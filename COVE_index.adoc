@@ -1,0 +1,180 @@
+= COVE: Coastal Vector Evolution Model
+Martin D. Hurst, Andrew Barkwith, Christopher W. Thomas, Michael A. Ellis, A. Brad Murray
+:toc: left
+:stem: latexmath
+:imagesdir: ./images/
+:numbered:
+
+image::COVE_logo.png[width="100", height="100"]
+
+== Introduction
+
+This is the documentation for COVE, the COastal Vector Evolution model - a vector-based one-line coastal evolution model. The model was presented and used in a http://onlinelibrary.wiley.com/doi/10.1002/2015JF003704/abstract[paper] on the evolution of crenulate bays published in the _Journal of Geophysical Research Earth Surface_ (http://onlinelibrary.wiley.com/doi/10.1002/2015JF003704/abstract[Hurst et al., 2015]). The model is intended for research purposes, exploring coastal behaviour and sensitiviy. If you are interested in working with COVE, we would encourage you to mailto:martin.hurst@glasgow.ac.uk[get in touch] and work with us. In this introduction, we will give a brief overview of the science behind the model.
+
+Reference documentation for the code has been generated using Doxygen and the resulting reference material can be accessed at https://COVE-model.github.io/COVE/documentation/html/index.html[COVE Doxygen Documentation].
+
+====
+SUMMARY
+- COVE is a ‘one-line’ type shoreline evolution model.
+- Application at spatial scales of kms to tens of kms, over decadal to millennial timescales.
+- Coastal change is driven by gradients in wave-generated alongshore sediment transport.
+- Alongshore sediment transport driven by the height and angle of breaking waves.
+- Retreat of cliffs governed by beach interaction (protection vs tools).
+====
+
+=== Overview
+
+The COVE model is a special case of a ‘one-line’ model designed to handle complex coastline geometries, with high planform curvature shorelines (http://onlinelibrary.wiley.com/doi/10.1002/2015JF003704/abstract[Hurst et al., 2015]). The shoreline is represented by a single line (or contour) that advances or retreats depending on the net alongshore sediment flux. COVE is now actually a two-line model because a second line representing coastal cliffs interacts with the shoreline, eroding to provide beach sediment. One-line models make a number of simplifying assumptions to conceptualise the coastline allowing the ‘one-line’ representation of the coastline:
+
+====
+ASSUMPTIONS
+1. Short-term cross-shore variations due to storms or rip currents are considered temporary perturbations to the long-term
+trajectory of coastal change (i.e. the shoreface recovers rapidly from storm-driven cross-shore transport).
+2. The beach profile is thus assumed to maintain a constant time-averaged form (Fig. 1), implying that depth contours are
+shore-parallel and therefore allows the coast to be represented by a single contour line.
+3. Alongshore sediment transport occurs primarily in the surf zone, and cross-shore sediment transport acts to maintain the
+equilibrium shoreface as it advances /retreats.
+4. Alongshore sediment flux occurs due to wave action in the surf zone, parameterized by the height and angle of incidence
+of breaking waves. Gradients in alongshore transport dictate whether the shoreline advances or retreats.
+====
+
+image::shoreface_section.png[title="Change in shoreline position viewed in schematic cross section",width="200"]
+
+=== Governing equation
+The conservation equation for beach sediment expressed in terms of local coordinates states that the change in position of the shoreline latexmath:[d\eta], perpendicular to the local shoreline orientation latexmath:[s] through time latexmath:[t] is a function of the divergence of alongshore sediment flux latexmath:[Q_{ls}]:
+
+latexmath:[\frac{d\eta}{dt} = f\left(\frac{dQ_{ls}}{ds}\right)]
+
+The nature of the function is dependent on the geometry of shoreline cells, which in COVE are not rectilinear, but rather triangular, trapezoidal or polygonal. The change of shoreline position for such cells is calculated by inverting quadratic and cubic equations for the volume of sediment in these cells (see http://onlinelibrary.wiley.com/doi/10.1002/2015JF003704/abstract[Hurst et al., 2015]).
+
+=== Alongshore Flux
+Bulk alongshore sediment flux is driven by waves breaking on the shoreface. Typically in alongshore transport laws, flux depends on the height latexmath:[H_b]
+and angle latexmath:[\alpha_b] of breaking waves. For example, in the simplest case of fine/medium sand, COVE uses the CERC equation:
+
+latexmath:[Q_{ls} = K_{ls} H_b^{5\over2} \sin 2\alpha_b]
+
+where latexmath:[K_{ls}] is a transport coefficient. The transport coefficient latexmath:[K_{ls}] may be modified to account for the size of beach material (latexmath:[D_{50}]). Calibration of this coefficient can be made from estimates of bulk alongshore transport or by calibration against a historical record of coastal change (e.g. http://www.earth-surf-dynam.net/2/295/2014/esurf-2-295-2014.html[Barkwith et al. 2014a]).
+
+=== Cliff Erosion
+
+Cliffs are represented in the model as a separate line. The cliffline and coastline interact to determine how wide the beach is locally. Eroded cliff material is provided to the adjacent beach and causes the shoreface to advance. Cliff erosion is controlled by beach width since a wider beach provide energy dissipation and protection from approaching waves. Figure X shows a schematic graph of this relationship, as well as a conceptual diagram of the representation and relationship of the cliff and the beach.
+
+image::limber_cliff_retreat.png[title="Schematic illustration of retreating cliff and beach. Relationship between beach width and cliff retreat rate is humped and nonlinear. For thin beaches, cliff retreat increases with beach width due to increased availability of "tools" to aid erosion. Wider beaches cause reduced cliff retreat, protecting the cliff by dissipating wave energy.,width="200"]
+
+The result is that we can run simlutaions at decadal timescales to explore the interactions between coastal erosion and alongshore sediment dynamics. 
+
+=== Model requirements
+
+==== Data
+- The model requires offshore (~10 m water depth) wave data. This can be obtained either from a wave buoy or preferably from distributed coastal area modelling predictions of wave conditions (e.g. http://fvcom.smast.umassd.edu/fvcom/[FVCOM] or http://www.swan.tudelft.nl/[SWAN]).
+- The transport coefficient latexmath:[K_{ls}] may be modified to account for the size of beach material (latexmath:[D_{50}]). Calibration of this coefficient can be made from estimates of bulk alongshore transport or by calibration against a historical record of coastal change.
+- Historical shoreline positions and legacy wave data allow training of the model to reproduce past geomorphic changes.
+
+==== Boundary Conditions
+* Offshore waves (see above).
+* Coupling to sediment sources and sinks (e.g. river mouth, estuary).
+* Human interaction with the coast (e.g. http://www.earth-surf-dynam.net/2/233/2014/[Barkwith et al. 2014b]):
+** Nourishment can be provided to build out the shoreface
+** Hard defences represented as immovable, cliffed shoreline
+** Groin fields simulated by prescribing a minimum beach width
+
+== Software Requirements
+
+COVE is written in C++, partly for efficiency but also to allow us to take advantage of running ensembles of simulations on UNIX high performance computing (HPC) clusters. The code has been written and tested in a Linux/UNIX environment, but has not been tested on Mac or Windows (we will doing this soon). So for now, you're going to need to be/get familiar with working at a command line interface. 
+
+There are a number of software requirements to run the model and visualise the results.
+====
+Linux/UNIX computer or virtual machine (e.g. Ubuntu)
+C++ compiler (e.g. GCC: the GNU Compiler Collection)
+Text editor (e.g. gedit, Notepad++)
+Python + Scipy, Numpy and Matplotlib packages
+====
+
+=== Linux/UNIX
+
+If you do not already work in Linux or UNIX, then the easiest way to get started would be to use some virtualisation software such as https://www.virtualbox.org/[VirtualBox] or http://www.vmware.com/uk/products/player[VMWare Workstation Player]. VirtualBox is preferable since it is open source and free to use, but there are some minor advantages to using VMWare Player if you become a heavy user. We hope soon to provide a https://www.vagrantup.com/[Vagrant file] to make this process a bit more straight forward. For now, I recommend installing https://www.virtualbox.org/[VirtualBox], creating a new virtual machine, and installing http://www.ubuntu.com/desktop[Ubuntu] using a downloaded iso file.
+
+=== Git
+
+https://git-scm.com/[Git] is version control software. The model is stored in a repository on https://github.com/COVE-Model[github]. This allows us to track all of our updates and developments and avoid duplication. You can install git from the command line:
+----
+$ sudo apt-get install git
+----
+Getting to grips with git can be a steep learning curve at first. The https://help.github.com/articles/github-glossary/[github glossary] is useful for getting up to speed with the terminology, and I found a good https://www.git-tower.com/blog/git-cheat-sheet/[cheat sheet] for git commands.
+ 
+=== C++ Compiler
+
+If you are using a Linux machine (e.g. the recommended Ubuntu VM) then you should have the GNU Compiler Collection installed. Depending on your experience and whether your developing the model, the https://www.gnu.org/software/gdb/[GNU debugger] can also be helpful (should already be installed with GCC), not to mention http://valgrind.org/[Valgrind] (you probably know what you're doing better than I do if you're using Valgrind!). We will also need the make utility (this should also be ready installed). No additional C++ libraries are required at this stage.
+
+=== Text editor
+
+A text editor is required for viewing and editing both the main code and driver files (shorter bits of code that interact with and control the main model objects). Ubuntu ships with gedit, which I find works well once you install and activate some useful plugins.
+----
+sudo apt-get install gedit-plugins gedit-developer-plugins
+----
+Some of these can really increase productivity while writing code.
+
+=== Python
+
+Python is a programming language that is great for analysing and visualising data, and is used here to visualise the output of COVE and running further analyses on model results. Again Python comes preinstalled on Ubuntu, but you could also use it on Windows/Mac. The key package required is https://www.scipy.org/[SciPy] ("scientific python"), which includes NumPy and Matplotlib. These are included with Ubuntu's preinstalled version of Python. If you are using Windows/Mac then we recommend installing a Python distribution such as https://www.continuum.io/why-anaconda[Anaconda].
+
+== Download the model
+
+
+The COVE code is under continuous development. As we publish scientific papers that use the model, we will provide release versions of the model code associated. The development version is maintained on https://github.com/COVE-Model/COVE[github].
+
+=== Release version
+
+Version 1.0.0 are available as https://github.com/mdhurst1/COVE/archive/1.0.0.tar.gz[tar.gz release version] and https://github.com/mdhurst1/COVE/archive/1.0.0.zip[.zip release version] as used by http://onlinelibrary.wiley.com/doi/10.1002/2015JF003704/abstract[Hurst et al. (2015)] to explore the sensitivity of crenulate-shaped bays to variation in wave climate. If using this version, once downloaded, extract the contents to an appropriate workspace and you're ready to continue.
+
+=== Development version
+
+
+=== Compiling the code
+
+The code can be compiled in a Linux environment from the command line, using one of the makefiles. These are contained in the 'driver_files' subdirectory. The driver files are C++ scripts that control the initiation, running and saving of a COVE model run. In this tutorial we will use the example for running a spiral bay as used in http://onlinelibrary.wiley.com/doi/10.1002/2015JF003704/abstract[Hurst et al. (2015)].
+
+In a terminal, navigate to the 'driver_files' subdirectory:
+----
+COVE$ cd driver_files
+----
+Compile COVE for running a spiral bay by launching the makefile:
+----
+COVE/driver_files$ make -f spiral_bay_make.make
+----
+This will create an executable 'spiral_bay.out' which can be launched from the command line to run the model. First, let's move the executable to the parent directory, and navigate to the same directory:
+----
+COVE/driver_files$ mv spiral_bay.out ..
+COVE/driver_files$ cd ..
+----
+
+=== Running the model
+
+The file spiral_bay.out generated by compiling the code can be launched from the command line:
+----
+COVE/driver_files$ ./spiral_bay.out
+----
+Running it in this way will result in it terminating with an error, which will tell you that the program requires a number of input arguments in order to run. In the spiral bay example, the offshore wave climate is represented with three Gaussian distributions, for wave period, height and direction. Each of these is described by a mean and standard deviation, and these are fed to the model as arguments. To run the model with mean wave period of 6 seconds, standard deviation 1 second, mean wave height 1 metre, standard deviation 0.1 metre, and mean wave direction 035^o and standard deviation 25^o:
+----
+COVE/driver_files$ ./spiral_bay.out 6 1 1. 0.1 35 25
+----
+The model should then run for a hundred years. This example evolves a crenulate-shaped bay from a straight initial coastline between two fixed headlands or sea walls. Sediment is transported out of the model domain by alongshore sediment flux and the shoreline gradually adjusts to the distribution of wave directions. The bay eventually reaches a state of equilibrium where the net alongshore flux is close to zero everywhere. The model is setup to run for 100 years, more than enough time for an equilibrium bay configuration to form.
+
+While running the model will print the current model time to screen, it may also print some other messages, particularly including intersections in the coastline. The intersection analysis detects when the coastline intersects itself, such as when it erodes back behind the headland. Once this has happened the coastline is prevented from eroding any further.
+
+=== Plotting the results
+We make plots of the resulting coastline evolution using the python http://matplotlib.org/[matplotlib] library. To use them you will need a python IDE such as http://pythonhosted.org/spyder/[Spyder]. A series of plotting functions are included in the subdirectory 'plotting_functions'. To plot the results of your spiral bay model run, open the file 'plot_coastline_evolution_figure.py' in your favourite python IDE, and run. You should get the following figure:
+
+.Example model output for a spiral bay
+image::spiral_bay_example.png[]
+
+Additionally, below will be a link to a video of a spiral bay evolving, which will be hosted on Vimeo once I have time to work out how to do it (MDH).
+
+ 
+== References
+[small]#Barkwith, A., Thomas, C. W., Limber, P. W., Ellis, M. A., and Murray, A. B. (2014a), Coastal vulnerability of a pinned, soft-cliff coastline – Part I: Assessing the natural sensitivity to wave climate, _Earth Surf. Dynam._, 2, 295-308, http://dx.doi.org/10.5194/esurf-2-295-2014[doi:10.5194/esurf-2-295-2014].#
+
+[small]#Barkwith, A., Hurst, M. D., Thomas, C. W., Ellis, M. A., Limber, P. L., and Murray, A. B. (2014b) Coastal vulnerability of a pinned, soft-cliff coastline, II: assessing the influence of sea walls on future morphology, Earth Surf. Dynam., 2, 233-242, http://dx.doi.org/10.5194/esurf-2-233-2014[doi:10.5194/esurf-2-233-2014].#
+
+[small]#Hurst, M. D., A. Barkwith, M. A. Ellis, C. W. Thomas, and A. B. Murray (2015), Exploring the sensitivities of crenulate bay shorelines to wave climates using a new vector-based one-line model, _J. Geophys. Res. Earth Surf._, 120, 2586–2608, http://dx.doi.org/10.1002/2015JF003704[doi:10.1002/2015JF003704].#
+

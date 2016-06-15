@@ -13,7 +13,7 @@ This is the documentation for COVE, the COastal Vector Evolution model - a vecto
 
 Reference documentation for the code has been generated using Doxygen and the resulting reference material can be accessed at https://COVE-model.github.io/COVE/documentation/html/index.html[COVE Doxygen Documentation].
 
-SUMMARY
+*SUMMARY*
 ====
 - COVE is a ‘one-line’ type shoreline evolution model.
 - Application at spatial scales of kms to tens of kms, over decadal to millennial timescales.
@@ -26,8 +26,8 @@ SUMMARY
 
 The COVE model is a special case of a ‘one-line’ model designed to handle complex coastline geometries, with high planform curvature shorelines (http://onlinelibrary.wiley.com/doi/10.1002/2015JF003704/abstract[Hurst et al., 2015]). The shoreline is represented by a single line (or contour) that advances or retreats depending on the net alongshore sediment flux. COVE is now actually a two-line model because a second line representing coastal cliffs interacts with the shoreline, eroding to provide beach sediment. One-line models make a number of simplifying assumptions to conceptualise the coastline allowing the ‘one-line’ representation of the coastline:
 
+*ASSUMPTIONS*
 ====
-ASSUMPTIONS
 1. Short-term cross-shore variations due to storms or rip currents are considered temporary perturbations to the long-term
 trajectory of coastal change (i.e. the shoreface recovers rapidly from storm-driven cross-shore transport).
 2. The beach profile is thus assumed to maintain a constant time-averaged form (Fig. 1), implying that depth contours are
@@ -38,7 +38,7 @@ equilibrium shoreface as it advances /retreats.
 of breaking waves. Gradients in alongshore transport dictate whether the shoreline advances or retreats.
 ====
 
-image::shoreface_section.png[title="Change in shoreline position viewed in schematic cross section",width="200"]
+image::shoreface_section.png[title="Change in shoreline position viewed in schematic cross section. Planar beach sloepe extends down to the depth of the shoreface. Shoreface danvances or retreats across the shelf",width="300",align="center"]
 
 === Governing equation
 The conservation equation for beach sediment expressed in terms of local coordinates states that the change in position of the shoreline latexmath:[d\eta], perpendicular to the local shoreline orientation latexmath:[s] through time latexmath:[t] is a function of the divergence of alongshore sediment flux latexmath:[Q_{ls}]:
@@ -59,7 +59,7 @@ where latexmath:[K_{ls}] is a transport coefficient. The transport coefficient l
 
 Cliffs are represented in the model as a separate line. The cliffline and coastline interact to determine how wide the beach is locally. Eroded cliff material is provided to the adjacent beach and causes the shoreface to advance. Cliff erosion is controlled by beach width since a wider beach provide energy dissipation and protection from approaching waves. Figure X shows a schematic graph of this relationship, as well as a conceptual diagram of the representation and relationship of the cliff and the beach.
 
-image::limber_cliff_retreat.png[title="Schematic illustration of retreating cliff and beach. Relationship between beach width and cliff retreat rate is humped and nonlinear. For thin beaches, cliff retreat increases with beach width due to increased availability of "tools" to aid erosion. Wider beaches cause reduced cliff retreat, protecting the cliff by dissipating wave energy.,width="200"]
+image::limber_cliff_retreat.png[title="Schematic illustration of retreating cliff and beach. Relationship between beach width and cliff retreat rate is humped and nonlinear. For thin beaches, cliff retreat increases with beach width due to increased availability of \"tools\" to aid erosion. Wider beaches cause reduced cliff retreat, protecting the cliff by dissipating wave energy (after Limber and Murray, 2011).",width="500",align="center"]
 
 The result is that we can run simlutaions at decadal timescales to explore the interactions between coastal erosion and alongshore sediment dynamics. 
 
@@ -84,10 +84,10 @@ COVE is written in C++, partly for efficiency but also to allow us to take advan
 
 There are a number of software requirements to run the model and visualise the results.
 ====
-Linux/UNIX computer or virtual machine (e.g. Ubuntu)
-C++ compiler (e.g. GCC: the GNU Compiler Collection)
-Text editor (e.g. gedit, Notepad++)
-Python + Scipy, Numpy and Matplotlib packages
+* Linux/UNIX computer or virtual machine (e.g. Ubuntu)
+* C++ compiler (e.g. GCC: the GNU Compiler Collection)
+* Text editor (e.g. gedit, Notepad++)
+* Python + Scipy, Numpy and Matplotlib packages
 ====
 
 === Linux/UNIX
@@ -110,7 +110,7 @@ If you are using a Linux machine (e.g. the recommended Ubuntu VM) then you shoul
 
 A text editor is required for viewing and editing both the main code and driver files (shorter bits of code that interact with and control the main model objects). Ubuntu ships with gedit, which I find works well once you install and activate some useful plugins.
 ----
-sudo apt-get install gedit-plugins gedit-developer-plugins
+$ sudo apt-get install gedit-plugins gedit-developer-plugins
 ----
 Some of these can really increase productivity while writing code.
 
@@ -127,8 +127,16 @@ The COVE code is under continuous development. As we publish scientific papers t
 
 Version 1.0.0 are available as https://github.com/mdhurst1/COVE/archive/1.0.0.tar.gz[tar.gz release version] and https://github.com/mdhurst1/COVE/archive/1.0.0.zip[.zip release version] as used by http://onlinelibrary.wiley.com/doi/10.1002/2015JF003704/abstract[Hurst et al. (2015)] to explore the sensitivity of crenulate-shaped bays to variation in wave climate. If using this version, once downloaded, extract the contents to an appropriate workspace and you're ready to continue.
 
+Alternatively, you can clone the release version directly from the repository by running the command:
+----
+$ git clone https://github.com/COVE-Model/COVE-v1.0.0.git
+----
+
 === Development version
 
+The model is under semi-continuous development (depending on other commitments) and thus the development version is not always going to be functioning and stable. If you wish to work with the latest developments we suggest that you mailto:martin.hurst@glasgow.ac.uk[get in touch] and work with us directly. 
+
+== Getting Started
 
 === Compiling the code
 
@@ -169,7 +177,6 @@ We make plots of the resulting coastline evolution using the python http://matpl
 image::spiral_bay_example.png[]
 
 Additionally, below will be a link to a video of a spiral bay evolving, which will be hosted on Vimeo once I have time to work out how to do it (MDH).
-
  
 == References
 [small]#Barkwith, A., Thomas, C. W., Limber, P. W., Ellis, M. A., and Murray, A. B. (2014a), Coastal vulnerability of a pinned, soft-cliff coastline – Part I: Assessing the natural sensitivity to wave climate, _Earth Surf. Dynam._, 2, 295-308, http://dx.doi.org/10.5194/esurf-2-295-2014[doi:10.5194/esurf-2-295-2014].#
@@ -177,4 +184,6 @@ Additionally, below will be a link to a video of a spiral bay evolving, which wi
 [small]#Barkwith, A., Hurst, M. D., Thomas, C. W., Ellis, M. A., Limber, P. L., and Murray, A. B. (2014b) Coastal vulnerability of a pinned, soft-cliff coastline, II: assessing the influence of sea walls on future morphology, Earth Surf. Dynam., 2, 233-242, http://dx.doi.org/10.5194/esurf-2-233-2014[doi:10.5194/esurf-2-233-2014].#
 
 [small]#Hurst, M. D., A. Barkwith, M. A. Ellis, C. W. Thomas, and A. B. Murray (2015), Exploring the sensitivities of crenulate bay shorelines to wave climates using a new vector-based one-line model, _J. Geophys. Res. Earth Surf._, 120, 2586–2608, http://dx.doi.org/10.1002/2015JF003704[doi:10.1002/2015JF003704].#
+
+[small]#Limber, P. W. and A. Brad Murray (2011) Beach and sea-cliff dynamics as a driver of long-term rocky coastline evolution and stability, _Geology_, 39, 1147-1150, http://dx.doi.org/10.1130/G32315.1[doi:10.1130/G32315.1]
 

@@ -13,8 +13,8 @@ This is the documentation for COVE, the COastal Vector Evolution model - a vecto
 
 Reference documentation for the code has been generated using Doxygen and the resulting reference material can be accessed at https://COVE-model.github.io/COVE/documentation/html/index.html[COVE Doxygen Documentation].
 
-====
 SUMMARY
+====
 - COVE is a ‘one-line’ type shoreline evolution model.
 - Application at spatial scales of kms to tens of kms, over decadal to millennial timescales.
 - Coastal change is driven by gradients in wave-generated alongshore sediment transport.

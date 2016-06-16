@@ -169,7 +169,7 @@ Running it in this way will result in it terminating with an error, which will t
 ----
 COVE/driver_files$ ./spiral_bay.out 6 1 1. 0.1 35 25
 ----
-The model should then run for a hundred years. This example evolves a crenulate-shaped bay from a straight initial coastline between two fixed headlands or sea walls. Sediment is transported out of the model domain by alongshore sediment flux and the shoreline gradually adjusts to the distribution of wave directions. The bay eventually reaches a state of equilibrium where the net alongshore flux is close to zero everywhere. The model is setup to run for 100 years, more than enough time for an equilibrium bay configuration to form.
+The model should then run for fifty years. This example evolves a crenulate-shaped bay from a straight initial coastline between two fixed headlands or sea walls. Sediment is transported out of the model domain by alongshore sediment flux and the shoreline gradually adjusts to the distribution of wave directions. The bay eventually reaches a state of equilibrium where the net alongshore flux is close to zero everywhere. The model is setup to run for 100 years, more than enough time for an equilibrium bay configuration to form.
 
 While running the model will print the current model time to screen, it may also print some other messages, particularly including intersections in the coastline. The intersection analysis detects when the coastline intersects itself, such as when it erodes back behind the headland. Once this has happened the coastline is prevented from eroding any further.
 
@@ -294,13 +294,87 @@ We declare a `Coastline` object whech we have called `CoastVector`, this is our 
 
 Note there is also a call to declare a `Cliffline` object called `CliffVector`. It has no input arguments and therefore generates an empty `Cliffline` object (i.e. there is no actual cliff line inside it). Our spiral bay experiments don`t require a cliffline object so that is OK, but this declaration is required to keep the model happy (it needs to be able to look at a cliff to know it doesn`t really exist, it`s a dummy cliff). Don`t worry about this for now, this will generate a warning when we come to run the model but we are OK to ignore it.
 
+Finally, for our spiral bay runs, we want to allow some simple rules for the refreaction and diffraction of waves behind coastal obstructions to be operating. To do this we need to set a flag within the `Coastline` object, 1 = on, 0 = off. 
 
-=== Next title
+[source,c++]
+----
+// Allow refraction/diffraction rules
+int RefDiffFlag = 1;
+CoastVector.SetRefDiffFlag(RefDiffFlag);
+----
+
+Finally, before we run the main model loop, we'll write the initial conditions to file:
+
+[source,c++]
+----
+// loop through time and evolve the coast
+CoastVector.WriteCoast(WriteCoastFile, Time);
+----
+
+==== Main model loop
+
+We're all set up and ready to go! The model loop is pretty simple really, first grab a new wave from the wave climate, second pass it to the `Coastline` object when calling the `TransportSediment` function, third print the coordinates of the `Coastline` to file. 
+
+The model evolves until the `Time` exceeds the prescribed `EndTime`:
+
+[source,c++]
+----
+while (Time < EndTime)
+{
+	...	
+----
+
+We grab a new wave from the wave climate if it's time (`GetWaveTime` depends on `WaveTimeDelta` which sets how often we get a new wave):
+
+[source,c++]
+----
+//Get a new wave?
+if (Time > GetWaveTime) 
+{
+	MyWave = WaveClimate.Get_Wave();
+	GetWaveTime += WaveTimeDelta/365.;
+}
+----
+
+Notice that `GetWaveTime` is in years, but `WaveTimeDelta` is in days, so we divide through by 365 to convert.
+
+Now we evolve the coast by calling the `Coastline` function `TransportSediment`. This requires three input arguments, `TimeStep` is the length of time that sediment is transported over, we also give it the wave `MyWave`, and finally the dummy Cliffline object `CliffVector`:
+
+[source,c++]
+----
+//Evolve coast
+CoastVector.TransportSediment(TimeStep, MyWave, CliffVector);
+----
+
+A whole lot of things happen inside this function (see a later section of this documentation that is yet to be written). The shoreline geometry is recalculated at each timestep. The wave is transformed from offshore to wave breaking conditions following linear wave theory, and any wave shadowing and refraction/diffraction are calculated. Alongshore sediment transport for each cell is calculated and the change in the volume of sediment in each cell calculated from the divergence of alongshore flux. The volume change is inverted for a change in the position of the coast and the position of each node is updated accordingly. The coastal geometry is updated for the next timestep.
+
+There is a crude attempt written in here to allow adaptive timestepping. This hasn't fully been tested yet, and usually if it's called it's because there is a bug in the model not actually associated with the adaptive timestep. If you run into this problem please mailto:martin.hurst@glasgow.ac.uk[email me].
+
+Finally, the model prints the updated _X_ and _Y_ coordinates to an output file. See <<Output>> for details of the resulting file format.
+
+=== Compile and Run
 
 Compile COVE for running a spiral bay by launching the makefile:
+
 ----
 COVE/driver_files$ make -f spiral_bay_make.make
 ----
+
+The file spiral_bay.out generated by compiling the code can be launched from the command line. The program takes the wave climate parameters as inputs latexmath:[T_{mean}],latexmath:[T_{std}],latexmath:[H_{mean}],latexmath:[H_{std}],latexmath:[\theta_{mean}],latexmath:[\theta_{std}]:
+
+----
+COVE/driver_files$ ./spiral_bay.out 6 1 1. 0.1 35 25
+----
+
+The model should then run for fifty years. This example evolves a crenulate-shaped bay from a straight initial coastline between two fixed headlands or sea walls. Sediment is transported out of the model domain by alongshore sediment flux and the shoreline gradually adjusts to the distribution of wave directions. The bay eventually reaches a state of equilibrium where the net alongshore flux is close to zero everywhere. The model is setup to run for fifty years, more than enough time for an equilibrium bay configuration to form.
+
+While running the model will print the current model time to screen, it may also print some other messages, particularly including intersections in the coastline. The intersection analysis detects when the coastline intersects itself, such as when it erodes back behind the headland. Once this has happened the coastline is prevented from eroding any further.
+
+=== Plotting the results
+A series of plotting functions are included in the subdirectory `plotting_functions`. To plot the results of your spiral bay model run, open the file `plot_coastline_evolution_figure.py` in your favourite python IDE, and run. You should get the following figure:
+
+.Example model output for a spiral bay showing the evolution of the bay through time from a starting condition of a straight coastline pinned by two headlands/sea walls. Model evolves to a condition of equilibrium where the coastal morphology changes little through time. 
+image::spiral_bay_example.png[width="500",align="center"]
 
 == Wave Climates
 
@@ -389,7 +463,33 @@ The model is a single line. The start and end of the line can be handled in diff
 1. Periodic boundary conditions: the start of the line is also the end, and sediment can be passed \"round the back\" e.g. an island.
 2. Fixed boundary conditions the first and last two nodes/cells in the model are fixed and immovable.
 
-Details to follow. See the [Doxygen documentation] for the time being.
+
+=== [[Output]]Writing results to file
+
+The `Coastline` object writes the position of the coast to a text file with a name provided in the call `WriteCoastFile`. The `Time` must also be passed:
+
+[source,c++]
+----
+//loop through time and evolve the coast
+CoastVector.WriteCoast(WriteCoastFile, Time);
+----
+
+The file format is the same as for reading a coast from a text file. The first line is a header containing integer values for the `StartBoundary` and `EndBoundary` conditions. The next two lines are the X and Y coordinates of the line respectively, but both preceded by the time (in years). We use \| to indicate a white space delimiter here such as a space or tab.
+----
+StartBoundary | EndBoundary
+Time | X[0] | X[1] | X[2] =====> X[NoNodes]
+Time | Y[0] | Y[1] | Y[2] =====> Y[NoNodes]
+----
+So for example, a 5 metre long coastline with fixed boundary conditions oriented at 135^o with a latexmath:[sqrt{2}] node spacing, at `Time = 1`, that has not changed since `Time = 0` would have an input file:
+----
+2 2
+0 0 1 2 3 4 5
+0 0 1 2 3 4 5
+1 0 1 2 3 4 5
+1 0 1 2 3 4 5
+----
+
+More details to follow. See the [Doxygen documentation] for the time being.
 
 == Ensemble mode
 

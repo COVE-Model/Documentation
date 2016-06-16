@@ -552,7 +552,8 @@ table.CodeRay td.code>pre{padding:0}
 <li><a href="#_crenulate_shaped_bays">5. Crenulate-shaped bays</a>
 <ul class="sectlevel2">
 <li><a href="#_the_driver_file">5.1. The driver file</a></li>
-<li><a href="#_next_title">5.2. Next title</a></li>
+<li><a href="#_compile_and_run">5.2. Compile and Run</a></li>
+<li><a href="#_plotting_the_results_2">5.3. Plotting the results</a></li>
 </ul>
 </li>
 <li><a href="#_wave_climates">6. Wave Climates</a>
@@ -569,6 +570,7 @@ table.CodeRay td.code>pre{padding:0}
 <li><a href="#_initialising_a_coastline_object">7.1. Initialising a Coastline object</a></li>
 <li><a href="#_initialising_a_cliffline_object">7.2. Initialising a Cliffline object</a></li>
 <li><a href="#_boundary_conditions_2">7.3. Boundary Conditions</a></li>
+<li><a href="#__a_id_output_a_writing_results_to_file">7.4. <a id="Output"></a>Writing results to file</a></li>
 </ul>
 </li>
 <li><a href="#_ensemble_mode">8. Ensemble mode</a></li>
@@ -911,7 +913,7 @@ COVE/driver_files$ cd ..</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>The model should then run for a hundred years. This example evolves a crenulate-shaped bay from a straight initial coastline between two fixed headlands or sea walls. Sediment is transported out of the model domain by alongshore sediment flux and the shoreline gradually adjusts to the distribution of wave directions. The bay eventually reaches a state of equilibrium where the net alongshore flux is close to zero everywhere. The model is setup to run for 100 years, more than enough time for an equilibrium bay configuration to form.</p>
+<p>The model should then run for fifty years. This example evolves a crenulate-shaped bay from a straight initial coastline between two fixed headlands or sea walls. Sediment is transported out of the model domain by alongshore sediment flux and the shoreline gradually adjusts to the distribution of wave directions. The bay eventually reaches a state of equilibrium where the net alongshore flux is close to zero everywhere. The model is setup to run for 100 years, more than enough time for an equilibrium bay configuration to form.</p>
 </div>
 <div class="paragraph">
 <p>While running the model will print the current model time to screen, it may also print some other messages, particularly including intersections in the coastline. The intersection analysis detects when the coastline intersects itself, such as when it erodes back behind the headland. Once this has happened the coastline is prevented from eroding any further.</p>
@@ -1096,10 +1098,79 @@ Cliffline CliffVector;</code></pre>
 <div class="paragraph">
 <p>Note there is also a call to declare a <code>Cliffline</code> object called <code>CliffVector</code>. It has no input arguments and therefore generates an empty <code>Cliffline</code> object (i.e. there is no actual cliff line inside it). Our spiral bay experiments don`t require a cliffline object so that is OK, but this declaration is required to keep the model happy (it needs to be able to look at a cliff to know it doesn`t really exist, it`s a dummy cliff). Don`t worry about this for now, this will generate a warning when we come to run the model but we are OK to ignore it.</p>
 </div>
+<div class="paragraph">
+<p>Finally, for our spiral bay runs, we want to allow some simple rules for the refreaction and diffraction of waves behind coastal obstructions to be operating. To do this we need to set a flag within the <code>Coastline</code> object, 1 = on, 0 = off.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="c++"><span class="comment">// Allow refraction/diffraction rules</span>
+<span class="predefined-type">int</span> RefDiffFlag = <span class="integer">1</span>;
+CoastVector.SetRefDiffFlag(RefDiffFlag);</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Finally, before we run the main model loop, we&#8217;ll write the initial conditions to file:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="c++"><span class="comment">// loop through time and evolve the coast</span>
+CoastVector.WriteCoast(WriteCoastFile, Time);</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_main_model_loop">5.1.4. Main model loop</h4>
+<div class="paragraph">
+<p>We&#8217;re all set up and ready to go! The model loop is pretty simple really, first grab a new wave from the wave climate, second pass it to the <code>Coastline</code> object when calling the <code>TransportSediment</code> function, third print the coordinates of the <code>Coastline</code> to file.</p>
+</div>
+<div class="paragraph">
+<p>The model evolves until the <code>Time</code> exceeds the prescribed <code>EndTime</code>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="c++"><span class="keyword">while</span> (Time &lt; EndTime)
+{
+        ...</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>We grab a new wave from the wave climate if it&#8217;s time (<code>GetWaveTime</code> depends on <code>WaveTimeDelta</code> which sets how often we get a new wave):</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="c++"><span class="comment">//Get a new wave?</span>
+<span class="keyword">if</span> (Time &gt; GetWaveTime)
+{
+        MyWave = WaveClimate.Get_Wave();
+        GetWaveTime += WaveTimeDelta/<span class="integer">36</span><span class="float">5</span>.;
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Notice that <code>GetWaveTime</code> is in years, but <code>WaveTimeDelta</code> is in days, so we divide through by 365 to convert.</p>
+</div>
+<div class="paragraph">
+<p>Now we evolve the coast by calling the <code>Coastline</code> function <code>TransportSediment</code>. This requires three input arguments, <code>TimeStep</code> is the length of time that sediment is transported over, we also give it the wave <code>MyWave</code>, and finally the dummy Cliffline object <code>CliffVector</code>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="c++"><span class="comment">//Evolve coast</span>
+CoastVector.TransportSediment(TimeStep, MyWave, CliffVector);</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>A whole lot of things happen inside this function (see a later section of this documentation that is yet to be written). The shoreline geometry is recalculated at each timestep. The wave is transformed from offshore to wave breaking conditions following linear wave theory, and any wave shadowing and refraction/diffraction are calculated. Alongshore sediment transport for each cell is calculated and the change in the volume of sediment in each cell calculated from the divergence of alongshore flux. The volume change is inverted for a change in the position of the coast and the position of each node is updated accordingly. The coastal geometry is updated for the next timestep.</p>
+</div>
+<div class="paragraph">
+<p>There is a crude attempt written in here to allow adaptive timestepping. This hasn&#8217;t fully been tested yet, and usually if it&#8217;s called it&#8217;s because there is a bug in the model not actually associated with the adaptive timestep. If you run into this problem please <a href="mailto:martin.hurst@glasgow.ac.uk">email me</a>.</p>
+</div>
+<div class="paragraph">
+<p>Finally, the model prints the updated <em>X</em> and <em>Y</em> coordinates to an output file. See <a href="#Output">[Output]</a> for details of the resulting file format.</p>
+</div>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_next_title">5.2. Next title</h3>
+<h3 id="_compile_and_run">5.2. Compile and Run</h3>
 <div class="paragraph">
 <p>Compile COVE for running a spiral bay by launching the makefile:</p>
 </div>
@@ -1107,6 +1178,32 @@ Cliffline CliffVector;</code></pre>
 <div class="content">
 <pre>COVE/driver_files$ make -f spiral_bay_make.make</pre>
 </div>
+</div>
+<div class="paragraph">
+<p>The file spiral_bay.out generated by compiling the code can be launched from the command line. The program takes the wave climate parameters as inputs \(T_{mean}\),\(T_{std}\),\(H_{mean}\),\(H_{std}\),\(\theta_{mean}\),\(\theta_{std}\):</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>COVE/driver_files$ ./spiral_bay.out 6 1 1. 0.1 35 25</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The model should then run for fifty years. This example evolves a crenulate-shaped bay from a straight initial coastline between two fixed headlands or sea walls. Sediment is transported out of the model domain by alongshore sediment flux and the shoreline gradually adjusts to the distribution of wave directions. The bay eventually reaches a state of equilibrium where the net alongshore flux is close to zero everywhere. The model is setup to run for fifty years, more than enough time for an equilibrium bay configuration to form.</p>
+</div>
+<div class="paragraph">
+<p>While running the model will print the current model time to screen, it may also print some other messages, particularly including intersections in the coastline. The intersection analysis detects when the coastline intersects itself, such as when it erodes back behind the headland. Once this has happened the coastline is prevented from eroding any further.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_plotting_the_results_2">5.3. Plotting the results</h3>
+<div class="paragraph">
+<p>A series of plotting functions are included in the subdirectory <code>plotting_functions</code>. To plot the results of your spiral bay model run, open the file <code>plot_coastline_evolution_figure.py</code> in your favourite python IDE, and run. You should get the following figure:</p>
+</div>
+<div class="imageblock" style="text-align: center">
+<div class="content">
+<img src="./images//spiral_bay_example.png" alt="spiral bay example" width="500">
+</div>
+<div class="title">Figure 4. Example model output for a spiral bay showing the evolution of the bay through time from a starting condition of a straight coastline pinned by two headlands/sea walls. Model evolves to a condition of equilibrium where the coastal morphology changes little through time.</div>
 </div>
 </div>
 </div>
@@ -1227,8 +1324,42 @@ Time | Y[0] | Y[1] | Y[2] =====&gt; Y[NoNodes]</pre>
 1. Periodic boundary conditions: the start of the line is also the end, and sediment can be passed \"round the back\" e.g. an island.
 2. Fixed boundary conditions the first and last two nodes/cells in the model are fixed and immovable.</p>
 </div>
+</div>
+<div class="sect2">
+<h3 id="__a_id_output_a_writing_results_to_file">7.4. <a id="Output"></a>Writing results to file</h3>
 <div class="paragraph">
-<p>Details to follow. See the [Doxygen documentation] for the time being.</p>
+<p>The <code>Coastline</code> object writes the position of the coast to a text file with a name provided in the call <code>WriteCoastFile</code>. The <code>Time</code> must also be passed:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="c++"><span class="comment">//loop through time and evolve the coast</span>
+CoastVector.WriteCoast(WriteCoastFile, Time);</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The file format is the same as for reading a coast from a text file. The first line is a header containing integer values for the <code>StartBoundary</code> and <code>EndBoundary</code> conditions. The next two lines are the X and Y coordinates of the line respectively, but both preceded by the time (in years). We use \| to indicate a white space delimiter here such as a space or tab.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>StartBoundary | EndBoundary
+Time | X[0] | X[1] | X[2] =====&gt; X[NoNodes]
+Time | Y[0] | Y[1] | Y[2] =====&gt; Y[NoNodes]</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>So for example, a 5 metre long coastline with fixed boundary conditions oriented at 135^o with a \(sqrt{2}\) node spacing, at <code>Time = 1</code>, that has not changed since <code>Time = 0</code> would have an input file:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>2 2
+0 0 1 2 3 4 5
+0 0 1 2 3 4 5
+1 0 1 2 3 4 5
+1 0 1 2 3 4 5</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>More details to follow. See the [Doxygen documentation] for the time being.</p>
 </div>
 </div>
 </div>
@@ -1265,7 +1396,7 @@ Time | Y[0] | Y[1] | Y[2] =====&gt; Y[NoNodes]</pre>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2016-06-16 13:23:54 BST
+Last updated 2016-06-16 14:44:37 BST
 </div>
 </div>
 <script type="text/x-mathjax-config">

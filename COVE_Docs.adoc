@@ -4,6 +4,7 @@ Martin D. Hurst, Andrew Barkwith, Christopher W. Thomas, Michael A. Ellis, A. Br
 :stem: latexmath
 :imagesdir: ./images/
 :numbered:
+:source-highlighter: coderay
 
 image::COVE_logo.png[width="100", height="100"]
 
@@ -184,6 +185,8 @@ Additionally, below will be a link to a video of a spiral bay evolving, which wi
 
 In this chapter we will look in detail at how the model is set up to simulate the formation and evolution of crenulate-shaped bays (also known as spiral, log-spiral, zeta bays). To do so, we will open up the appropriate driver file and work through it to understand how the simulations are set up and what the model is doing.
 
+=== The driver file
+
 The driver file 'spiral_bay_driver.cpp' can be found in the 'driver_files' subdirectory. You can navigate to it and open in a text editor from the command line with:
 ----
 $ cd driver_files
@@ -191,8 +194,75 @@ $ gedit spiral_bay_driver.cpp &
 ----
 or open it from the explorer window.
 
-d
-=== 
+OK, let's look at the driver file. There are some helpful comments that are ignored when we run the program, these start with \"//\" or are in blocks \"\/*\" to \"*\/\". At the top of the file there are some '#include' statements that allow the program access to some libraries we will be using, including the model's main coastline and waveclimate objects.
+
+==== Setting up the wave climate
+
+The spiral_bay_driver uses a Guassian representation of the wave climate. The parameters to set up the wave climate are required as input arguments at runtime. The wave climate is defined by a _mean_ and _standard deviation_ value for: 
+- Wave period latexmath:[T]
+- Wave height latexmath:[H_0]
+- Wave direction latexmath:[\theta_0]
+and hence those 6 input arguments are required. The driver_file runs a check at the start to make sure it has the correct number of arguments, and will terminate with an error message if not.
+
+In order to initialise the wave climate the 6 input arguments first are assigned to 6 variables:
+
+[source,c++]
+----
+//Declare parameter for wave conditions
+ double OffshoreMeanWavePeriod, OffshoreStDWavePeriod, OffshoreMeanWaveDirection, 
+        OffshoreStDWaveDirection, OffshoreMeanWaveHeight, OffshoreStDWaveHeight;
+----
+
+and the corresponding input arguments are converted from character sequences to numerical values and passed to these variables.
+
+The wave climate is initialised by declaring a 'GuassianWaveClimate' object called 'WaveClimate' and passing these variables as input arguments in the correct order.
+
+[source,c++]
+----
+	// initialise the wave climate
+	GaussianWaveClimate WaveClimate = GaussianWaveClimate(	OffshoreMeanWavePeriod,
+		OffshoreStDWavePeriod, OffshoreMeanWaveDirection, OffshoreStDWaveDirection,
+		OffshoreMeanWaveHeight, OffshoreStDWaveHeight);
+----
+
+We then also declare an individual wave object. This holds the period, height and direction of an individual wave 'MyWave; which we later pass to the coastline object in order to drive coastal evolution. We will sample a wave from 'WaveClimate' and pass it to 'MyWave'
+
+[source,c++]
+----
+	// declare an individual wave (this will be sampled from the wave climate object
+	Wave MyWave = Wave();
+	// Get a wave from thewave climate object
+	MyWave = WaveClimate.Get_Wave();
+----
+
+==== Model run control parameters
+
+Various parameters are required to control the length of the model run (in years), how often the coastline position is output to file (in years), how often to sample a new wave from the wave climate object (days), and how big the model timestep should be (days). We suggest leaving these as they are for now, but as you start customising model setup you may need to adjust them.
+
+[source,c++]
+----
+	//declare time control paramters
+	int EndTime = 50.;						      // End time (years)
+	double Time = 0.;							      // Start Time (years)
+	double PrintTimeDelta = 36.5/365.;  // how often to print coastline (years)
+	double PrintTime = PrintTimeDelta;	// Print time (years)
+	double TempTime;
+	
+	double WaveTimeDelta = 0.1;			// Frequency at which to sample new waves (days)
+	double GetWaveTime = 0.0;				// Time to get a new wave (days)
+	double TimeStep = 0.05;					// Time step (days)
+	double MaxTimeStep = 0.05;			// Maximum timestep (days)	
+----
+
+==== Initialise the model
+
+
+=== Next title
+
+Compile COVE for running a spiral bay by launching the makefile:
+----
+COVE/driver_files$ make -f spiral_bay_make.make
+----
 
 == Wave Climates
 
@@ -202,15 +272,66 @@ The model requires wave conditions to drive alongshore sediment transport. This 
 
 === Gaussian wave climate
 
+The 'GuassianWaveClimate' object contains six parameters to describe distributions of Wave period latexmath:[T], Wave height latexmath:[H_0], and Wave direction latexmath:[\theta_0]. In order to initialise the wave climate in a driver file, 6 variables must be declared, and values assigned:
+
+[source,c++]
+----
+//Declare parameter for wave conditions
+double OffshoreMeanWavePeriod, OffshoreStDWavePeriod, OffshoreMeanWaveDirection, 
+       OffshoreStDWaveDirection, OffshoreMeanWaveHeight, OffshoreStDWaveHeight;
+----
+
+The wave climate is initialised by declaring a 'GuassianWaveClimate' object called 'WaveClimate' and passing these variables as input arguments in the correct order.
+
+[source,c++]
+----
+// initialise the wave climate
+GaussianWaveClimate WaveClimate = GaussianWaveClimate(	OffshoreMeanWavePeriod,
+		OffshoreStDWavePeriod, OffshoreMeanWaveDirection, OffshoreStDWaveDirection,
+		OffshoreMeanWaveHeight, OffshoreStDWaveHeight);
+----
+
+We then also declare an individual wave object. This holds the period, height and direction of an individual wave 'MyWave' which we later pass to the coastline object in order to drive coastal evolution. We will sample a wave from 'WaveClimate' and pass it to 'MyWave'
+
+[source,c++]
+----
+// declare an individual wave (this will be sampled from the wave climate object
+Wave MyWave = Wave();
+// Get a wave from thewave climate object
+MyWave = WaveClimate.Get_Wave();
+----
+
+This last line should appear in the main model loop to select new waves at the chosen frequency:
+
+[source,c++]
+----
+while (Time < EndTime)
+{
+	//Get a new wave?
+	if (Time > GetWaveTime) 
+	{
+		MyWave = WaveClimate.Get_Wave();
+		GetWaveTime += WaveTimeDelta/365.;
+	}
+	
+	...
+	
+----
+
 === Bimodal  wave climate
 
 === U-A wave climate
 
 === Real wave data
 
-
 == Under the hood
- 
+
+=== Boundary Conditions
+
+The model is a single line. The start and end of the line can be handled in different ways. At the moment, we have two possible boundary conditions, which are assigned by setting the 'StartBoundary' and 'EndBoundary' parameters when initialising the coastline, or putting these in the header of an input file if initialising the coastline with an existing coastline output file (or real coastline). The boundary conditions are set by an integer as:
+1. Periodic boundary conditions: the start of the line is also the end, and sediment can be passed \"round the back\" e.g. an island.
+2. Fixed boundary conditions the first and last two nodes/cells in the model are fixed and immovable.
+
 Details to follow. See the [Doxygen documentation] for the time being.
 
 == Ensemble mode

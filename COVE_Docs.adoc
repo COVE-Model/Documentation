@@ -228,5 +228,5 @@ Details to follow.
 
 [small]#Hurst, M. D., A. Barkwith, M. A. Ellis, C. W. Thomas, and A. B. Murray (2015), Exploring the sensitivities of crenulate bay shorelines to wave climates using a new vector-based one-line model, _J. Geophys. Res. Earth Surf._, 120, 2586–2608, doi:http://dx.doi.org/10.1002/2015JF003704[10.1002/2015JF003704].#
 
-[small]#Limber, P. W. and A. Brad Murray (2011) Beach and sea-cliff dynamics as a driver of long-term rocky coastline evolution and stability, _Geology_, 39, 1147-1150, doi:http://dx.doi.org/10.1130/G32315.1[10.1130/G32315.1]
+[small]#Limber, P. W. and A. Brad Murray (2011) Beach and sea-cliff dynamics as a driver of long-term rocky coastline evolution and stability, _Geology_, 39, 1147-1150, doi:http://dx.doi.org/10.1130/G32315.1[10.1130/G32315.1]#
 

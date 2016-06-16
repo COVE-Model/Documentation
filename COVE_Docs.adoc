@@ -175,8 +175,8 @@ While running the model will print the current model time to screen, it may also
 === Plotting the results
 We make plots of the resulting coastline evolution using the python http://matplotlib.org/[matplotlib] library. To use them you will need a python IDE such as http://pythonhosted.org/spyder/[Spyder]. A series of plotting functions are included in the subdirectory 'plotting_functions'. To plot the results of your spiral bay model run, open the file 'plot_coastline_evolution_figure.py' in your favourite python IDE, and run. You should get the following figure:
 
-.Example model output for a spiral bay
-image::spiral_bay_example.png[]
+.Example model output for a spiral bay showing the evolution of the bay through time from a starting condition of a straight coastline pinned by two headlands/sea walls. Model evolves to a condition of equilibrium where the coastal morphology changes little through time. 
+image::spiral_bay_example.png[width="500",align="center"]
 
 Additionally, below will be a link to a video of a spiral bay evolving, which will be hosted on Vimeo once I have time to work out how to do it (MDH).
 

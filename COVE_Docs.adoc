@@ -218,11 +218,15 @@ Details to follow. See the [Doxygen documentation] for the time being.
 Details to follow.
 
 == References
-[small]#Barkwith, A., Thomas, C. W., Limber, P. W., Ellis, M. A., and Murray, A. B. (2014a), Coastal vulnerability of a pinned, soft-cliff coastline – Part I: Assessing the natural sensitivity to wave climate, _Earth Surf. Dynam._, 2, 295-308, http://dx.doi.org/10.5194/esurf-2-295-2014[doi:10.5194/esurf-2-295-2014].#
 
-[small]#Barkwith, A., Hurst, M. D., Thomas, C. W., Ellis, M. A., Limber, P. L., and Murray, A. B. (2014b) Coastal vulnerability of a pinned, soft-cliff coastline, II: assessing the influence of sea walls on future morphology, Earth Surf. Dynam., 2, 233-242, http://dx.doi.org/10.5194/esurf-2-233-2014[doi:10.5194/esurf-2-233-2014].#
+[small]#Ashton, A. D., and A. B. Murray (2006), High-angle wave instability and emergent shoreline shapes: 1. Modeling of sand waves, flying spits, and capes, _J. Geophys. Res._,
+111, F04011, doi:http://dx.doi.org/10.1029/2005JF000422[10.1029/2005JF000422].#
 
-[small]#Hurst, M. D., A. Barkwith, M. A. Ellis, C. W. Thomas, and A. B. Murray (2015), Exploring the sensitivities of crenulate bay shorelines to wave climates using a new vector-based one-line model, _J. Geophys. Res. Earth Surf._, 120, 2586–2608, http://dx.doi.org/10.1002/2015JF003704[doi:10.1002/2015JF003704].#
+[small]#Barkwith, A., Thomas, C. W., Limber, P. W., Ellis, M. A., and Murray, A. B. (2014a), Coastal vulnerability of a pinned, soft-cliff coastline – Part I: Assessing the natural sensitivity to wave climate, _Earth Surf. Dynam._, 2, 295-308, doi:http://dx.doi.org/10.5194/esurf-2-295-2014[10.5194/esurf-2-295-2014].#
 
-[small]#Limber, P. W. and A. Brad Murray (2011) Beach and sea-cliff dynamics as a driver of long-term rocky coastline evolution and stability, _Geology_, 39, 1147-1150, http://dx.doi.org/10.1130/G32315.1[doi:10.1130/G32315.1]
+[small]#Barkwith, A., Hurst, M. D., Thomas, C. W., Ellis, M. A., Limber, P. L., and Murray, A. B. (2014b) Coastal vulnerability of a pinned, soft-cliff coastline, II: assessing the influence of sea walls on future morphology, Earth Surf. Dynam., 2, 233-242, doi:http://dx.doi.org/10.5194/esurf-2-233-2014[10.5194/esurf-2-233-2014].#
+
+[small]#Hurst, M. D., A. Barkwith, M. A. Ellis, C. W. Thomas, and A. B. Murray (2015), Exploring the sensitivities of crenulate bay shorelines to wave climates using a new vector-based one-line model, _J. Geophys. Res. Earth Surf._, 120, 2586–2608, doi:http://dx.doi.org/10.1002/2015JF003704[10.1002/2015JF003704].#
+
+[small]#Limber, P. W. and A. Brad Murray (2011) Beach and sea-cliff dynamics as a driver of long-term rocky coastline evolution and stability, _Geology_, 39, 1147-1150, doi:http://dx.doi.org/10.1130/G32315.1[10.1130/G32315.1]
 

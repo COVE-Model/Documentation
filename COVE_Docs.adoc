@@ -81,7 +81,7 @@ The result is that we can run simlutaions at decadal timescales to explore the i
 
 == Software Requirements
 
-COVE is written in C++, partly for efficiency but also to allow us to take advantage of running ensembles of simulations on UNIX high performance computing (HPC) clusters. The code has been written and tested in a Linux/UNIX environment, but has not been tested on Mac or Windows (we will doing this soon). So for now, you're going to need to be/get familiar with working at a command line interface. 
+COVE is written in C++, partly for efficiency but also to allow us to take advantage of running ensembles of simulations on UNIX high performance computing (HPC) clusters. The code has been written and tested in a Linux/UNIX environment, but has not been tested on Mac or Windows (we will doing this soon). So for now, you`re going to need to be/get familiar with working at a command line interface. 
 
 There are a number of software requirements to run the model and visualise the results.
 ====
@@ -105,7 +105,7 @@ Getting to grips with git can be a steep learning curve at first. The https://he
  
 === C++ Compiler
 
-If you are using a Linux machine (e.g. the recommended Ubuntu VM) then you should have the GNU Compiler Collection installed. Depending on your experience and whether your developing the model, the https://www.gnu.org/software/gdb/[GNU debugger] can also be helpful (should already be installed with GCC), not to mention http://valgrind.org/[Valgrind] (you probably know what you're doing better than I do if you're using Valgrind!). We will also need the make utility (this should also be ready installed). No additional C++ libraries are required at this stage.
+If you are using a Linux machine (e.g. the recommended Ubuntu VM) then you should have the GNU Compiler Collection installed. Depending on your experience and whether your developing the model, the https://www.gnu.org/software/gdb/[GNU debugger] can also be helpful (should already be installed with GCC), not to mention http://valgrind.org/[Valgrind] (you probably know what you`re doing better than I do if you`re using Valgrind!). We will also need the make utility (this should also be ready installed). No additional C++ libraries are required at this stage.
 
 === Text editor
 
@@ -117,7 +117,7 @@ Some of these can really increase productivity while writing code.
 
 === Python
 
-Python is a programming language that is great for analysing and visualising data, and is used here to visualise the output of COVE and running further analyses on model results. Again Python comes preinstalled on Ubuntu, but you could also use it on Windows/Mac. The key package required is https://www.scipy.org/[SciPy] ("scientific python"), which includes NumPy and Matplotlib. These are included with Ubuntu's preinstalled version of Python. If you are using Windows/Mac then we recommend installing a Python distribution such as https://www.continuum.io/why-anaconda[Anaconda].
+Python is a programming language that is great for analysing and visualising data, and is used here to visualise the output of COVE and running further analyses on model results. Again Python comes preinstalled on Ubuntu, but you could also use it on Windows/Mac. The key package required is https://www.scipy.org/[SciPy] ("scientific python"), which includes NumPy and Matplotlib. These are included with Ubuntu`s preinstalled version of Python. If you are using Windows/Mac then we recommend installing a Python distribution such as https://www.continuum.io/why-anaconda[Anaconda].
 
 == Download the model
 
@@ -126,7 +126,7 @@ The COVE code is under continuous development. As we publish scientific papers t
 
 === Release version
 
-Version 1.0.0 are available as https://github.com/mdhurst1/COVE/archive/1.0.0.tar.gz[tar.gz release version] and https://github.com/mdhurst1/COVE/archive/1.0.0.zip[.zip release version] as used by http://onlinelibrary.wiley.com/doi/10.1002/2015JF003704/abstract[Hurst et al. (2015)] to explore the sensitivity of crenulate-shaped bays to variation in wave climate. If using this version, once downloaded, extract the contents to an appropriate workspace and you're ready to continue.
+Version 1.0.0 are available as https://github.com/mdhurst1/COVE/archive/1.0.0.tar.gz[tar.gz release version] and https://github.com/mdhurst1/COVE/archive/1.0.0.zip[.zip release version] as used by http://onlinelibrary.wiley.com/doi/10.1002/2015JF003704/abstract[Hurst et al. (2015)] to explore the sensitivity of crenulate-shaped bays to variation in wave climate. If using this version, once downloaded, extract the contents to an appropriate workspace and you`re ready to continue.
 
 Alternatively, you can clone the release version directly from the repository by running the command:
 ----
@@ -143,9 +143,9 @@ This chapter provides a brief overview of how to compile and run an example mode
 
 === Compiling the code
 
-The code can be compiled in a Linux environment from the command line, using one of the makefiles. These are contained in the 'driver_files' subdirectory. The driver files are C++ scripts that control the initiation, running and saving of a COVE model run. In this tutorial we will use the example for running a spiral bay as used in http://onlinelibrary.wiley.com/doi/10.1002/2015JF003704/abstract[Hurst et al. (2015)].
+The code can be compiled in a Linux environment from the command line, using one of the makefiles. These are contained in the `driver_files` subdirectory. The driver files are C++ scripts that control the initiation, running and saving of a COVE model run. In this tutorial we will use the example for running a spiral bay as used in http://onlinelibrary.wiley.com/doi/10.1002/2015JF003704/abstract[Hurst et al. (2015)].
 
-In a terminal, navigate to the 'driver_files' subdirectory:
+In a terminal, navigate to the `driver_files` subdirectory:
 ----
 COVE$ cd driver_files
 ----
@@ -153,7 +153,7 @@ Compile COVE for running a spiral bay by launching the makefile:
 ----
 COVE/driver_files$ make -f spiral_bay_make.make
 ----
-This will create an executable 'spiral_bay.out' which can be launched from the command line to run the model. First, let's move the executable to the parent directory, and navigate to the same directory:
+This will create an executable `spiral_bay.out` which can be launched from the command line to run the model. First, let`s move the executable to the parent directory, and navigate to the same directory:
 ----
 COVE/driver_files$ mv spiral_bay.out ..
 COVE/driver_files$ cd ..
@@ -174,7 +174,7 @@ The model should then run for a hundred years. This example evolves a crenulate-
 While running the model will print the current model time to screen, it may also print some other messages, particularly including intersections in the coastline. The intersection analysis detects when the coastline intersects itself, such as when it erodes back behind the headland. Once this has happened the coastline is prevented from eroding any further.
 
 === Plotting the results
-We make plots of the resulting coastline evolution using the python http://matplotlib.org/[matplotlib] library. To use them you will need a python IDE such as http://pythonhosted.org/spyder/[Spyder]. A series of plotting functions are included in the subdirectory 'plotting_functions'. To plot the results of your spiral bay model run, open the file 'plot_coastline_evolution_figure.py' in your favourite python IDE, and run. You should get the following figure:
+We make plots of the resulting coastline evolution using the python http://matplotlib.org/[matplotlib] library. To use them you will need a python IDE such as http://pythonhosted.org/spyder/[Spyder]. A series of plotting functions are included in the subdirectory `plotting_functions`. To plot the results of your spiral bay model run, open the file `plot_coastline_evolution_figure.py` in your favourite python IDE, and run. You should get the following figure:
 
 .Example model output for a spiral bay showing the evolution of the bay through time from a starting condition of a straight coastline pinned by two headlands/sea walls. Model evolves to a condition of equilibrium where the coastal morphology changes little through time. 
 image::spiral_bay_example.png[width="500",align="center"]
@@ -187,22 +187,24 @@ In this chapter we will look in detail at how the model is set up to simulate th
 
 === The driver file
 
-The driver file 'spiral_bay_driver.cpp' can be found in the 'driver_files' subdirectory. You can navigate to it and open in a text editor from the command line with:
+The driver file `spiral_bay_driver.cpp` can be found in the `driver_files` subdirectory. You can navigate to it and open in a text editor from the command line with:
 ----
 $ cd driver_files
 $ gedit spiral_bay_driver.cpp &
 ----
 or open it from the explorer window.
 
-OK, let's look at the driver file. There are some helpful comments that are ignored when we run the program, these start with \"//\" or are in blocks \"\/*\" to \"*\/\". At the top of the file there are some '#include' statements that allow the program access to some libraries we will be using, including the model's main coastline and waveclimate objects.
+OK, let's look at the driver file. There are some helpful comments that are ignored when we run the program, these start with "//" or are in blocks "/\*" to "*/". At the top of the file there are some `#include` statements that allow the program access to some libraries we will be using, including the model`s main coastline and waveclimate objects.
 
 ==== Setting up the wave climate
 
-The spiral_bay_driver uses a Guassian representation of the wave climate. The parameters to set up the wave climate are required as input arguments at runtime. The wave climate is defined by a _mean_ and _standard deviation_ value for: 
-- Wave period latexmath:[T]
-- Wave height latexmath:[H_0]
-- Wave direction latexmath:[\theta_0]
-and hence those 6 input arguments are required. The driver_file runs a check at the start to make sure it has the correct number of arguments, and will terminate with an error message if not.
+The spiral_bay_driver uses a Guassian representation of the wave climate. The parameters to set up the wave climate are required as input arguments at runtime. The wave climate is defined by a _mean_ and _standard deviation_ value for:
+
+* Wave period latexmath:[T]
+* Wave height latexmath:[H_0]
+* Wave direction latexmath:[\theta_0]
+
+and hence 6 input arguments are required. The driver file runs a check at the start to make sure it has the correct number of arguments, and will terminate with an error message if not.
 
 In order to initialise the wave climate the 6 input arguments first are assigned to 6 variables:
 
@@ -215,7 +217,7 @@ In order to initialise the wave climate the 6 input arguments first are assigned
 
 and the corresponding input arguments are converted from character sequences to numerical values and passed to these variables.
 
-The wave climate is initialised by declaring a 'GuassianWaveClimate' object called 'WaveClimate' and passing these variables as input arguments in the correct order.
+The wave climate is initialised by declaring a `GuassianWaveClimate` object called `WaveClimate` and passing these variables as input arguments in the correct order.
 
 [source,c++]
 ----
@@ -225,7 +227,7 @@ The wave climate is initialised by declaring a 'GuassianWaveClimate' object call
 		OffshoreMeanWaveHeight, OffshoreStDWaveHeight);
 ----
 
-We then also declare an individual wave object. This holds the period, height and direction of an individual wave 'MyWave; which we later pass to the coastline object in order to drive coastal evolution. We will sample a wave from 'WaveClimate' and pass it to 'MyWave'
+We then also declare an individual wave object. This holds the period, height and direction of an individual wave `MyWave` which we later pass to the coastline object in order to drive coastal evolution. We will sample a wave from `WaveClimate` and pass it to `MyWave`
 
 [source,c++]
 ----
@@ -242,19 +244,55 @@ Various parameters are required to control the length of the model run (in years
 [source,c++]
 ----
 	//declare time control paramters
-	int EndTime = 50.;						      // End time (years)
-	double Time = 0.;							      // Start Time (years)
-	double PrintTimeDelta = 36.5/365.;  // how often to print coastline (years)
+	int EndTime = 50.;	// End time (years)
+	double Time = 0.;	// Start Time (years)
+	double PrintTimeDelta = 36.5/365.;	// how often to print coastline (years)
 	double PrintTime = PrintTimeDelta;	// Print time (years)
-	double TempTime;
-	
-	double WaveTimeDelta = 0.1;			// Frequency at which to sample new waves (days)
-	double GetWaveTime = 0.0;				// Time to get a new wave (days)
-	double TimeStep = 0.05;					// Time step (days)
-	double MaxTimeStep = 0.05;			// Maximum timestep (days)	
+		
+	double WaveTimeDelta = 0.1;	// Frequency at which to sample new waves (days)
+	double GetWaveTime = 0.0;	// Time to get a new wave (days)
+	double TimeStep = 0.05;	// Time step (days)
+	double MaxTimeStep = 0.05;	// Maximum timestep (days)	
+	double TempTime;	// Copies TimeDelta, allows adaptive timestep in a crude way
 ----
 
 ==== Initialise the model
+
+The spiral bay model is initialised as a straight coast with fixed boundaries at each end of the coast line. In order to generate the coastline object, we need to prescribe some attributes that dictate the properties of the generated coast, which we will pass to the new Coastline object when we declare it.
+
+[source,c++]
+----
+//initialise coast as straight line with low amp noise
+int MeanNodeSpacing = 50; 	// in metres
+double CoastLength = 2000;	// in metres
+double Trend = 140.;	// in degrees
+	
+//boundary conditions are fixed
+int StartBoundary = 2;
+int EndBoundary = 2;		
+----
+
+* `MeanNodeSpacing` sets approximately how widely spaced the Coastline cells will be. It is a mean value, because as the model evolves, nodes might get closer together or further apart, and nodes will be dynamically added or destroyed accordingly in order to maintain this average. 
+* `CoastLength` is the length of the coastline between the fixed (or otherwise) end nodes.
+* `Trend` is the orientation (azimuth) that the straight coastline should extend in.
+
+NOTE: The sea is always on the left side of the vector, so imagine you are standing at node '[0]' looking down the vector. If the `Trend` is 140^o^ then the sea is to the nort-east and the land to the south-west.
+
+OK now that we have these variables in place we can go ahead and declare the Coastline object.
+
+[source,c++]
+----
+//initialise the coastline as a straight line
+Coastline CoastVector = Coastline(MeanNodeSpacing, CoastLength, Trend, StartBoundary, 
+	EndBoundary);
+	
+//Initialise an empty/dummy cliffline object here
+Cliffline CliffVector;
+----
+
+We declare a `Coastline` object whech we have called `CoastVector`, this is our coast, and all of its morphological properties are stored internally within the object. We provide the input arguments to the call in the order listed. 
+
+Note there is also a call to declare a `Cliffline` object called `CliffVector`. It has no input arguments and therefore generates an empty `Cliffline` object (i.e. there is no actual cliff line inside it). Our spiral bay experiments don`t require a cliffline object so that is OK, but this declaration is required to keep the model happy (it needs to be able to look at a cliff to know it doesn`t really exist, it`s a dummy cliff). Don`t worry about this for now, this will generate a warning when we come to run the model but we are OK to ignore it.
 
 
 === Next title
@@ -272,32 +310,32 @@ The model requires wave conditions to drive alongshore sediment transport. This 
 
 === Gaussian wave climate
 
-The 'GuassianWaveClimate' object contains six parameters to describe distributions of Wave period latexmath:[T], Wave height latexmath:[H_0], and Wave direction latexmath:[\theta_0]. In order to initialise the wave climate in a driver file, 6 variables must be declared, and values assigned:
+The `GuassianWaveClimate` object contains six parameters to describe distributions of Wave period latexmath:[T], Wave height latexmath:[H_0], and Wave direction latexmath:[\theta_0]. In order to initialise the wave climate in a driver file, 6 variables must be declared, and values assigned:
 
 [source,c++]
 ----
 //Declare parameter for wave conditions
 double OffshoreMeanWavePeriod, OffshoreStDWavePeriod, OffshoreMeanWaveDirection, 
-       OffshoreStDWaveDirection, OffshoreMeanWaveHeight, OffshoreStDWaveHeight;
+	OffshoreStDWaveDirection, OffshoreMeanWaveHeight, OffshoreStDWaveHeight;
 ----
 
-The wave climate is initialised by declaring a 'GuassianWaveClimate' object called 'WaveClimate' and passing these variables as input arguments in the correct order.
+The wave climate is initialised by declaring a `GuassianWaveClimate` object called `WaveClimate` and passing these variables as input arguments in the correct order.
 
 [source,c++]
 ----
 // initialise the wave climate
-GaussianWaveClimate WaveClimate = GaussianWaveClimate(	OffshoreMeanWavePeriod,
-		OffshoreStDWavePeriod, OffshoreMeanWaveDirection, OffshoreStDWaveDirection,
-		OffshoreMeanWaveHeight, OffshoreStDWaveHeight);
+GaussianWaveClimate WaveClimate = GaussianWaveClimate(OffshoreMeanWavePeriod,
+	OffshoreStDWavePeriod, OffshoreMeanWaveDirection, OffshoreStDWaveDirection,
+	OffshoreMeanWaveHeight, OffshoreStDWaveHeight);
 ----
 
-We then also declare an individual wave object. This holds the period, height and direction of an individual wave 'MyWave' which we later pass to the coastline object in order to drive coastal evolution. We will sample a wave from 'WaveClimate' and pass it to 'MyWave'
+We then also declare an individual wave object. This holds the period, height and direction of an individual wave `MyWave` which we later pass to the coastline object in order to drive coastal evolution. We will sample a wave from `WaveClimate` and pass it to `MyWave`
 
 [source,c++]
 ----
 // declare an individual wave (this will be sampled from the wave climate object
 Wave MyWave = Wave();
-// Get a wave from thewave climate object
+// Get a wave from the wave climate object
 MyWave = WaveClimate.Get_Wave();
 ----
 
@@ -326,9 +364,28 @@ while (Time < EndTime)
 
 == Under the hood
 
+=== Initialising a Coastline object
+
+==== Read a Coastline from file
+
+Input files for the position of the coast take the same format as output files. The first line is a header containing integer values for the `StartBoundary` and `EndBoundary` conditions. The next two lines are the X and Y coordinates of the line respectively, but both preceded by the time (in years). We use \| to indicate a white space delimiter here such as a space or tab.
+----
+StartBoundary | EndBoundary
+Time | X[0] | X[1] | X[2] =====> X[NoNodes]
+Time | Y[0] | Y[1] | Y[2] =====> Y[NoNodes]
+----
+So for example, a 5 metre long coastline with fixed boundary conditions oriented at 135^o with a latexmath:[sqrt{2}] node spacing, at `Time = 0` would have an input file:
+----
+2 2
+0 0 1 2 3 4 5
+0 0 1 2 3 4 5
+----
+
+=== Initialising a Cliffline object
+
 === Boundary Conditions
 
-The model is a single line. The start and end of the line can be handled in different ways. At the moment, we have two possible boundary conditions, which are assigned by setting the 'StartBoundary' and 'EndBoundary' parameters when initialising the coastline, or putting these in the header of an input file if initialising the coastline with an existing coastline output file (or real coastline). The boundary conditions are set by an integer as:
+The model is a single line. The start and end of the line can be handled in different ways. At the moment, we have two possible boundary conditions, which are assigned by setting the `StartBoundary` and `EndBoundary` parameters when initialising the coastline, or putting these in the header of an input file if initialising the coastline with an existing coastline output file (or real coastline). The boundary conditions are set by an integer as:
 1. Periodic boundary conditions: the start of the line is also the end, and sediment can be passed \"round the back\" e.g. an island.
 2. Fixed boundary conditions the first and last two nodes/cells in the model are fixed and immovable.
 

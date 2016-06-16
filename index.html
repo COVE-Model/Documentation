@@ -566,7 +566,9 @@ table.CodeRay td.code>pre{padding:0}
 </li>
 <li><a href="#_under_the_hood">7. Under the hood</a>
 <ul class="sectlevel2">
-<li><a href="#_boundary_conditions_2">7.1. Boundary Conditions</a></li>
+<li><a href="#_initialising_a_coastline_object">7.1. Initialising a Coastline object</a></li>
+<li><a href="#_initialising_a_cliffline_object">7.2. Initialising a Cliffline object</a></li>
+<li><a href="#_boundary_conditions_2">7.3. Boundary Conditions</a></li>
 </ul>
 </li>
 <li><a href="#_ensemble_mode">8. Ensemble mode</a></li>
@@ -752,7 +754,7 @@ and angle \(\alpha_b\) of breaking waves. For example, in the simplest case of f
 <h2 id="_software_requirements">2. Software Requirements</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>COVE is written in C++, partly for efficiency but also to allow us to take advantage of running ensembles of simulations on UNIX high performance computing (HPC) clusters. The code has been written and tested in a Linux/UNIX environment, but has not been tested on Mac or Windows (we will doing this soon). So for now, you&#8217;re going to need to be/get familiar with working at a command line interface.</p>
+<p>COVE is written in C++, partly for efficiency but also to allow us to take advantage of running ensembles of simulations on UNIX high performance computing (HPC) clusters. The code has been written and tested in a Linux/UNIX environment, but has not been tested on Mac or Windows (we will doing this soon). So for now, you`re going to need to be/get familiar with working at a command line interface.</p>
 </div>
 <div class="paragraph">
 <p>There are a number of software requirements to run the model and visualise the results.</p>
@@ -800,7 +802,7 @@ and angle \(\alpha_b\) of breaking waves. For example, in the simplest case of f
 <div class="sect2">
 <h3 id="_c_compiler">2.3. C++ Compiler</h3>
 <div class="paragraph">
-<p>If you are using a Linux machine (e.g. the recommended Ubuntu VM) then you should have the GNU Compiler Collection installed. Depending on your experience and whether your developing the model, the <a href="https://www.gnu.org/software/gdb/">GNU debugger</a> can also be helpful (should already be installed with GCC), not to mention <a href="http://valgrind.org/">Valgrind</a> (you probably know what you&#8217;re doing better than I do if you&#8217;re using Valgrind!). We will also need the make utility (this should also be ready installed). No additional C++ libraries are required at this stage.</p>
+<p>If you are using a Linux machine (e.g. the recommended Ubuntu VM) then you should have the GNU Compiler Collection installed. Depending on your experience and whether your developing the model, the <a href="https://www.gnu.org/software/gdb/">GNU debugger</a> can also be helpful (should already be installed with GCC), not to mention <a href="http://valgrind.org/">Valgrind</a> (you probably know what you`re doing better than I do if you`re using Valgrind!). We will also need the make utility (this should also be ready installed). No additional C++ libraries are required at this stage.</p>
 </div>
 </div>
 <div class="sect2">
@@ -820,7 +822,7 @@ and angle \(\alpha_b\) of breaking waves. For example, in the simplest case of f
 <div class="sect2">
 <h3 id="_python">2.5. Python</h3>
 <div class="paragraph">
-<p>Python is a programming language that is great for analysing and visualising data, and is used here to visualise the output of COVE and running further analyses on model results. Again Python comes preinstalled on Ubuntu, but you could also use it on Windows/Mac. The key package required is <a href="https://www.scipy.org/">SciPy</a> ("scientific python"), which includes NumPy and Matplotlib. These are included with Ubuntu&#8217;s preinstalled version of Python. If you are using Windows/Mac then we recommend installing a Python distribution such as <a href="https://www.continuum.io/why-anaconda">Anaconda</a>.</p>
+<p>Python is a programming language that is great for analysing and visualising data, and is used here to visualise the output of COVE and running further analyses on model results. Again Python comes preinstalled on Ubuntu, but you could also use it on Windows/Mac. The key package required is <a href="https://www.scipy.org/">SciPy</a> ("scientific python"), which includes NumPy and Matplotlib. These are included with Ubuntu`s preinstalled version of Python. If you are using Windows/Mac then we recommend installing a Python distribution such as <a href="https://www.continuum.io/why-anaconda">Anaconda</a>.</p>
 </div>
 </div>
 </div>
@@ -834,7 +836,7 @@ and angle \(\alpha_b\) of breaking waves. For example, in the simplest case of f
 <div class="sect2">
 <h3 id="_release_version">3.1. Release version</h3>
 <div class="paragraph">
-<p>Version 1.0.0 are available as <a href="https://github.com/mdhurst1/COVE/archive/1.0.0.tar.gz">tar.gz release version</a> and <a href="https://github.com/mdhurst1/COVE/archive/1.0.0.zip">.zip release version</a> as used by <a href="http://onlinelibrary.wiley.com/doi/10.1002/2015JF003704/abstract">Hurst et al. (2015)</a> to explore the sensitivity of crenulate-shaped bays to variation in wave climate. If using this version, once downloaded, extract the contents to an appropriate workspace and you&#8217;re ready to continue.</p>
+<p>Version 1.0.0 are available as <a href="https://github.com/mdhurst1/COVE/archive/1.0.0.tar.gz">tar.gz release version</a> and <a href="https://github.com/mdhurst1/COVE/archive/1.0.0.zip">.zip release version</a> as used by <a href="http://onlinelibrary.wiley.com/doi/10.1002/2015JF003704/abstract">Hurst et al. (2015)</a> to explore the sensitivity of crenulate-shaped bays to variation in wave climate. If using this version, once downloaded, extract the contents to an appropriate workspace and you`re ready to continue.</p>
 </div>
 <div class="paragraph">
 <p>Alternatively, you can clone the release version directly from the repository by running the command:</p>
@@ -862,10 +864,10 @@ and angle \(\alpha_b\) of breaking waves. For example, in the simplest case of f
 <div class="sect2">
 <h3 id="_compiling_the_code">4.1. Compiling the code</h3>
 <div class="paragraph">
-<p>The code can be compiled in a Linux environment from the command line, using one of the makefiles. These are contained in the 'driver_files' subdirectory. The driver files are C++ scripts that control the initiation, running and saving of a COVE model run. In this tutorial we will use the example for running a spiral bay as used in <a href="http://onlinelibrary.wiley.com/doi/10.1002/2015JF003704/abstract">Hurst et al. (2015)</a>.</p>
+<p>The code can be compiled in a Linux environment from the command line, using one of the makefiles. These are contained in the <code>driver_files</code> subdirectory. The driver files are C++ scripts that control the initiation, running and saving of a COVE model run. In this tutorial we will use the example for running a spiral bay as used in <a href="http://onlinelibrary.wiley.com/doi/10.1002/2015JF003704/abstract">Hurst et al. (2015)</a>.</p>
 </div>
 <div class="paragraph">
-<p>In a terminal, navigate to the 'driver_files' subdirectory:</p>
+<p>In a terminal, navigate to the <code>driver_files</code> subdirectory:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -881,7 +883,7 @@ and angle \(\alpha_b\) of breaking waves. For example, in the simplest case of f
 </div>
 </div>
 <div class="paragraph">
-<p>This will create an executable 'spiral_bay.out' which can be launched from the command line to run the model. First, let&#8217;s move the executable to the parent directory, and navigate to the same directory:</p>
+<p>This will create an executable <code>spiral_bay.out</code> which can be launched from the command line to run the model. First, let`s move the executable to the parent directory, and navigate to the same directory:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -918,7 +920,7 @@ COVE/driver_files$ cd ..</pre>
 <div class="sect2">
 <h3 id="_plotting_the_results">4.3. Plotting the results</h3>
 <div class="paragraph">
-<p>We make plots of the resulting coastline evolution using the python <a href="http://matplotlib.org/">matplotlib</a> library. To use them you will need a python IDE such as <a href="http://pythonhosted.org/spyder/">Spyder</a>. A series of plotting functions are included in the subdirectory 'plotting_functions'. To plot the results of your spiral bay model run, open the file 'plot_coastline_evolution_figure.py' in your favourite python IDE, and run. You should get the following figure:</p>
+<p>We make plots of the resulting coastline evolution using the python <a href="http://matplotlib.org/">matplotlib</a> library. To use them you will need a python IDE such as <a href="http://pythonhosted.org/spyder/">Spyder</a>. A series of plotting functions are included in the subdirectory <code>plotting_functions</code>. To plot the results of your spiral bay model run, open the file <code>plot_coastline_evolution_figure.py</code> in your favourite python IDE, and run. You should get the following figure:</p>
 </div>
 <div class="imageblock" style="text-align: center">
 <div class="content">
@@ -941,7 +943,7 @@ COVE/driver_files$ cd ..</pre>
 <div class="sect2">
 <h3 id="_the_driver_file">5.1. The driver file</h3>
 <div class="paragraph">
-<p>The driver file 'spiral_bay_driver.cpp' can be found in the 'driver_files' subdirectory. You can navigate to it and open in a text editor from the command line with:</p>
+<p>The driver file <code>spiral_bay_driver.cpp</code> can be found in the <code>driver_files</code> subdirectory. You can navigate to it and open in a text editor from the command line with:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -953,16 +955,28 @@ $ gedit spiral_bay_driver.cpp &amp;</pre>
 <p>or open it from the explorer window.</p>
 </div>
 <div class="paragraph">
-<p>OK, let&#8217;s look at the driver file. There are some helpful comments that are ignored when we run the program, these start with \"//\" or are in blocks \"\/<strong>\" to \"</strong>\/\". At the top of the file there are some '#include' statements that allow the program access to some libraries we will be using, including the model&#8217;s main coastline and waveclimate objects.</p>
+<p>OK, let&#8217;s look at the driver file. There are some helpful comments that are ignored when we run the program, these start with "//" or are in blocks "/*" to "*/". At the top of the file there are some <code>#include</code> statements that allow the program access to some libraries we will be using, including the model`s main coastline and waveclimate objects.</p>
 </div>
 <div class="sect3">
 <h4 id="_setting_up_the_wave_climate">5.1.1. Setting up the wave climate</h4>
 <div class="paragraph">
-<p>The spiral_bay_driver uses a Guassian representation of the wave climate. The parameters to set up the wave climate are required as input arguments at runtime. The wave climate is defined by a <em>mean</em> and <em>standard deviation</em> value for:
-- Wave period \(T\)
-- Wave height \(H_0\)
-- Wave direction \(\theta_0\)
-and hence those 6 input arguments are required. The driver_file runs a check at the start to make sure it has the correct number of arguments, and will terminate with an error message if not.</p>
+<p>The spiral_bay_driver uses a Guassian representation of the wave climate. The parameters to set up the wave climate are required as input arguments at runtime. The wave climate is defined by a <em>mean</em> and <em>standard deviation</em> value for:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Wave period \(T\)</p>
+</li>
+<li>
+<p>Wave height \(H_0\)</p>
+</li>
+<li>
+<p>Wave direction \(\theta_0\)</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>and hence 6 input arguments are required. The driver file runs a check at the start to make sure it has the correct number of arguments, and will terminate with an error message if not.</p>
 </div>
 <div class="paragraph">
 <p>In order to initialise the wave climate the 6 input arguments first are assigned to 6 variables:</p>
@@ -978,7 +992,7 @@ and hence those 6 input arguments are required. The driver_file runs a check at 
 <p>and the corresponding input arguments are converted from character sequences to numerical values and passed to these variables.</p>
 </div>
 <div class="paragraph">
-<p>The wave climate is initialised by declaring a 'GuassianWaveClimate' object called 'WaveClimate' and passing these variables as input arguments in the correct order.</p>
+<p>The wave climate is initialised by declaring a <code>GuassianWaveClimate</code> object called <code>WaveClimate</code> and passing these variables as input arguments in the correct order.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -989,7 +1003,7 @@ and hence those 6 input arguments are required. The driver_file runs a check at 
 </div>
 </div>
 <div class="paragraph">
-<p>We then also declare an individual wave object. This holds the period, height and direction of an individual wave 'MyWave; which we later pass to the coastline object in order to drive coastal evolution. We will sample a wave from 'WaveClimate' and pass it to 'MyWave'</p>
+<p>We then also declare an individual wave object. This holds the period, height and direction of an individual wave <code>MyWave</code> which we later pass to the coastline object in order to drive coastal evolution. We will sample a wave from <code>WaveClimate</code> and pass it to <code>MyWave</code></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1008,22 +1022,80 @@ and hence those 6 input arguments are required. The driver_file runs a check at 
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="c++">        <span class="comment">//declare time control paramters</span>
-        <span class="predefined-type">int</span> EndTime = <span class="integer">5</span><span class="float">0</span>.;                                                      <span class="comment">// End time (years)</span>
-        <span class="predefined-type">double</span> Time = <span class="float">0</span>.;                                                              <span class="comment">// Start Time (years)</span>
-        <span class="predefined-type">double</span> PrintTimeDelta = <span class="integer">3</span><span class="float">6</span><span class="float">.5</span>/<span class="integer">36</span><span class="float">5</span>.;  <span class="comment">// how often to print coastline (years)</span>
+        <span class="predefined-type">int</span> EndTime = <span class="integer">5</span><span class="float">0</span>.;        <span class="comment">// End time (years)</span>
+        <span class="predefined-type">double</span> Time = <span class="float">0</span>.;        <span class="comment">// Start Time (years)</span>
+        <span class="predefined-type">double</span> PrintTimeDelta = <span class="integer">3</span><span class="float">6</span><span class="float">.5</span>/<span class="integer">36</span><span class="float">5</span>.;        <span class="comment">// how often to print coastline (years)</span>
         <span class="predefined-type">double</span> PrintTime = PrintTimeDelta;        <span class="comment">// Print time (years)</span>
-        <span class="predefined-type">double</span> TempTime;
 
-        <span class="predefined-type">double</span> WaveTimeDelta = <span class="float">0</span><span class="float">.1</span>;                        <span class="comment">// Frequency at which to sample new waves (days)</span>
-        <span class="predefined-type">double</span> GetWaveTime = <span class="float">0</span><span class="float">.0</span>;                                <span class="comment">// Time to get a new wave (days)</span>
-        <span class="predefined-type">double</span> TimeStep = <span class="float">0</span><span class="float">.05</span>;                                        <span class="comment">// Time step (days)</span>
-        <span class="predefined-type">double</span> MaxTimeStep = <span class="float">0</span><span class="float">.05</span>;                        <span class="comment">// Maximum timestep (days)</span></code></pre>
+        <span class="predefined-type">double</span> WaveTimeDelta = <span class="float">0</span><span class="float">.1</span>;        <span class="comment">// Frequency at which to sample new waves (days)</span>
+        <span class="predefined-type">double</span> GetWaveTime = <span class="float">0</span><span class="float">.0</span>;        <span class="comment">// Time to get a new wave (days)</span>
+        <span class="predefined-type">double</span> TimeStep = <span class="float">0</span><span class="float">.05</span>;        <span class="comment">// Time step (days)</span>
+        <span class="predefined-type">double</span> MaxTimeStep = <span class="float">0</span><span class="float">.05</span>;        <span class="comment">// Maximum timestep (days)</span>
+        <span class="predefined-type">double</span> TempTime;        <span class="comment">// Copies TimeDelta, allows adaptive timestep in a crude way</span></code></pre>
 </div>
 </div>
 </div>
 <div class="sect3">
 <h4 id="_initialise_the_model">5.1.3. Initialise the model</h4>
+<div class="paragraph">
+<p>The spiral bay model is initialised as a straight coast with fixed boundaries at each end of the coast line. In order to generate the coastline object, we need to prescribe some attributes that dictate the properties of the generated coast, which we will pass to the new Coastline object when we declare it.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="c++"><span class="comment">//initialise coast as straight line with low amp noise</span>
+<span class="predefined-type">int</span> MeanNodeSpacing = <span class="integer">50</span>;         <span class="comment">// in metres</span>
+<span class="predefined-type">double</span> CoastLength = <span class="integer">2000</span>;        <span class="comment">// in metres</span>
+<span class="predefined-type">double</span> Trend = <span class="integer">14</span><span class="float">0</span>.;        <span class="comment">// in degrees</span>
 
+<span class="comment">//boundary conditions are fixed</span>
+<span class="predefined-type">int</span> StartBoundary = <span class="integer">2</span>;
+<span class="predefined-type">int</span> EndBoundary = <span class="integer">2</span>;</code></pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>MeanNodeSpacing</code> sets approximately how widely spaced the Coastline cells will be. It is a mean value, because as the model evolves, nodes might get closer together or further apart, and nodes will be dynamically added or destroyed accordingly in order to maintain this average.</p>
+</li>
+<li>
+<p><code>CoastLength</code> is the length of the coastline between the fixed (or otherwise) end nodes.</p>
+</li>
+<li>
+<p><code>Trend</code> is the orientation (azimuth) that the straight coastline should extend in.</p>
+</li>
+</ul>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+The sea is always on the left side of the vector, so imagine you are standing at node '[0]' looking down the vector. If the <code>Trend</code> is 140<sup>o</sup> then the sea is to the nort-east and the land to the south-west.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>OK now that we have these variables in place we can go ahead and declare the Coastline object.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="c++"><span class="comment">//initialise the coastline as a straight line</span>
+Coastline CoastVector = Coastline(MeanNodeSpacing, CoastLength, Trend, StartBoundary,
+        EndBoundary);
+
+<span class="comment">//Initialise an empty/dummy cliffline object here</span>
+Cliffline CliffVector;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>We declare a <code>Coastline</code> object whech we have called <code>CoastVector</code>, this is our coast, and all of its morphological properties are stored internally within the object. We provide the input arguments to the call in the order listed.</p>
+</div>
+<div class="paragraph">
+<p>Note there is also a call to declare a <code>Cliffline</code> object called <code>CliffVector</code>. It has no input arguments and therefore generates an empty <code>Cliffline</code> object (i.e. there is no actual cliff line inside it). Our spiral bay experiments don`t require a cliffline object so that is OK, but this declaration is required to keep the model happy (it needs to be able to look at a cliff to know it doesn`t really exist, it`s a dummy cliff). Don`t worry about this for now, this will generate a warning when we come to run the model but we are OK to ignore it.</p>
+</div>
 </div>
 </div>
 <div class="sect2">
@@ -1052,34 +1124,34 @@ and hence those 6 input arguments are required. The driver_file runs a check at 
 <div class="sect2">
 <h3 id="_gaussian_wave_climate">6.2. Gaussian wave climate</h3>
 <div class="paragraph">
-<p>The 'GuassianWaveClimate' object contains six parameters to describe distributions of Wave period \(T\), Wave height \(H_0\), and Wave direction \(\theta_0\). In order to initialise the wave climate in a driver file, 6 variables must be declared, and values assigned:</p>
+<p>The <code>GuassianWaveClimate</code> object contains six parameters to describe distributions of Wave period \(T\), Wave height \(H_0\), and Wave direction \(\theta_0\). In order to initialise the wave climate in a driver file, 6 variables must be declared, and values assigned:</p>
 </div>
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="c++"><span class="comment">//Declare parameter for wave conditions</span>
 <span class="predefined-type">double</span> OffshoreMeanWavePeriod, OffshoreStDWavePeriod, OffshoreMeanWaveDirection,
-       OffshoreStDWaveDirection, OffshoreMeanWaveHeight, OffshoreStDWaveHeight;</code></pre>
+        OffshoreStDWaveDirection, OffshoreMeanWaveHeight, OffshoreStDWaveHeight;</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>The wave climate is initialised by declaring a 'GuassianWaveClimate' object called 'WaveClimate' and passing these variables as input arguments in the correct order.</p>
+<p>The wave climate is initialised by declaring a <code>GuassianWaveClimate</code> object called <code>WaveClimate</code> and passing these variables as input arguments in the correct order.</p>
 </div>
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="c++"><span class="comment">// initialise the wave climate</span>
-GaussianWaveClimate WaveClimate = GaussianWaveClimate(        OffshoreMeanWavePeriod,
-                OffshoreStDWavePeriod, OffshoreMeanWaveDirection, OffshoreStDWaveDirection,
-                OffshoreMeanWaveHeight, OffshoreStDWaveHeight);</code></pre>
+GaussianWaveClimate WaveClimate = GaussianWaveClimate(OffshoreMeanWavePeriod,
+        OffshoreStDWavePeriod, OffshoreMeanWaveDirection, OffshoreStDWaveDirection,
+        OffshoreMeanWaveHeight, OffshoreStDWaveHeight);</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>We then also declare an individual wave object. This holds the period, height and direction of an individual wave 'MyWave' which we later pass to the coastline object in order to drive coastal evolution. We will sample a wave from 'WaveClimate' and pass it to 'MyWave'</p>
+<p>We then also declare an individual wave object. This holds the period, height and direction of an individual wave <code>MyWave</code> which we later pass to the coastline object in order to drive coastal evolution. We will sample a wave from <code>WaveClimate</code> and pass it to <code>MyWave</code></p>
 </div>
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="c++"><span class="comment">// declare an individual wave (this will be sampled from the wave climate object</span>
 Wave MyWave = Wave();
-<span class="comment">// Get a wave from thewave climate object</span>
+<span class="comment">// Get a wave from the wave climate object</span>
 MyWave = WaveClimate.Get_Wave();</code></pre>
 </div>
 </div>
@@ -1119,9 +1191,39 @@ MyWave = WaveClimate.Get_Wave();</code></pre>
 <h2 id="_under_the_hood">7. Under the hood</h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="_boundary_conditions_2">7.1. Boundary Conditions</h3>
+<h3 id="_initialising_a_coastline_object">7.1. Initialising a Coastline object</h3>
+<div class="sect3">
+<h4 id="_read_a_coastline_from_file">7.1.1. Read a Coastline from file</h4>
 <div class="paragraph">
-<p>The model is a single line. The start and end of the line can be handled in different ways. At the moment, we have two possible boundary conditions, which are assigned by setting the 'StartBoundary' and 'EndBoundary' parameters when initialising the coastline, or putting these in the header of an input file if initialising the coastline with an existing coastline output file (or real coastline). The boundary conditions are set by an integer as:
+<p>Input files for the position of the coast take the same format as output files. The first line is a header containing integer values for the <code>StartBoundary</code> and <code>EndBoundary</code> conditions. The next two lines are the X and Y coordinates of the line respectively, but both preceded by the time (in years). We use \| to indicate a white space delimiter here such as a space or tab.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>StartBoundary | EndBoundary
+Time | X[0] | X[1] | X[2] =====&gt; X[NoNodes]
+Time | Y[0] | Y[1] | Y[2] =====&gt; Y[NoNodes]</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>So for example, a 5 metre long coastline with fixed boundary conditions oriented at 135^o with a \(sqrt{2}\) node spacing, at <code>Time = 0</code> would have an input file:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>2 2
+0 0 1 2 3 4 5
+0 0 1 2 3 4 5</pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_initialising_a_cliffline_object">7.2. Initialising a Cliffline object</h3>
+
+</div>
+<div class="sect2">
+<h3 id="_boundary_conditions_2">7.3. Boundary Conditions</h3>
+<div class="paragraph">
+<p>The model is a single line. The start and end of the line can be handled in different ways. At the moment, we have two possible boundary conditions, which are assigned by setting the <code>StartBoundary</code> and <code>EndBoundary</code> parameters when initialising the coastline, or putting these in the header of an input file if initialising the coastline with an existing coastline output file (or real coastline). The boundary conditions are set by an integer as:
 1. Periodic boundary conditions: the start of the line is also the end, and sediment can be passed \"round the back\" e.g. an island.
 2. Fixed boundary conditions the first and last two nodes/cells in the model are fixed and immovable.</p>
 </div>
@@ -1163,7 +1265,7 @@ MyWave = WaveClimate.Get_Wave();</code></pre>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2016-06-16 12:41:01 BST
+Last updated 2016-06-16 13:23:54 BST
 </div>
 </div>
 <script type="text/x-mathjax-config">

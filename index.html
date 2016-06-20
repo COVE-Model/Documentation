@@ -546,11 +546,11 @@ table.CodeRay td.code>pre{padding:0}
 <li><a href="#_plotting_the_results">4.3. Plotting the results</a></li>
 </ul>
 </li>
-<li><a href="#_crenulate_shaped_bays">5. Crenulate-shaped bays</a>
+<li><a href="#_example_model_runs">5. Example model runs</a>
 <ul class="sectlevel2">
-<li><a href="#_the_driver_file">5.1. The driver file</a></li>
-<li><a href="#_compile_and_run">5.2. Compile and Run</a></li>
-<li><a href="#_plotting_the_results_2">5.3. Plotting the results</a></li>
+<li><a href="#_spiral_bays">5.1. Spiral bays</a></li>
+<li><a href="#_cusps_sand_waves_and_flying_spits">5.2. Cusps, sand waves and flying spits</a></li>
+<li><a href="#_a_real_cliffed_coastline_benacre">5.3. A real cliffed coastline: Benacre</a></li>
 </ul>
 </li>
 <li><a href="#_wave_climates">6. Wave Climates</a>
@@ -940,13 +940,18 @@ COVE/driver_files$ cd ..</pre>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_crenulate_shaped_bays">5. Crenulate-shaped bays</h2>
+<h2 id="_example_model_runs">5. Example model runs</h2>
 <div class="sectionbody">
+<div class="paragraph">
+<p>In this chapter we will look in detail at how the model is setup to perform a number of different example experiments. First we will look at the evolution of spiral bays from an initially straight coast line bound by sea walls or headlands, as used in <a href="http://onlinelibrary.wiley.com/doi/10.1002/2015JF003704/abstract">Hurst et al. (2015)</a>. Next we will look at an example of an initially straight coastline using a periodic boundary condition subject to a mixture of low and high angle incidence offshore waves that generate hgih-angle wave instability, similar to the experiments of <a href="http://onlinelibrary.wiley.com/doi/10.1029/2005JF000422/abstract">Ashton and Murray, 2006</a>. Finally we will look at an example setup for a real stretch of cliffed coastline, using a stretch of the Suffolk coastline between Lowestoft and Southwold, which includes the interesting coastal foreland Benacre Ness. Hopefully this will give you some hands on guided experience of how to set the model up and how it behaves under different wave and boundary conditions.</p>
+</div>
+<div class="sect2">
+<h3 id="_spiral_bays">5.1. Spiral bays</h3>
 <div class="paragraph">
 <p>In this chapter we will look in detail at how the model is set up to simulate the formation and evolution of crenulate-shaped bays (also known as spiral, log-spiral, zeta bays). To do so, we will open up the appropriate driver file and work through it to understand how the simulations are set up and what the model is doing.</p>
 </div>
-<div class="sect2">
-<h3 id="_the_driver_file">5.1. The driver file</h3>
+<div class="sect3">
+<h4 id="_the_driver_file">5.1.1. The driver file</h4>
 <div class="paragraph">
 <p>The driver file <code>spiral_bay_driver.cpp</code> can be found in the <code>driver_files</code> subdirectory. You can navigate to it and open in a text editor from the command line with:</p>
 </div>
@@ -962,8 +967,9 @@ $ gedit spiral_bay_driver.cpp &amp;</pre>
 <div class="paragraph">
 <p>OK, let&#8217;s look at the driver file. There are some helpful comments that are ignored when we run the program, these start with "//" or are in blocks "/*" to "*/". At the top of the file there are some <code>#include</code> statements that allow the program access to some libraries we will be using, including the model`s main coastline and waveclimate objects.</p>
 </div>
+</div>
 <div class="sect3">
-<h4 id="_setting_up_the_wave_climate">5.1.1. Setting up the wave climate</h4>
+<h4 id="_setting_up_the_wave_climate">5.1.2. Setting up the wave climate</h4>
 <div class="paragraph">
 <p>The spiral_bay_driver uses a Guassian representation of the wave climate. The parameters to set up the wave climate are required as input arguments at runtime. The wave climate is defined by a <em>mean</em> and <em>standard deviation</em> value for:</p>
 </div>
@@ -1020,7 +1026,7 @@ $ gedit spiral_bay_driver.cpp &amp;</pre>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_model_run_control_parameters">5.1.2. Model run control parameters</h4>
+<h4 id="_model_run_control_parameters">5.1.3. Model run control parameters</h4>
 <div class="paragraph">
 <p>Various parameters are required to control the length of the model run (in years), how often the coastline position is output to file (in years), how often to sample a new wave from the wave climate object (days), and how big the model timestep should be (days). We suggest leaving these as they are for now, but as you start customising model setup you may need to adjust them.</p>
 </div>
@@ -1041,7 +1047,7 @@ $ gedit spiral_bay_driver.cpp &amp;</pre>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_initialise_the_model">5.1.3. Initialise the model</h4>
+<h4 id="_initialise_the_model">5.1.4. Initialise the model</h4>
 <div class="paragraph">
 <p>The spiral bay model is initialised as a straight coast with fixed boundaries at each end of the coast line. In order to generate the coastline object, we need to prescribe some attributes that dictate the properties of the generated coast, which we will pass to the new Coastline object when we declare it.</p>
 </div>
@@ -1122,7 +1128,7 @@ CoastVector.WriteCoast(WriteCoastFile, Time);</code></pre>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_main_model_loop">5.1.4. Main model loop</h4>
+<h4 id="_main_model_loop">5.1.5. Main model loop</h4>
 <div class="paragraph">
 <p>We&#8217;re all set up and ready to go! The model loop is pretty simple really, first grab a new wave from the wave climate, second pass it to the <code>Coastline</code> object when calling the <code>TransportSediment</code> function, third print the coordinates of the <code>Coastline</code> to file.</p>
 </div>
@@ -1171,9 +1177,8 @@ CoastVector.TransportSediment(TimeStep, MyWave, CliffVector);</code></pre>
 <p>Finally, the model prints the updated <em>X</em> and <em>Y</em> coordinates to an output file. See Writing Results to File for details of the resulting file format.</p>
 </div>
 </div>
-</div>
-<div class="sect2">
-<h3 id="_compile_and_run">5.2. Compile and Run</h3>
+<div class="sect3">
+<h4 id="_compile_and_run">5.1.6. Compile and Run</h4>
 <div class="paragraph">
 <p>Compile COVE for running a spiral bay by launching the makefile:</p>
 </div>
@@ -1197,8 +1202,8 @@ CoastVector.TransportSediment(TimeStep, MyWave, CliffVector);</code></pre>
 <p>While running the model will print the current model time to screen, it may also print some other messages, particularly including intersections in the coastline. The intersection analysis detects when the coastline intersects itself, such as when it erodes back behind the headland. Once this has happened the coastline is prevented from eroding any further.</p>
 </div>
 </div>
-<div class="sect2">
-<h3 id="_plotting_the_results_2">5.3. Plotting the results</h3>
+<div class="sect3">
+<h4 id="_plotting_the_results_2">5.1.7. Plotting the results</h4>
 <div class="paragraph">
 <p>A series of plotting functions are included in the subdirectory <code>plotting_functions</code>. To plot the results of your spiral bay model run, open the file <code>plot_coastline_evolution_figure.py</code> in your favourite python IDE, and run. You should get the following figure:</p>
 </div>
@@ -1208,6 +1213,15 @@ CoastVector.TransportSediment(TimeStep, MyWave, CliffVector);</code></pre>
 </div>
 <div class="title">Figure 4. Example model output for a spiral bay showing the evolution of the bay through time from a starting condition of a straight coastline pinned by two headlands/sea walls. Model evolves to a condition of equilibrium where the coastal morphology changes little through time.</div>
 </div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_cusps_sand_waves_and_flying_spits">5.2. Cusps, sand waves and flying spits</h3>
+
+</div>
+<div class="sect2">
+<h3 id="_a_real_cliffed_coastline_benacre">5.3. A real cliffed coastline: Benacre</h3>
+
 </div>
 </div>
 </div>
@@ -1399,7 +1413,7 @@ Time | Y[0] | Y[1] | Y[2] =====&gt; Y[NoNodes]</pre>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2016-06-20 12:26:12 BST
+Last updated 2016-06-20 13:40:29 BST
 </div>
 </div>
 <script type="text/x-mathjax-config">

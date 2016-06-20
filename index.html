@@ -530,10 +530,7 @@ table.CodeRay td.code>pre{padding:0}
 <li><a href="#_software_requirements">2. Software Requirements</a>
 <ul class="sectlevel2">
 <li><a href="#_linux_unix">2.1. Linux/UNIX</a></li>
-<li><a href="#_git">2.2. Git</a></li>
-<li><a href="#_c_compiler">2.3. C++ Compiler</a></li>
-<li><a href="#_text_editor">2.4. Text editor</a></li>
-<li><a href="#_python">2.5. Python</a></li>
+<li><a href="#_windows">2.2. Windows</a></li>
 </ul>
 </li>
 <li><a href="#_download_the_model">3. Download the model</a>
@@ -570,7 +567,7 @@ table.CodeRay td.code>pre{padding:0}
 <li><a href="#_initialising_a_coastline_object">7.1. Initialising a Coastline object</a></li>
 <li><a href="#_initialising_a_cliffline_object">7.2. Initialising a Cliffline object</a></li>
 <li><a href="#_boundary_conditions_2">7.3. Boundary Conditions</a></li>
-<li><a href="#__a_id_output_a_writing_results_to_file">7.4. <a id="Output"></a>Writing results to file</a></li>
+<li><a href="#_writing_results_to_file">7.4. Writing results to file</a></li>
 </ul>
 </li>
 <li><a href="#_ensemble_mode">8. Ensemble mode</a></li>
@@ -786,9 +783,8 @@ and angle \(\alpha_b\) of breaking waves. For example, in the simplest case of f
 <div class="paragraph">
 <p>If you do not already work in Linux or UNIX, then the easiest way to get started would be to use some virtualisation software such as <a href="https://www.virtualbox.org/">VirtualBox</a> or <a href="http://www.vmware.com/uk/products/player">VMWare Workstation Player</a>. VirtualBox is preferable since it is open source and free to use, but there are some minor advantages to using VMWare Player if you become a heavy user. We hope soon to provide a <a href="https://www.vagrantup.com/">Vagrant file</a> to make this process a bit more straight forward. For now, I recommend installing <a href="https://www.virtualbox.org/">VirtualBox</a>, creating a new virtual machine, and installing <a href="http://www.ubuntu.com/desktop">Ubuntu</a> using a downloaded iso file.</p>
 </div>
-</div>
-<div class="sect2">
-<h3 id="_git">2.2. Git</h3>
+<div class="sect3">
+<h4 id="_git">2.1.1. Git</h4>
 <div class="paragraph">
 <p><a href="https://git-scm.com/">Git</a> is version control software. The model is stored in a repository on <a href="https://github.com/COVE-Model">github</a>. This allows us to track all of our updates and developments and avoid duplication. You can install git from the command line:</p>
 </div>
@@ -801,14 +797,14 @@ and angle \(\alpha_b\) of breaking waves. For example, in the simplest case of f
 <p>Getting to grips with git can be a steep learning curve at first. The <a href="https://help.github.com/articles/github-glossary/">github glossary</a> is useful for getting up to speed with the terminology, and I found a good <a href="https://www.git-tower.com/blog/git-cheat-sheet/">cheat sheet</a> for git commands.</p>
 </div>
 </div>
-<div class="sect2">
-<h3 id="_c_compiler">2.3. C++ Compiler</h3>
+<div class="sect3">
+<h4 id="_c_compiler">2.1.2. C++ Compiler</h4>
 <div class="paragraph">
 <p>If you are using a Linux machine (e.g. the recommended Ubuntu VM) then you should have the GNU Compiler Collection installed. Depending on your experience and whether your developing the model, the <a href="https://www.gnu.org/software/gdb/">GNU debugger</a> can also be helpful (should already be installed with GCC), not to mention <a href="http://valgrind.org/">Valgrind</a> (you probably know what you`re doing better than I do if you`re using Valgrind!). We will also need the make utility (this should also be ready installed). No additional C++ libraries are required at this stage.</p>
 </div>
 </div>
-<div class="sect2">
-<h3 id="_text_editor">2.4. Text editor</h3>
+<div class="sect3">
+<h4 id="_text_editor">2.1.3. Text editor</h4>
 <div class="paragraph">
 <p>A text editor is required for viewing and editing both the main code and driver files (shorter bits of code that interact with and control the main model objects). Ubuntu ships with gedit, which I find works well once you install and activate some useful plugins.</p>
 </div>
@@ -821,10 +817,17 @@ and angle \(\alpha_b\) of breaking waves. For example, in the simplest case of f
 <p>Some of these can really increase productivity while writing code.</p>
 </div>
 </div>
-<div class="sect2">
-<h3 id="_python">2.5. Python</h3>
+<div class="sect3">
+<h4 id="_python">2.1.4. Python</h4>
 <div class="paragraph">
 <p>Python is a programming language that is great for analysing and visualising data, and is used here to visualise the output of COVE and running further analyses on model results. Again Python comes preinstalled on Ubuntu, but you could also use it on Windows/Mac. The key package required is <a href="https://www.scipy.org/">SciPy</a> ("scientific python"), which includes NumPy and Matplotlib. These are included with Ubuntu`s preinstalled version of Python. If you are using Windows/Mac then we recommend installing a Python distribution such as <a href="https://www.continuum.io/why-anaconda">Anaconda</a>.</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_windows">2.2. Windows</h3>
+<div class="paragraph">
+<p>We are experimenting with getting the model working using the <a href="http://www.codeblocks.org/home">Code::Blocks</a> IDE with <a href="http://www.mingw.org/">MinGW</a> (Minimalist GNU for Windows) compilers. The pair are available to install together <a href="http://sourceforge.net/projects/codeblocks/files/Binaries/16.01/Windows/codeblocks-16.01mingw-setup.exe">here</a>. More to follow.</p>
 </div>
 </div>
 </div>
@@ -1165,7 +1168,7 @@ CoastVector.TransportSediment(TimeStep, MyWave, CliffVector);</code></pre>
 <p>There is a crude attempt written in here to allow adaptive timestepping. This hasn&#8217;t fully been tested yet, and usually if it&#8217;s called it&#8217;s because there is a bug in the model not actually associated with the adaptive timestep. If you run into this problem please <a href="mailto:martin.hurst@glasgow.ac.uk">email me</a>.</p>
 </div>
 <div class="paragraph">
-<p>Finally, the model prints the updated <em>X</em> and <em>Y</em> coordinates to an output file. See <a href="#Output">[Output]</a> for details of the resulting file format.</p>
+<p>Finally, the model prints the updated <em>X</em> and <em>Y</em> coordinates to an output file. See Writing Results to File for details of the resulting file format.</p>
 </div>
 </div>
 </div>
@@ -1326,7 +1329,7 @@ Time | Y[0] | Y[1] | Y[2] =====&gt; Y[NoNodes]</pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="__a_id_output_a_writing_results_to_file">7.4. <a id="Output"></a>Writing results to file</h3>
+<h3 id="_writing_results_to_file">7.4. Writing results to file</h3>
 <div class="paragraph">
 <p>The <code>Coastline</code> object writes the position of the coast to a text file with a name provided in the call <code>WriteCoastFile</code>. The <code>Time</code> must also be passed:</p>
 </div>
@@ -1396,7 +1399,7 @@ Time | Y[0] | Y[1] | Y[2] =====&gt; Y[NoNodes]</pre>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2016-06-16 14:44:37 BST
+Last updated 2016-06-20 12:26:12 BST
 </div>
 </div>
 <script type="text/x-mathjax-config">

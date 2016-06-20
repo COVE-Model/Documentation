@@ -95,7 +95,7 @@ There are a number of software requirements to run the model and visualise the r
 
 If you do not already work in Linux or UNIX, then the easiest way to get started would be to use some virtualisation software such as https://www.virtualbox.org/[VirtualBox] or http://www.vmware.com/uk/products/player[VMWare Workstation Player]. VirtualBox is preferable since it is open source and free to use, but there are some minor advantages to using VMWare Player if you become a heavy user. We hope soon to provide a https://www.vagrantup.com/[Vagrant file] to make this process a bit more straight forward. For now, I recommend installing https://www.virtualbox.org/[VirtualBox], creating a new virtual machine, and installing http://www.ubuntu.com/desktop[Ubuntu] using a downloaded iso file.
 
-=== Git
+==== Git
 
 https://git-scm.com/[Git] is version control software. The model is stored in a repository on https://github.com/COVE-Model[github]. This allows us to track all of our updates and developments and avoid duplication. You can install git from the command line:
 ----
@@ -103,11 +103,11 @@ $ sudo apt-get install git
 ----
 Getting to grips with git can be a steep learning curve at first. The https://help.github.com/articles/github-glossary/[github glossary] is useful for getting up to speed with the terminology, and I found a good https://www.git-tower.com/blog/git-cheat-sheet/[cheat sheet] for git commands.
  
-=== C++ Compiler
+==== C++ Compiler
 
 If you are using a Linux machine (e.g. the recommended Ubuntu VM) then you should have the GNU Compiler Collection installed. Depending on your experience and whether your developing the model, the https://www.gnu.org/software/gdb/[GNU debugger] can also be helpful (should already be installed with GCC), not to mention http://valgrind.org/[Valgrind] (you probably know what you`re doing better than I do if you`re using Valgrind!). We will also need the make utility (this should also be ready installed). No additional C++ libraries are required at this stage.
 
-=== Text editor
+==== Text editor
 
 A text editor is required for viewing and editing both the main code and driver files (shorter bits of code that interact with and control the main model objects). Ubuntu ships with gedit, which I find works well once you install and activate some useful plugins.
 ----
@@ -115,9 +115,14 @@ $ sudo apt-get install gedit-plugins gedit-developer-plugins
 ----
 Some of these can really increase productivity while writing code.
 
-=== Python
+==== Python
 
 Python is a programming language that is great for analysing and visualising data, and is used here to visualise the output of COVE and running further analyses on model results. Again Python comes preinstalled on Ubuntu, but you could also use it on Windows/Mac. The key package required is https://www.scipy.org/[SciPy] ("scientific python"), which includes NumPy and Matplotlib. These are included with Ubuntu`s preinstalled version of Python. If you are using Windows/Mac then we recommend installing a Python distribution such as https://www.continuum.io/why-anaconda[Anaconda].
+
+=== Windows
+
+We are experimenting with getting the model working using the http://www.codeblocks.org/home[Code::Blocks] IDE with http://www.mingw.org/[MinGW] (Minimalist GNU for Windows) compilers. The pair are available to install together http://sourceforge.net/projects/codeblocks/files/Binaries/16.01/Windows/codeblocks-16.01mingw-setup.exe[here]. More to follow.
+
 
 == Download the model
 

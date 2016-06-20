@@ -58,7 +58,7 @@ where latexmath:[K_{ls}] is a transport coefficient. The transport coefficient l
 
 === Cliff Erosion
 
-Cliffs are represented in the model as a separate line. The cliffline and coastline interact to determine how wide the beach is locally. Eroded cliff material is provided to the adjacent beach and causes the shoreface to advance. Cliff erosion is controlled by beach width since a wider beach provide energy dissipation and protection from approaching waves. Figure X shows a schematic graph of this relationship, as well as a conceptual diagram of the representation and relationship of the cliff and the beach.
+Cliffs are represented in the model as a separate line. The cliffline and coastline interact to determine how wide the beach is locally. Eroded cliff material is provided to the adjacent beach and causes the shoreface to advance. Cliff erosion is controlled by beach width since a wider beach provide energy dissipation and protection from approaching waves. Figure 2 shows a schematic graph of this relationship, as well as a conceptual diagram of the representation and relationship of the cliff and the beach.
 
 image::limber_cliff_retreat.png[title="Schematic illustration of retreating cliff and beach. Relationship between beach width and cliff retreat rate is humped and nonlinear. For thin beaches, cliff retreat increases with beach width due to increased availability of \"tools\" to aid erosion. Wider beaches cause reduced cliff retreat, protecting the cliff by dissipating wave energy (after Limber and Murray, 2011).",width="500",align="center"]
 
@@ -399,7 +399,7 @@ image::spiral_bay_example.png[width="500",align="center"]
 
 === Real cliffed coast
 
-Let's look at how to set the model up to run on a real stretch of cliffed coastline. The example we are going to look at is from the coast of Suffolk between Lowestoft and Southwold (see Figure X).
+Let's look at how to set the model up to run on a real stretch of cliffed coastline. The example we are going to look at is from the coast of Suffolk between Lowestoft and Southwold (see Figure 5).
 
 Insert figure here of study site.
 
@@ -450,7 +450,7 @@ Time | X[0] | X[1] | X[2] =====> X[NoNodes]
 Time | Y[0] | Y[1] | Y[2] =====> Y[NoNodes]
 ----
 
-The order that your _x_ and _y_ coordinates come in is very important. The model *ALWAYS* assumes that the sea is on the left side as it works its way down the coastline or cliffline vector. To be sure you get this correct, imagine you are standing at the first node on your coastline, looking towards the second node. The sea will be on the left of the line, and the land on the right (see Figure X). If this is backwards, you will get some very strange behaviour, because the model will ignore alot of waves (since they are coming from the land) and beach widths will be negative. If your first attempt at modelling a stretch of coastline blows up straight away, this is the first thing to check. We should probably write some error checking into the beach width calculator to flag negative values and warn you. This will get added in later.
+The order that your _x_ and _y_ coordinates come in is very important. The model *ALWAYS* assumes that the sea is on the left side as it works its way down the coastline or cliffline vector. To be sure you get this correct, imagine you are standing at the first node on your coastline, looking towards the second node. The sea will be on the left of the line, and the land on the right (see Figure 5). If this is backwards, you will get some very strange behaviour, because the model will ignore alot of waves (since they are coming from the land) and beach widths will be negative. If your first attempt at modelling a stretch of coastline blows up straight away, this is the first thing to check. We should probably write some error checking into the beach width calculator to flag negative values and warn you. This will get added in later.
 
 .Google Earth image of the coastline of Suffolk between Lowestoft and Southwold showing the beginning and end of the coastline vector the correct way around. 
 image::coastline_orientation.png[width="500",align="center"]
@@ -653,18 +653,18 @@ The model should then run for fifty years. This example evolves the Suffolk coas
 A series of plotting functions are included in the subdirectory `plotting_functions`. To plot the results of your Suffolk model run, open the file `benacre_evolution_animation.py` in your favourite python IDE, and run. You should get a series of figures whose file names are numbered sequentially and each looks a bit like this:
 
 .Example model output from the Suffolk coast showing the stretch of coastline between Lowestoft and Southwold. 
-image::benacre_output.png[width="500",align="center"]
+image::benacre_output.png[width="300",align="center"]
 
 The python script creates a file called filelist.txt which contains a list of all the output filenames. These frames can then be stitched together to create a video of the coastline evolving using https://en.wikipedia.org/wiki/MEncoder[Mencoder], a command line tool that is part of http://www.mplayerhq.hu/design7/news.html[MPlayer] that allows you to encode video files. Thus once you have run the python script, you can run the following command to stich the output together into a nice video:
 
-====
+----
 $ mencoder mf://@filelist.txt -mf w=300:h=600:fps=25:type=png -ovc lavc -lavcopts vcodec=mpeg4:mbd=2:trell -oac copy -o video.avi
-====
+----
 
 Once you've made the video, you can delete all the individual png frame files to keep things tidy:
-====
+----
 $ rm *.png
-====
+----
 
 == Wave Climates
 
@@ -715,9 +715,7 @@ while (Time < EndTime)
 		MyWave = WaveClimate.Get_Wave();
 		GetWaveTime += WaveTimeDelta/365.;
 	}
-	
 	...
-	
 ----
 
 === Bimodal  wave climate
@@ -770,10 +768,7 @@ while (Time < EndTime)
 		else MyWave = WaveClimate2.Get_Wave();
 		GetWaveTime += WaveTimeDelta/365.;
 	}
-
 	...
-
-}
 ----
 
 === U-A wave climate

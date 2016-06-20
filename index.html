@@ -687,7 +687,7 @@ and angle \(\alpha_b\) of breaking waves. For example, in the simplest case of f
 <div class="sect2">
 <h3 id="_cliff_erosion">1.4. Cliff Erosion</h3>
 <div class="paragraph">
-<p>Cliffs are represented in the model as a separate line. The cliffline and coastline interact to determine how wide the beach is locally. Eroded cliff material is provided to the adjacent beach and causes the shoreface to advance. Cliff erosion is controlled by beach width since a wider beach provide energy dissipation and protection from approaching waves. Figure X shows a schematic graph of this relationship, as well as a conceptual diagram of the representation and relationship of the cliff and the beach.</p>
+<p>Cliffs are represented in the model as a separate line. The cliffline and coastline interact to determine how wide the beach is locally. Eroded cliff material is provided to the adjacent beach and causes the shoreface to advance. Cliff erosion is controlled by beach width since a wider beach provide energy dissipation and protection from approaching waves. Figure 2 shows a schematic graph of this relationship, as well as a conceptual diagram of the representation and relationship of the cliff and the beach.</p>
 </div>
 <div class="imageblock" style="text-align: center">
 <div class="content">
@@ -1238,7 +1238,7 @@ CoastVector.TransportSediment(TimeStep, MyWave, CliffVector);</code></pre>
 <div class="sect2">
 <h3 id="_real_cliffed_coast">5.3. Real cliffed coast</h3>
 <div class="paragraph">
-<p>Let&#8217;s look at how to set the model up to run on a real stretch of cliffed coastline. The example we are going to look at is from the coast of Suffolk between Lowestoft and Southwold (see Figure X).</p>
+<p>Let&#8217;s look at how to set the model up to run on a real stretch of cliffed coastline. The example we are going to look at is from the coast of Suffolk between Lowestoft and Southwold (see Figure 5).</p>
 </div>
 <div class="paragraph">
 <p>Insert figure here of study site.</p>
@@ -1300,7 +1300,7 @@ Time | Y[0] | Y[1] | Y[2] =====&gt; Y[NoNodes]</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>The order that your <em>x</em> and <em>y</em> coordinates come in is very important. The model <strong>ALWAYS</strong> assumes that the sea is on the left side as it works its way down the coastline or cliffline vector. To be sure you get this correct, imagine you are standing at the first node on your coastline, looking towards the second node. The sea will be on the left of the line, and the land on the right (see Figure X). If this is backwards, you will get some very strange behaviour, because the model will ignore alot of waves (since they are coming from the land) and beach widths will be negative. If your first attempt at modelling a stretch of coastline blows up straight away, this is the first thing to check. We should probably write some error checking into the beach width calculator to flag negative values and warn you. This will get added in later.</p>
+<p>The order that your <em>x</em> and <em>y</em> coordinates come in is very important. The model <strong>ALWAYS</strong> assumes that the sea is on the left side as it works its way down the coastline or cliffline vector. To be sure you get this correct, imagine you are standing at the first node on your coastline, looking towards the second node. The sea will be on the left of the line, and the land on the right (see Figure 5). If this is backwards, you will get some very strange behaviour, because the model will ignore alot of waves (since they are coming from the land) and beach widths will be negative. If your first attempt at modelling a stretch of coastline blows up straight away, this is the first thing to check. We should probably write some error checking into the beach width calculator to flag negative values and warn you. This will get added in later.</p>
 </div>
 <div class="imageblock" style="text-align: center">
 <div class="content">
@@ -1541,28 +1541,24 @@ CliffVector.ErodeCliff(TimeStep, CoastVector, ErosionType);</code></pre>
 </div>
 <div class="imageblock" style="text-align: center">
 <div class="content">
-<img src="./images//benacre_output.png" alt="benacre output" width="500">
+<img src="./images//benacre_output.png" alt="benacre output" width="300">
 </div>
 <div class="title">Figure 6. Example model output from the Suffolk coast showing the stretch of coastline between Lowestoft and Southwold.</div>
 </div>
 <div class="paragraph">
 <p>The python script creates a file called filelist.txt which contains a list of all the output filenames. These frames can then be stitched together to create a video of the coastline evolving using <a href="https://en.wikipedia.org/wiki/MEncoder">Mencoder</a>, a command line tool that is part of <a href="http://www.mplayerhq.hu/design7/news.html">MPlayer</a> that allows you to encode video files. Thus once you have run the python script, you can run the following command to stich the output together into a nice video:</p>
 </div>
-<div class="exampleblock">
+<div class="listingblock">
 <div class="content">
-<div class="paragraph">
-<p>$ mencoder mf://@filelist.txt -mf w=300:h=600:fps=25:type=png -ovc lavc -lavcopts vcodec=mpeg4:mbd=2:trell -oac copy -o video.avi</p>
-</div>
+<pre>$ mencoder mf://@filelist.txt -mf w=300:h=600:fps=25:type=png -ovc lavc -lavcopts vcodec=mpeg4:mbd=2:trell -oac copy -o video.avi</pre>
 </div>
 </div>
 <div class="paragraph">
 <p>Once you&#8217;ve made the video, you can delete all the individual png frame files to keep things tidy:</p>
 </div>
-<div class="exampleblock">
+<div class="listingblock">
 <div class="content">
-<div class="paragraph">
-<p>$ rm *.png</p>
-</div>
+<pre>$ rm *.png</pre>
 </div>
 </div>
 </div>
@@ -1626,7 +1622,6 @@ MyWave = WaveClimate.Get_Wave();</code></pre>
                 MyWave = WaveClimate.Get_Wave();
                 GetWaveTime += WaveTimeDelta/<span class="integer">36</span><span class="float">5</span>.;
         }
-
         ...</code></pre>
 </div>
 </div>
@@ -1685,10 +1680,7 @@ MyWave = WaveClimate.Get_Wave();</code></pre>
                 <span class="keyword">else</span> MyWave = WaveClimate2.Get_Wave();
                 GetWaveTime += WaveTimeDelta/<span class="integer">36</span><span class="float">5</span>.;
         }
-
-        ...
-
-}</code></pre>
+        ...</code></pre>
 </div>
 </div>
 </div>
@@ -1869,7 +1861,7 @@ Time | Y[0] | Y[1] | Y[2] =====&gt; Y[NoNodes]</pre>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2016-06-20 17:06:32 BST
+Last updated 2016-06-20 17:12:20 BST
 </div>
 </div>
 <script type="text/x-mathjax-config">

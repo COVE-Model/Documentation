@@ -192,7 +192,7 @@ In this chapter we will look in detail at how the model is setup to perform a nu
 
 === Spiral bays
 
-In this chapter we will look in detail at how the model is set up to simulate the formation and evolution of crenulate-shaped bays (also known as spiral, log-spiral, zeta bays). To do so, we will open up the appropriate driver file and work through it to understand how the simulations are set up and what the model is doing.
+Let's look at how the model is set up to simulate the formation and evolution of crenulate-shaped bays (also known as spiral, log-spiral, zeta bays). To do so, we will open up the appropriate driver file and work through it to understand how the simulations are set up and what the model is doing.
 
 ==== The driver file
 
@@ -385,11 +385,30 @@ A series of plotting functions are included in the subdirectory `plotting_functi
 .Example model output for a spiral bay showing the evolution of the bay through time from a starting condition of a straight coastline pinned by two headlands/sea walls. Model evolves to a condition of equilibrium where the coastal morphology changes little through time. 
 image::spiral_bay_example.png[width="500",align="center"]
 
-=== Cusps, sand waves and flying spits
+=== Sand waves
 
-=== A real cliffed coastline: Benacre
+==== The driver file
+
+=== Real cliffed coast
+
+Let's look at how to set the model up to run on a real stretch of cliffed coastline. The example we are going to look at is from the coast of Suffolk between Lowestoft and Southwold (see Figure X).
+
+Insert figure here of study site.
+
+This coastline experiences a bimodal wave climate, with waves coming out of the North Sea to the north east, and through the English Channel from the South.
+
+We are interested in this stretch of coastline because at Kessingland there is a large coastal foreland called Benacre Ness that is migrating northward along the coast. It is called Benacre Ness because it used to sit in front of the Benacre estate, but has migrated northward and now stretches across the frontage of Kessingland. It has been estimated to extend northward at rates of 20-50 m y^-1^, despite the locally established view that alongshore sediment transport is directed from north to south.
+
+==== The driver file
 
 
+==== Input files
+
+Using a real coastline, the model will require three input files in order to initialise the coast. A coastline _x-y_ file, a cliffline _x-y_ file and cliff type file. The coastline and cliffline _x-y_ files have the same format as the model output, consisting of a header line with two space-separated integers representing the start and end boundary conditions, followed by lines containing the _x_ and _y_ coordinates of the coastline, preceded by the time (see "Read a coast from file" in the "under the hood" section. The order that your _x_ and _y_ coordinates come in is very important. The model *ALWAYS* assumes that the sea is on the left side as it works its way down the coastline or cliffline vector. 
+
+To be sure you get this correct, imagine you are standing at the first node on your coastline, looking towards the second node. The sea will be on the left of the line, and the land on the right. If this is backwards, you will get some very strange behaviour, because the model will ignore alot of waves (since they are coming from the land) and beach widths will be negative. If your first attempt at modelling a stretch of coastline blows up straight away, this is the first thing to check. We should probably write some error checking into the beach width calculator to flag negative values and warn you. This will get added in later.
+
+The third file required is a cliff type file. This tells the model whether a cliff node can erode or is fixed (this can later be expanded to include different types of geology). Currently a value of 1 represents a fixed coast (e.g. defended by sea wall/revetment) and a value of 0 is a normal erodible cliff. The file format is a header line followed by two columns, one for the node index (`i=0` to `i=NoNodes-1`) and the second for the cliff type integer.
 
 == Wave Climates
 

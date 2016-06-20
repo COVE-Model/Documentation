@@ -549,8 +549,8 @@ table.CodeRay td.code>pre{padding:0}
 <li><a href="#_example_model_runs">5. Example model runs</a>
 <ul class="sectlevel2">
 <li><a href="#_spiral_bays">5.1. Spiral bays</a></li>
-<li><a href="#_cusps_sand_waves_and_flying_spits">5.2. Cusps, sand waves and flying spits</a></li>
-<li><a href="#_a_real_cliffed_coastline_benacre">5.3. A real cliffed coastline: Benacre</a></li>
+<li><a href="#_sand_waves">5.2. Sand waves</a></li>
+<li><a href="#_real_cliffed_coast">5.3. Real cliffed coast</a></li>
 </ul>
 </li>
 <li><a href="#_wave_climates">6. Wave Climates</a>
@@ -948,7 +948,7 @@ COVE/driver_files$ cd ..</pre>
 <div class="sect2">
 <h3 id="_spiral_bays">5.1. Spiral bays</h3>
 <div class="paragraph">
-<p>In this chapter we will look in detail at how the model is set up to simulate the formation and evolution of crenulate-shaped bays (also known as spiral, log-spiral, zeta bays). To do so, we will open up the appropriate driver file and work through it to understand how the simulations are set up and what the model is doing.</p>
+<p>Let&#8217;s look at how the model is set up to simulate the formation and evolution of crenulate-shaped bays (also known as spiral, log-spiral, zeta bays). To do so, we will open up the appropriate driver file and work through it to understand how the simulations are set up and what the model is doing.</p>
 </div>
 <div class="sect3">
 <h4 id="_the_driver_file">5.1.1. The driver file</h4>
@@ -1216,12 +1216,42 @@ CoastVector.TransportSediment(TimeStep, MyWave, CliffVector);</code></pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_cusps_sand_waves_and_flying_spits">5.2. Cusps, sand waves and flying spits</h3>
+<h3 id="_sand_waves">5.2. Sand waves</h3>
+<div class="sect3">
+<h4 id="_the_driver_file_2">5.2.1. The driver file</h4>
 
 </div>
+</div>
 <div class="sect2">
-<h3 id="_a_real_cliffed_coastline_benacre">5.3. A real cliffed coastline: Benacre</h3>
+<h3 id="_real_cliffed_coast">5.3. Real cliffed coast</h3>
+<div class="paragraph">
+<p>Let&#8217;s look at how to set the model up to run on a real stretch of cliffed coastline. The example we are going to look at is from the coast of Suffolk between Lowestoft and Southwold (see Figure X).</p>
+</div>
+<div class="paragraph">
+<p>Insert figure here of study site.</p>
+</div>
+<div class="paragraph">
+<p>This coastline experiences a bimodal wave climate, with waves coming out of the North Sea to the north east, and through the English Channel from the South.</p>
+</div>
+<div class="paragraph">
+<p>We are interested in this stretch of coastline because at Kessingland there is a large coastal foreland called Benacre Ness that is migrating northward along the coast. It is called Benacre Ness because it used to sit in front of the Benacre estate, but has migrated northward and now stretches across the frontage of Kessingland. It has been estimated to extend northward at rates of 20-50 m y<sup>-1</sup>, despite the locally established view that alongshore sediment transport is directed from north to south.</p>
+</div>
+<div class="sect3">
+<h4 id="_the_driver_file_3">5.3.1. The driver file</h4>
 
+</div>
+<div class="sect3">
+<h4 id="_input_files">5.3.2. Input files</h4>
+<div class="paragraph">
+<p>Using a real coastline, the model will require three input files in order to initialise the coast. A coastline <em>x-y</em> file, a cliffline <em>x-y</em> file and cliff type file. The coastline and cliffline <em>x-y</em> files have the same format as the model output, consisting of a header line with two space-separated integers representing the start and end boundary conditions, followed by lines containing the <em>x</em> and <em>y</em> coordinates of the coastline, preceded by the time (see "Read a coast from file" in the "under the hood" section. The order that your <em>x</em> and <em>y</em> coordinates come in is very important. The model <strong>ALWAYS</strong> assumes that the sea is on the left side as it works its way down the coastline or cliffline vector.</p>
+</div>
+<div class="paragraph">
+<p>To be sure you get this correct, imagine you are standing at the first node on your coastline, looking towards the second node. The sea will be on the left of the line, and the land on the right. If this is backwards, you will get some very strange behaviour, because the model will ignore alot of waves (since they are coming from the land) and beach widths will be negative. If your first attempt at modelling a stretch of coastline blows up straight away, this is the first thing to check. We should probably write some error checking into the beach width calculator to flag negative values and warn you. This will get added in later.</p>
+</div>
+<div class="paragraph">
+<p>The third file required is a cliff type file. This tells the model whether a cliff node can erode or is fixed (this can later be expanded to include different types of geology). Currently a value of 1 represents a fixed coast (e.g. defended by sea wall/revetment) and a value of 0 is a normal erodible cliff. The file format is a header line followed by two columns, one for the node index (<code>i=0</code> to <code>i=NoNodes-1</code>) and the second for the cliff type integer.</p>
+</div>
+</div>
 </div>
 </div>
 </div>
@@ -1413,7 +1443,7 @@ Time | Y[0] | Y[1] | Y[2] =====&gt; Y[NoNodes]</pre>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2016-06-20 13:40:29 BST
+Last updated 2016-06-20 14:36:57 BST
 </div>
 </div>
 <script type="text/x-mathjax-config">

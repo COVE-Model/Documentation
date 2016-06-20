@@ -350,7 +350,7 @@ A whole lot of things happen inside this function (see a later section of this d
 
 There is a crude attempt written in here to allow adaptive timestepping. This hasn't fully been tested yet, and usually if it's called it's because there is a bug in the model not actually associated with the adaptive timestep. If you run into this problem please mailto:martin.hurst@glasgow.ac.uk[email me].
 
-Finally, the model prints the updated _X_ and _Y_ coordinates to an output file. See <<Output>> for details of the resulting file format.
+Finally, the model prints the updated _X_ and _Y_ coordinates to an output file. See Writing Results to File for details of the resulting file format.
 
 === Compile and Run
 
@@ -464,7 +464,7 @@ The model is a single line. The start and end of the line can be handled in diff
 2. Fixed boundary conditions the first and last two nodes/cells in the model are fixed and immovable.
 
 
-=== [[Output]]Writing results to file
+=== Writing results to file
 
 The `Coastline` object writes the position of the coast to a text file with a name provided in the call `WriteCoastFile`. The `Time` must also be passed:
 

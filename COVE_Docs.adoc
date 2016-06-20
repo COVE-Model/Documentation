@@ -431,7 +431,13 @@ Various parameters are required to control the length of the model run (in years
 
 ==== Input files
 
-Using a real coastline, the model will require three input files in order to initialise the coast. A coastline _x-y_ file, a cliffline _x-y_ file and cliff type file. These have been declared:
+Using a real coastline, the model will require three input files in order to initialise the coast. A coastline _x-y_ file, a cliffline _x-y_ file and cliff type file. These are available in the `example_inputs` subdirectory of the repository. From the `driver_file` directory copy these across at the command line ready for running the model:
+
+----
+/COVE/driver_files/$ cp ../example_inputs/* .
+----
+
+These files have been declared in the driver file:
 
 [source,c++]
 ----

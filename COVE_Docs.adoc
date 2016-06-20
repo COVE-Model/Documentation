@@ -653,7 +653,7 @@ The model should then run for fifty years. This example evolves the Suffolk coas
 A series of plotting functions are included in the subdirectory `plotting_functions`. To plot the results of your Suffolk model run, open the file `benacre_evolution_animation.py` in your favourite python IDE, and run. You should get a series of figures whose file names are numbered sequentially and each looks a bit like this:
 
 .Example model output from the Suffolk coast showing the stretch of coastline between Lowestoft and Southwold. 
-image::benacre_example.png[width="500",align="center"]
+image::benacre_output.png[width="500",align="center"]
 
 The python script creates a file called filelist.txt which contains a list of all the output filenames. These frames can then be stitched together to create a video of the coastline evolving using https://en.wikipedia.org/wiki/MEncoder[Mencoder], a command line tool that is part of http://www.mplayerhq.hu/design7/news.html[MPlayer] that allows you to encode video files. Thus once you have run the python script, you can run the following command to stich the output together into a nice video:
 

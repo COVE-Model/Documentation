@@ -186,11 +186,15 @@ image::spiral_bay_example.png[width="500",align="center"]
 
 Additionally, below will be a link to a video of a spiral bay evolving, which will be hosted on Vimeo once I have time to work out how to do it (MDH).
 
-== Crenulate-shaped bays
+== Example model runs
+
+In this chapter we will look in detail at how the model is setup to perform a number of different example experiments. First we will look at the evolution of spiral bays from an initially straight coast line bound by sea walls or headlands, as used in http://onlinelibrary.wiley.com/doi/10.1002/2015JF003704/abstract[Hurst et al. (2015)]. Next we will look at an example of an initially straight coastline using a periodic boundary condition subject to a mixture of low and high angle incidence offshore waves that generate hgih-angle wave instability, similar to the experiments of http://onlinelibrary.wiley.com/doi/10.1029/2005JF000422/abstract[Ashton and Murray, 2006]. Finally we will look at an example setup for a real stretch of cliffed coastline, using a stretch of the Suffolk coastline between Lowestoft and Southwold, which includes the interesting coastal foreland Benacre Ness. Hopefully this will give you some hands on guided experience of how to set the model up and how it behaves under different wave and boundary conditions.
+
+=== Spiral bays
 
 In this chapter we will look in detail at how the model is set up to simulate the formation and evolution of crenulate-shaped bays (also known as spiral, log-spiral, zeta bays). To do so, we will open up the appropriate driver file and work through it to understand how the simulations are set up and what the model is doing.
 
-=== The driver file
+==== The driver file
 
 The driver file `spiral_bay_driver.cpp` can be found in the `driver_files` subdirectory. You can navigate to it and open in a text editor from the command line with:
 ----
@@ -357,7 +361,7 @@ There is a crude attempt written in here to allow adaptive timestepping. This ha
 
 Finally, the model prints the updated _X_ and _Y_ coordinates to an output file. See Writing Results to File for details of the resulting file format.
 
-=== Compile and Run
+==== Compile and Run
 
 Compile COVE for running a spiral bay by launching the makefile:
 
@@ -375,11 +379,17 @@ The model should then run for fifty years. This example evolves a crenulate-shap
 
 While running the model will print the current model time to screen, it may also print some other messages, particularly including intersections in the coastline. The intersection analysis detects when the coastline intersects itself, such as when it erodes back behind the headland. Once this has happened the coastline is prevented from eroding any further.
 
-=== Plotting the results
+==== Plotting the results
 A series of plotting functions are included in the subdirectory `plotting_functions`. To plot the results of your spiral bay model run, open the file `plot_coastline_evolution_figure.py` in your favourite python IDE, and run. You should get the following figure:
 
 .Example model output for a spiral bay showing the evolution of the bay through time from a starting condition of a straight coastline pinned by two headlands/sea walls. Model evolves to a condition of equilibrium where the coastal morphology changes little through time. 
 image::spiral_bay_example.png[width="500",align="center"]
+
+=== Cusps, sand waves and flying spits
+
+=== A real cliffed coastline: Benacre
+
+
 
 == Wave Climates
 

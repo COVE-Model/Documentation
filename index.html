@@ -541,8 +541,8 @@ table.CodeRay td.code>pre{padding:0}
 </li>
 <li><a href="#_getting_started">4. Getting Started</a>
 <ul class="sectlevel2">
-<li><a href="#_compiling_the_code">4.1. Compiling the code</a></li>
-<li><a href="#_running_the_model">4.2. Running the model</a></li>
+<li><a href="#_linux_unix_2">4.1. Linux/UNIX</a></li>
+<li><a href="#_windows_2">4.2. Windows</a></li>
 <li><a href="#_plotting_the_results">4.3. Plotting the results</a></li>
 </ul>
 </li>
@@ -763,9 +763,6 @@ and angle \(\alpha_b\) of breaking waves. For example, in the simplest case of f
 <div class="ulist">
 <ul>
 <li>
-<p>Linux/UNIX computer or virtual machine (e.g. Ubuntu)</p>
-</li>
-<li>
 <p>C++ compiler (e.g. GCC: the GNU Compiler Collection)</p>
 </li>
 <li>
@@ -820,7 +817,7 @@ and angle \(\alpha_b\) of breaking waves. For example, in the simplest case of f
 <div class="sect3">
 <h4 id="_python">2.1.4. Python</h4>
 <div class="paragraph">
-<p>Python is a programming language that is great for analysing and visualising data, and is used here to visualise the output of COVE and running further analyses on model results. Again Python comes preinstalled on Ubuntu, but you could also use it on Windows/Mac. The key package required is <a href="https://www.scipy.org/">SciPy</a> ("scientific python"), which includes NumPy and Matplotlib. These are included with Ubuntu`s preinstalled version of Python. If you are using Windows/Mac then we recommend installing a Python distribution such as <a href="https://www.continuum.io/why-anaconda">Anaconda</a>.</p>
+<p>Python is a programming language that is great for analysing and visualising data, and is used here to visualise the output of COVE and running further analyses on model results. Again Python comes preinstalled on Ubuntu, but you could also use it on Windows/Mac. The key package required is <a href="https://www.scipy.org/">SciPy</a> ("scientific python"), which includes NumPy and Matplotlib. These are included with Ubuntu`s preinstalled version of Python.</p>
 </div>
 </div>
 <div class="sect3">
@@ -840,7 +837,31 @@ and angle \(\alpha_b\) of breaking waves. For example, in the simplest case of f
 <div class="sect2">
 <h3 id="_windows">2.2. Windows</h3>
 <div class="paragraph">
-<p>We are experimenting with getting the model working using the <a href="http://www.codeblocks.org/home">Code::Blocks</a> IDE with <a href="http://www.mingw.org/">MinGW</a> (Minimalist GNU for Windows) compilers. The pair are available to install together <a href="http://sourceforge.net/projects/codeblocks/files/Binaries/16.01/Windows/codeblocks-16.01mingw-setup.exe">here</a>. More to follow.</p>
+<p>Alternatively, if you prefer to continue using Windows, it is possible to get the model working using the <a href="http://www.codeblocks.org/home">Code::Blocks</a> IDE with <a href="http://www.mingw.org/">MinGW</a> (Minimalist GNU for Windows) compilers. The pair are available to install together <a href="http://sourceforge.net/projects/codeblocks/files/Binaries/16.01/Windows/">here</a>. We have not tested COVE extensively in this environment but the <a href="#Examples">examples</a> below all compile and run correctly from Code::Blocks.</p>
+</div>
+<div class="sect3">
+<h4 id="_code_blocks">2.2.1. Code::Blocks</h4>
+<div class="paragraph">
+<p>Code::Blocks is an IDE with built in compiler and debugger functionality. Head to the <a href="http://sourceforge.net/projects/codeblocks/files/Binaries/16.01/Windows/">download page</a> for Code::Blocks and select the binary executable with the suffix "&#8230;&#8203;mingw_setup.exe". Run through the installation procedure selecting the default options. Once finished, Code::Blocks should load automatically.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_python_2">2.2.2. Python</h4>
+<div class="paragraph">
+<p>Python is a programming language that is great for analysing and visualising data, and is used here to visualise the output of COVE and running further analyses on model results. The key package required is <a href="https://www.scipy.org/">SciPy</a> ("scientific python"), which includes NumPy and Matplotlib. If you are using Windows/Mac then we recommend installing a Python distribution such as <a href="https://www.continuum.io/why-anaconda">Anaconda</a>.</p>
+</div>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Warning</div>
+</td>
+<td class="content">
+If you have ARCGIS 10.x installed then Python v2.7 will already be installed on your computer. You can either try to build on this installation by adding the packages you need, when you need them (www.lfd.uci.edu/~gohlke/pythonlibs/[This collection] is a good resource for Python Extension binary packages), or work with two versions of Python by installing a second, such as through <a href="https://www.continuum.io/why-anaconda">Anaconda</a>.
+</td>
+</tr>
+</table>
+</div>
 </div>
 </div>
 </div>
@@ -880,7 +901,9 @@ and angle \(\alpha_b\) of breaking waves. For example, in the simplest case of f
 <p>This chapter provides a brief overview of how to compile and run an example model, and plot the results using Python. For more indepth tutorials, see the later chapters.</p>
 </div>
 <div class="sect2">
-<h3 id="_compiling_the_code">4.1. Compiling the code</h3>
+<h3 id="_linux_unix_2">4.1. Linux/UNIX</h3>
+<div class="sect3">
+<h4 id="_compiling_the_code">4.1.1. Compiling the code</h4>
 <div class="paragraph">
 <p>The code can be compiled in a Linux environment from the command line, using one of the makefiles. These are contained in the <code>driver_files</code> subdirectory. The driver files are C++ scripts that control the initiation, running and saving of a COVE model run. In this tutorial we will use the example for running a spiral bay as used in <a href="http://onlinelibrary.wiley.com/doi/10.1002/2015JF003704/abstract">Hurst et al. (2015)</a>.</p>
 </div>
@@ -910,8 +933,8 @@ COVE/driver_files$ cd ..</pre>
 </div>
 </div>
 </div>
-<div class="sect2">
-<h3 id="_running_the_model">4.2. Running the model</h3>
+<div class="sect3">
+<h4 id="_running_the_model">4.1.2. Running the model</h4>
 <div class="paragraph">
 <p>The file spiral_bay.out generated by compiling the code can be launched from the command line:</p>
 </div>
@@ -935,6 +958,66 @@ COVE/driver_files$ cd ..</pre>
 <p>While running the model will print the current model time to screen, it may also print some other messages, particularly including intersections in the coastline. The intersection analysis detects when the coastline intersects itself, such as when it erodes back behind the headland. Once this has happened the coastline is prevented from eroding any further.</p>
 </div>
 </div>
+</div>
+<div class="sect2">
+<h3 id="_windows_2">4.2. Windows</h3>
+<div class="sect3">
+<h4 id="_compiling_and_running_code_blocks">4.2.1. Compiling and running: Code::Blocks</h4>
+<div class="paragraph">
+<p>Since Code::Blocks is not the current development environment favoured by the COVE team, there is no Code::Blocks project file maintained in the COVE repository, and thus you will need to create one from scratch. Luckily, this process is pretty simple. Having opened Code::Blocks, from the startup click to create a new project:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="./images//CB_new.png" alt="CB new">
+</div>
+</div>
+<div class="paragraph">
+<p>Select the "Empty project" project template then click through the empty project creation wizard. You will be asked to name the project and provide a file/folder structure (see example) and then to select a compiler (select the GNU GCC Compiler; see example). Keep the default options for "Debug" and "Release" configurations and then click <code>Finish</code>.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="./images//CB_Title.png" alt="CB Title">
+</div>
+</div>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Warning</div>
+</td>
+<td class="content">
+You might have got an error message about the project not being able to save at this point, you can ignore it, the project appears to be saved. If you&#8217;re not sure about this, right click on the project within the Management side panel, and click <code>Save project</code>.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Next we need to populate the project with the required C++ files. From the top menu, click on <code>Project &#8594; Add files&#8230;&#8203;</code> then navigate to the COVE repository directory. Add the following list of files to your project:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>coastline.cpp, coastline.hpp
+cliffline.cpp, cliffline.hpp
+waveclimate.cpp, waveclimate.hpp
+global_variables.hpp
+./driver_files/spiral_bay_driver.cpp <b class="conum">(1)</b></pre>
+</div>
+</div>
+<div class="colist arabic">
+<ol>
+<li>
+<p>Or whichever driver file you wish to work with.</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>You should be able to expand the project in the Management side-bar to see these files organised by their file type (header or source).</p>
+</div>
+<div class="paragraph">
+<p>To compile the code, from the top menu, click <code>Build &#8594; Build</code>. This will compile and link all of the code automatically and create an executable named <code>YOUR_PROJECT_NAME.exe</code> in the <code>bin</code> and <code>debug</code> folders of your project folder. You can then run the code from Code::Blocks by going to the top menu and clicking <code>Build &#8594; Run</code>. If the driver file you have chosen or created requires input arguments, these can be set by clicking <code>Project &#8594; Set programs' arguments&#8230;&#8203;</code>.</p>
+</div>
+</div>
+</div>
 <div class="sect2">
 <h3 id="_plotting_the_results">4.3. Plotting the results</h3>
 <div class="paragraph">
@@ -955,7 +1038,7 @@ COVE/driver_files$ cd ..</pre>
 <div class="sect1">
 <h2 id="_example_model_runs">5. Example model runs</h2>
 <div class="sectionbody">
-<div class="paragraph">
+<div id="Examples" class="paragraph">
 <p>In this chapter we will look in detail at how the model is setup to perform a number of different example experiments. First we will look at the evolution of spiral bays from an initially straight coast line bound by sea walls or headlands, as used in <a href="http://onlinelibrary.wiley.com/doi/10.1002/2015JF003704/abstract">Hurst et al. (2015)</a>. Next we will look at an example of an initially straight coastline using a periodic boundary condition subject to a mixture of low and high angle incidence offshore waves that generate hgih-angle wave instability, similar to the experiments of <a href="http://onlinelibrary.wiley.com/doi/10.1029/2005JF000422/abstract">Ashton and Murray, 2006</a>. Finally we will look at an example setup for a real stretch of cliffed coastline, using a stretch of the Suffolk coastline between Lowestoft and Southwold, which includes the interesting coastal foreland Benacre Ness. Hopefully this will give you some hands on guided experience of how to set the model up and how it behaves under different wave and boundary conditions.</p>
 </div>
 <div class="sect2">
@@ -1869,7 +1952,7 @@ Time | Y[0] | Y[1] | Y[2] =====&gt; Y[NoNodes]</pre>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2016-06-20 17:22:28 BST
+Last updated 2016-06-23 16:51:28 BST
 </div>
 </div>
 <script type="text/x-mathjax-config">

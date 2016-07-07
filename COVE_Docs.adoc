@@ -1,5 +1,5 @@
 = COVE: Coastal Vector Evolution Model
-Martin D. Hurst, Andrew Barkwith, Christopher W. Thomas, Michael A. Ellis, A. Brad Murray
+Martin D. Hurst <Martin.Hurst@glasgow.ac.uk>, Andrew Barkwith, Christopher W. Thomas, Michael A. Ellis, A. Brad Murray
 :toc: left
 :stem: latexmath
 :imagesdir: ./images/
@@ -10,7 +10,9 @@ image::COVE_logo.png[width="100", height="100"]
 
 == Introduction
 
-This is the documentation for COVE, the COastal Vector Evolution model - a vector-based one-line coastal evolution model. The model was presented and used in a http://onlinelibrary.wiley.com/doi/10.1002/2015JF003704/abstract[paper] on the evolution of crenulate bays published in the _Journal of Geophysical Research Earth Surface_ (http://onlinelibrary.wiley.com/doi/10.1002/2015JF003704/abstract[Hurst et al., 2015]). The model is intended for research purposes, exploring coastal behaviour and sensitiviy. If you are interested in working with COVE, we would encourage you to mailto:martin.hurst@glasgow.ac.uk[get in touch] and work with us. In this introduction, we will give a brief overview of the science behind the model.
+This is the documentation for COVE, the COastal Vector Evolution model - a vector-based one-line coastal evolution model. The model was presented and used in a http://onlinelibrary.wiley.com/doi/10.1002/2015JF003704/abstract[paper] on the evolution of crenulate bays published in the _Journal of Geophysical Research Earth Surface_ (http://onlinelibrary.wiley.com/doi/10.1002/2015JF003704/abstract[Hurst et al., 2015]). The model is intended for research purposes, exploring coastal behaviour and sensitiviy. 
+
+The model is intended for research purposes. It is released under a http://www.gnu.org/licenses/gpl-3.0.en.html[GNU General Public Licence]. If you are interested in working with COVE, we would encourage you to mailto:martin.hurst@glasgow.ac.uk[get in touch] and work with us. In this introduction, we will give a brief overview of the science behind the model.
 
 Reference documentation for the code has been generated using Doxygen and the resulting reference material can be accessed at https://COVE-model.github.io/COVE/documentation/html/index.html[COVE Doxygen Documentation].
 
@@ -39,9 +41,14 @@ equilibrium shoreface as it advances /retreats.
 of breaking waves. Gradients in alongshore transport dictate whether the shoreline advances or retreats.
 ====
 
-image::shoreface_section.png[title="Change in shoreline position viewed in schematic cross section. Planar beach sloepe extends down to the depth of the shoreface. Shoreface danvances or retreats across the shelf",width="300",align="center"]
+image::shoreface_section.png[title="Change in shoreline position viewed in schematic cross section. Planar beach sloepe extends down to the depth of the shoreface. Shoreface advances or retreats across the shelf",width="300",align="center"]
+
+image::parallel_contours.pdf.png[title="Schematic planform diagram of a coastline with shore-parallel depth contours, as assumed in one-line models",width="300",align="center"]
 
 === Governing equation
+
+Previous one-line models have cast the conservation of sediment in a gridded cartesian framework, relative to the general orientation of the coastline (the latexmath:[x]-coordinate). The result is that coastal cells are rectangular and either prograde or regress perpendicular to the general orientation of the coastline (the latexmath:[y]-coordinate):
+
 The conservation equation for beach sediment expressed in terms of local coordinates states that the change in position of the shoreline latexmath:[d\eta], perpendicular to the local shoreline orientation latexmath:[s] through time latexmath:[t] is a function of the divergence of alongshore sediment flux latexmath:[Q_{ls}]:
 
 latexmath:[\frac{d\eta}{dt} = f\left(\frac{dQ_{ls}}{ds}\right)]
@@ -81,7 +88,7 @@ The result is that we can run simlutaions at decadal timescales to explore the i
 
 == Software Requirements
 
-COVE is written in C++, partly for efficiency but also to allow us to take advantage of running ensembles of simulations on UNIX high performance computing (HPC) clusters. The code has been written and tested in a Linux/UNIX environment, but has not been tested on Mac or Windows (we will doing this soon). So for now, you`re going to need to be/get familiar with working at a command line interface. 
+COVE is written in C++, partly for efficiency but also to allow us to take advantage of running ensembles of simulations on UNIX high performance computing (HPC) clusters. The code has been written and tested extensively in a Linux/UNIX environment, and has also been compiled and run on Windows using Code::Blocks, but has not been tested on Mac. So for now, you`re going to need to be/get familiar with working at a command line interface. 
 
 There are a number of software requirements to run the model and visualise the results.
 ====
@@ -117,6 +124,11 @@ Some of these can really increase productivity while writing code.
 ==== Python
 
 Python is a programming language that is great for analysing and visualising data, and is used here to visualise the output of COVE and running further analyses on model results. Again Python comes preinstalled on Ubuntu, but you could also use it on Windows/Mac. The key package required is https://www.scipy.org/[SciPy] ("scientific python"), which includes NumPy and Matplotlib. These are included with Ubuntu`s preinstalled version of Python. 
+
+It is recommended that you install a Python IDE in order to run plotting functions and perform post-processing. The preferred IDE is https://pythonhosted.org/spyder/[Spyder]. The easiest way to install is from the command line:
+----
+$ sudo apt-get install spyder
+----
 
 ==== Mencoder
 

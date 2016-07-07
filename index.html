@@ -5,7 +5,7 @@
 <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 1.5.4">
-<meta name="author" content="Martin D. Hurst, Andrew Barkwith, Christopher W. Thomas, Michael A. Ellis, A. Brad Murray">
+<meta name="author" content="Martin D. Hurst &lt;Martin.Hurst@glasgow.ac.uk&gt;, Andrew Barkwith, Christopher W. Thomas, Michael A. Ellis, A. Brad Murray">
 <title>COVE: Coastal Vector Evolution Model</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
 <style>
@@ -513,7 +513,7 @@ table.CodeRay td.code>pre{padding:0}
 <div id="header">
 <h1>COVE: Coastal Vector Evolution Model</h1>
 <div class="details">
-<span id="author" class="author">Martin D. Hurst, Andrew Barkwith, Christopher W. Thomas, Michael A. Ellis, A. Brad Murray</span><br>
+<span id="author" class="author">Martin D. Hurst &lt;Martin.Hurst@glasgow.ac.uk&gt;, Andrew Barkwith, Christopher W. Thomas, Michael A. Ellis, A. Brad Murray</span><br>
 </div>
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
@@ -589,7 +589,10 @@ table.CodeRay td.code>pre{padding:0}
 <h2 id="_introduction">1. Introduction</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>This is the documentation for COVE, the COastal Vector Evolution model - a vector-based one-line coastal evolution model. The model was presented and used in a <a href="http://onlinelibrary.wiley.com/doi/10.1002/2015JF003704/abstract">paper</a> on the evolution of crenulate bays published in the <em>Journal of Geophysical Research Earth Surface</em> (<a href="http://onlinelibrary.wiley.com/doi/10.1002/2015JF003704/abstract">Hurst et al., 2015</a>). The model is intended for research purposes, exploring coastal behaviour and sensitiviy. If you are interested in working with COVE, we would encourage you to <a href="mailto:martin.hurst@glasgow.ac.uk">get in touch</a> and work with us. In this introduction, we will give a brief overview of the science behind the model.</p>
+<p>This is the documentation for COVE, the COastal Vector Evolution model - a vector-based one-line coastal evolution model. The model was presented and used in a <a href="http://onlinelibrary.wiley.com/doi/10.1002/2015JF003704/abstract">paper</a> on the evolution of crenulate bays published in the <em>Journal of Geophysical Research Earth Surface</em> (<a href="http://onlinelibrary.wiley.com/doi/10.1002/2015JF003704/abstract">Hurst et al., 2015</a>). The model is intended for research purposes, exploring coastal behaviour and sensitiviy.</p>
+</div>
+<div class="paragraph">
+<p>The model is intended for research purposes. It is released under a <a href="http://www.gnu.org/licenses/gpl-3.0.en.html">GNU General Public Licence</a>. If you are interested in working with COVE, we would encourage you to <a href="mailto:martin.hurst@glasgow.ac.uk">get in touch</a> and work with us. In this introduction, we will give a brief overview of the science behind the model.</p>
 </div>
 <div class="paragraph">
 <p>Reference documentation for the code has been generated using Doxygen and the resulting reference material can be accessed at <a href="https://COVE-model.github.io/COVE/documentation/html/index.html">COVE Doxygen Documentation</a>.</p>
@@ -656,7 +659,13 @@ of breaking waves. Gradients in alongshore transport dictate whether the shoreli
 <div class="content">
 <img src="./images//shoreface_section.png" alt="shoreface section" width="300">
 </div>
-<div class="title">Figure 1. Change in shoreline position viewed in schematic cross section. Planar beach sloepe extends down to the depth of the shoreface. Shoreface danvances or retreats across the shelf</div>
+<div class="title">Figure 1. Change in shoreline position viewed in schematic cross section. Planar beach sloepe extends down to the depth of the shoreface. Shoreface advances or retreats across the shelf</div>
+</div>
+<div class="imageblock" style="text-align: center">
+<div class="content">
+<img src="./images//parallel_contours.pdf.png" alt="parallel contours.pdf" width="300">
+</div>
+<div class="title">Figure 2. Schematic planform diagram of a coastline with shore-parallel depth contours, as assumed in one-line models</div>
 </div>
 </div>
 <div class="sect2">
@@ -693,7 +702,7 @@ and angle \(\alpha_b\) of breaking waves. For example, in the simplest case of f
 <div class="content">
 <img src="./images//limber_cliff_retreat.png" alt="limber cliff retreat" width="500">
 </div>
-<div class="title">Figure 2. Schematic illustration of retreating cliff and beach. Relationship between beach width and cliff retreat rate is humped and nonlinear. For thin beaches, cliff retreat increases with beach width due to increased availability of "tools" to aid erosion. Wider beaches cause reduced cliff retreat, protecting the cliff by dissipating wave energy (after Limber and Murray, 2011).</div>
+<div class="title">Figure 3. Schematic illustration of retreating cliff and beach. Relationship between beach width and cliff retreat rate is humped and nonlinear. For thin beaches, cliff retreat increases with beach width due to increased availability of "tools" to aid erosion. Wider beaches cause reduced cliff retreat, protecting the cliff by dissipating wave energy (after Limber and Murray, 2011).</div>
 </div>
 <div class="paragraph">
 <p>The result is that we can run simlutaions at decadal timescales to explore the interactions between coastal erosion and alongshore sediment dynamics.</p>
@@ -753,7 +762,7 @@ and angle \(\alpha_b\) of breaking waves. For example, in the simplest case of f
 <h2 id="_software_requirements">2. Software Requirements</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>COVE is written in C++, partly for efficiency but also to allow us to take advantage of running ensembles of simulations on UNIX high performance computing (HPC) clusters. The code has been written and tested in a Linux/UNIX environment, but has not been tested on Mac or Windows (we will doing this soon). So for now, you`re going to need to be/get familiar with working at a command line interface.</p>
+<p>COVE is written in C++, partly for efficiency but also to allow us to take advantage of running ensembles of simulations on UNIX high performance computing (HPC) clusters. The code has been written and tested extensively in a Linux/UNIX environment, and has also been compiled and run on Windows using Code::Blocks, but has not been tested on Mac. So for now, you`re going to need to be/get familiar with working at a command line interface.</p>
 </div>
 <div class="paragraph">
 <p>There are a number of software requirements to run the model and visualise the results.</p>
@@ -818,6 +827,14 @@ and angle \(\alpha_b\) of breaking waves. For example, in the simplest case of f
 <h4 id="_python">2.1.4. Python</h4>
 <div class="paragraph">
 <p>Python is a programming language that is great for analysing and visualising data, and is used here to visualise the output of COVE and running further analyses on model results. Again Python comes preinstalled on Ubuntu, but you could also use it on Windows/Mac. The key package required is <a href="https://www.scipy.org/">SciPy</a> ("scientific python"), which includes NumPy and Matplotlib. These are included with Ubuntu`s preinstalled version of Python.</p>
+</div>
+<div class="paragraph">
+<p>It is recommended that you install a Python IDE in order to run plotting functions and perform post-processing. The preferred IDE is <a href="https://pythonhosted.org/spyder/">Spyder</a>. The easiest way to install is from the command line:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>$ sudo apt-get install spyder</pre>
+</div>
 </div>
 </div>
 <div class="sect3">
@@ -1027,7 +1044,7 @@ global_variables.hpp
 <div class="content">
 <img src="./images//spiral_bay_example.png" alt="spiral bay example" width="500">
 </div>
-<div class="title">Figure 3. Example model output for a spiral bay showing the evolution of the bay through time from a starting condition of a straight coastline pinned by two headlands/sea walls. Model evolves to a condition of equilibrium where the coastal morphology changes little through time.</div>
+<div class="title">Figure 4. Example model output for a spiral bay showing the evolution of the bay through time from a starting condition of a straight coastline pinned by two headlands/sea walls. Model evolves to a condition of equilibrium where the coastal morphology changes little through time.</div>
 </div>
 <div class="paragraph">
 <p>Additionally, below will be a link to a video of a spiral bay evolving, which will be hosted on Vimeo once I have time to work out how to do it (MDH).</p>
@@ -1307,7 +1324,7 @@ CoastVector.TransportSediment(TimeStep, MyWave, CliffVector);</code></pre>
 <div class="content">
 <img src="./images//spiral_bay_example.png" alt="spiral bay example" width="500">
 </div>
-<div class="title">Figure 4. Example model output for a spiral bay showing the evolution of the bay through time from a starting condition of a straight coastline pinned by two headlands/sea walls. Model evolves to a condition of equilibrium where the coastal morphology changes little through time.</div>
+<div class="title">Figure 5. Example model output for a spiral bay showing the evolution of the bay through time from a starting condition of a straight coastline pinned by two headlands/sea walls. Model evolves to a condition of equilibrium where the coastal morphology changes little through time.</div>
 </div>
 </div>
 </div>
@@ -1397,7 +1414,7 @@ Time | Y[0] | Y[1] | Y[2] =====&gt; Y[NoNodes]</pre>
 <div class="content">
 <img src="./images//coastline_orientation.png" alt="coastline orientation" width="500">
 </div>
-<div class="title">Figure 5. Google Earth image of the coastline of Suffolk between Lowestoft and Southwold showing the beginning and end of the coastline vector the correct way around.</div>
+<div class="title">Figure 6. Google Earth image of the coastline of Suffolk between Lowestoft and Southwold showing the beginning and end of the coastline vector the correct way around.</div>
 </div>
 <div class="paragraph">
 <p>The third file required is a cliff type file. This tells the model whether a cliff node can erode or is fixed (this can later be expanded to include different types of geology). Currently a value of 1 represents a fixed coast (e.g. defended by sea wall/revetment) and a value of 0 is a normal erodible cliff. The file format is a header line followed by two columns, one for the node index (<code>i=0</code> to <code>i=NoNodes-1</code>) and the second for the cliff type integer.</p>
@@ -1634,7 +1651,7 @@ CliffVector.ErodeCliff(TimeStep, CoastVector, ErosionType);</code></pre>
 <div class="content">
 <img src="./images//benacre_output.png" alt="benacre output" width="300">
 </div>
-<div class="title">Figure 6. Example model output from the Suffolk coast showing the stretch of coastline between Lowestoft and Southwold.</div>
+<div class="title">Figure 7. Example model output from the Suffolk coast showing the stretch of coastline between Lowestoft and Southwold.</div>
 </div>
 <div class="paragraph">
 <p>The python script creates a file called filelist.txt which contains a list of all the output filenames. These frames can then be stitched together to create a video of the coastline evolving using <a href="https://en.wikipedia.org/wiki/MEncoder">Mencoder</a>, a command line tool that is part of <a href="http://www.mplayerhq.hu/design7/news.html">MPlayer</a> that allows you to encode video files. Thus once you have run the python script, you can run the following command to stich the output together into a nice video:</p>
@@ -1952,7 +1969,7 @@ Time | Y[0] | Y[1] | Y[2] =====&gt; Y[NoNodes]</pre>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2016-06-23 16:51:28 BST
+Last updated 2016-07-07 13:59:55 BST
 </div>
 </div>
 <script type="text/x-mathjax-config">

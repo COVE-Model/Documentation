@@ -53,7 +53,7 @@ image::rectangular_cells.pdf.png[title="Schematic planform diagram of a coastlin
 
 Given the assumption that the evolution of the coastline is driven by gradients in alongshore sediment transport, the conservation equation for this setup (e.g. Ashton and Murray, 2006) states that the change of position of the coast latexmath:[y] is equal to the divergence in alongshore sediment flux latexmath:[Q_{ls}] divided by the shoreface depth latexmath:[D_{sf}]:
 
-latexmath:[\frac{dy}{dt} = \frac{1}{D_{sf}\left(\frac{dQ_{ls}}{dx}\right)]
+latexmath:[\frac{dy}{dt} = \frac{1}{D_{sf}}\left(\frac{dQ_{ls}}{dx}\right)]
 
 However, when the shoreline has high planform curvature, this equation becomes difficult to apply as the principle of conservation of mass is violated. Ashton and Murray (2006) dealt with this problem through the use of a cellular model. Alternatively, it has been proposed to use a local coordinate system (LeBlond, 1972; Kaergaard and Fredsoe, 2013). 
 
@@ -63,7 +63,7 @@ latexmath:[\frac{d\eta}{dt} = f\left(\frac{dQ_{ls}}{ds}\right)]
 
 The nature of the function is dependent on the geometry of shoreline cells. If we were to use rectilinear cells we would violate mass conservation because the cells would either diverge or converge offshore, depending on the planform curvature of the shoreline (i.e. convex offshore vs concave offshore respectively).
 
-image::mass_balance_errors.png[title="Schematic planform diagram of a coastline where rectilinear cells, orientated perpendicular to the local coastline orientation, are assumed to extend down to the bottom of the shoreface. Some cells diverge where the shoreline is convex-seaward, whilst others overlap where the shoreline is concave",width="300",align="center"] 
+image::mass_balance_errors.png[title="Schematic planform diagram of a coastline where rectilinear cells, orientated perpendicular to the local coastline orientation, are assumed to extend down to the bottom of the shoreface. Some cells diverge where the shoreline is convex-seaward, whilst others overlap where the shoreline is concave.",width="300",align="center"] 
 
 In COVE, coastline cells are not rectilinear, but rather triangular, trapezoidal or polygonal. The change of shoreline position for such cells is calculated by inverting quadratic and cubic equations for the volume of sediment in these cells (see http://onlinelibrary.wiley.com/doi/10.1002/2015JF003704/abstract[Hurst et al., 2015]).
 

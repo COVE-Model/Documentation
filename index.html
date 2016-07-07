@@ -522,9 +522,10 @@ table.CodeRay td.code>pre{padding:0}
 <ul class="sectlevel2">
 <li><a href="#_overview">1.1. Overview</a></li>
 <li><a href="#_governing_equation">1.2. Governing equation</a></li>
-<li><a href="#_alongshore_flux">1.3. Alongshore Flux</a></li>
-<li><a href="#_cliff_erosion">1.4. Cliff Erosion</a></li>
-<li><a href="#_model_requirements">1.5. Model requirements</a></li>
+<li><a href="#_cell_building_routine">1.3. Cell building routine</a></li>
+<li><a href="#_alongshore_flux">1.4. Alongshore Flux</a></li>
+<li><a href="#_cliff_erosion">1.5. Cliff Erosion</a></li>
+<li><a href="#_model_requirements">1.6. Model requirements</a></li>
 </ul>
 </li>
 <li><a href="#_software_requirements">2. Software Requirements</a>
@@ -685,14 +686,22 @@ of breaking waves. Gradients in alongshore transport dictate whether the shoreli
 <div class="paragraph">
 <p>However, when the shoreline has high planform curvature, this equation becomes difficult to apply as the principle of conservation of mass is violated. Ashton and Murray (2006) dealt with this problem through the use of a cellular model. Alternatively, it has been proposed to use a local coordinate system (LeBlond, 1972; Kaergaard and Fredsoe, 2013).</p>
 </div>
+<div class="sect3">
+<h4 id="_using_a_local_coordinate_system">1.2.1. Using a local coordinate system</h4>
 <div class="paragraph">
 <p>The conservation equation for beach sediment expressed in terms of local coordinates states that the change in position of the shoreline \(d\eta\), perpendicular to the local shoreline orientation \(s\) through time \(t\) is a function of the divergence of alongshore sediment flux \(Q_{ls}\):</p>
 </div>
 <div class="paragraph">
 <p>\(\frac{d\eta}{dt} = f\left(\frac{dQ_{ls}}{ds}\right)\)</p>
 </div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_cell_building_routine">1.3. Cell building routine</h3>
+<div class="sect3">
+<h4 id="_irregular_shoreline_cells">1.3.1. Irregular shoreline cells</h4>
 <div class="paragraph">
-<p>The nature of the function is dependent on the geometry of shoreline cells. If we were to use rectilinear cells we would violate mass conservation because the cells would either diverge or converge offshore, depending on the planform curvature of the shoreline (i.e. convex offshore vs concave offshore respectively).</p>
+<p>The nature of the conservation of mass function is dependent on the geometry of shoreline cells. If we were to use rectilinear cells we would violate mass conservation because the cells would either diverge or converge offshore, depending on the planform curvature of the shoreline (i.e. convex offshore vs concave offshore respectively).</p>
 </div>
 <div class="imageblock" style="text-align: center">
 <div class="content">
@@ -704,8 +713,38 @@ of breaking waves. Gradients in alongshore transport dictate whether the shoreli
 <p>In COVE, coastline cells are not rectilinear, but rather triangular, trapezoidal or polygonal. The change of shoreline position for such cells is calculated by inverting quadratic and cubic equations for the volume of sediment in these cells (see <a href="http://onlinelibrary.wiley.com/doi/10.1002/2015JF003704/abstract">Hurst et al., 2015</a>).</p>
 </div>
 </div>
+<div class="sect3">
+<h4 id="_cell_geometry">1.3.2. Cell geometry</h4>
+<div class="paragraph">
+<p>Each coastline node has an orientation calculated as the azimuth angle of a vector connecting the two adjacent nodes. Cell edges seperating adjacent cells have an orientation that is perpendicular to imaginary lines between the node of interest and each adjacent node, and they bisect these lines. The cell is thus defined by the cell width at the shoreline \(W_0\), and two angles describing the difference between the cell orientation and the cell boundary orientations \(\eta_1\) and \(\eta_2\) for the upcoast and downcoast boundaries respectively.</p>
+</div>
+<div class="imageblock" style="text-align: center">
+<div class="content">
+<img src="./images//cell_geometry.png" alt="cell geometry" width="300">
+</div>
+<div class="title">Figure 4. Schematic planform diagram of a coastal cell built from the arrangement of coastal nodes.</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_mesh_building_algorithm">1.3.3. Mesh building algorithm</h4>
+<div class="paragraph">
+<p>The model builds coastal cells by projecting offshore the cell edges defined above. The procedure is as follows:
+. A priority queue is built so that cells with the largest value of latexmath:[\eta_1+eta_2] are prioritised.
+. Starting with the most acute, cell boundaries are projected offshore until&#8230;&#8203;
+.. They intersect, in which case the cell is closed and a new boundary for adjacent cells will be created from the intersection point, and adjacent cells will be added to the priority queue again; or
+.. The bottom of the shoreface \(D_{sf}\) is reached and the cell is closed by a straight line across the shoreface defining the bottom of the shoreface.
+. The procedure continues until all cells have been meshed.</p>
+</div>
+<div class="imageblock" style="text-align: center">
+<div class="content">
+<img src="./images//meshing.png" alt="meshing" width="300">
+</div>
+<div class="title">Figure 5. Plan view of a shoreline with cells built using the mesh building algorithm. Coastal cells built by projecting cell boundaries seaward until they intersect, starting from the most concave-seaward cell. The order in which cell building proceeds is numbered. When cell boundaries intersect, the mean orientation of contributing cell edges determines the direction in which the projection continues.</div>
+</div>
+</div>
+</div>
 <div class="sect2">
-<h3 id="_alongshore_flux">1.3. Alongshore Flux</h3>
+<h3 id="_alongshore_flux">1.4. Alongshore Flux</h3>
 <div class="paragraph">
 <p>Bulk alongshore sediment flux is driven by waves breaking on the shoreface. Typically in alongshore transport laws, flux depends on the height \(H_b\)
 and angle \(\alpha_b\) of breaking waves. For example, in the simplest case of fine/medium sand, COVE uses the CERC equation:</p>
@@ -718,7 +757,7 @@ and angle \(\alpha_b\) of breaking waves. For example, in the simplest case of f
 </div>
 </div>
 <div class="sect2">
-<h3 id="_cliff_erosion">1.4. Cliff Erosion</h3>
+<h3 id="_cliff_erosion">1.5. Cliff Erosion</h3>
 <div class="paragraph">
 <p>Cliffs are represented in the model as a separate line. The cliffline and coastline interact to determine how wide the beach is locally. Eroded cliff material is provided to the adjacent beach and causes the shoreface to advance. Cliff erosion is controlled by beach width since a wider beach provide energy dissipation and protection from approaching waves. Figure 2 shows a schematic graph of this relationship, as well as a conceptual diagram of the representation and relationship of the cliff and the beach.</p>
 </div>
@@ -726,16 +765,16 @@ and angle \(\alpha_b\) of breaking waves. For example, in the simplest case of f
 <div class="content">
 <img src="./images//limber_cliff_retreat.png" alt="limber cliff retreat" width="500">
 </div>
-<div class="title">Figure 4. Schematic illustration of retreating cliff and beach. Relationship between beach width and cliff retreat rate is humped and nonlinear. For thin beaches, cliff retreat increases with beach width due to increased availability of "tools" to aid erosion. Wider beaches cause reduced cliff retreat, protecting the cliff by dissipating wave energy (after Limber and Murray, 2011).</div>
+<div class="title">Figure 6. Schematic illustration of retreating cliff and beach. Relationship between beach width and cliff retreat rate is humped and nonlinear. For thin beaches, cliff retreat increases with beach width due to increased availability of "tools" to aid erosion. Wider beaches cause reduced cliff retreat, protecting the cliff by dissipating wave energy (after Limber and Murray, 2011).</div>
 </div>
 <div class="paragraph">
 <p>The result is that we can run simlutaions at decadal timescales to explore the interactions between coastal erosion and alongshore sediment dynamics.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_model_requirements">1.5. Model requirements</h3>
+<h3 id="_model_requirements">1.6. Model requirements</h3>
 <div class="sect3">
-<h4 id="_data">1.5.1. Data</h4>
+<h4 id="_data">1.6.1. Data</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -751,7 +790,7 @@ and angle \(\alpha_b\) of breaking waves. For example, in the simplest case of f
 </div>
 </div>
 <div class="sect3">
-<h4 id="_boundary_conditions">1.5.2. Boundary Conditions</h4>
+<h4 id="_boundary_conditions">1.6.2. Boundary Conditions</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -1068,7 +1107,7 @@ global_variables.hpp
 <div class="content">
 <img src="./images//spiral_bay_example.png" alt="spiral bay example" width="500">
 </div>
-<div class="title">Figure 5. Example model output for a spiral bay showing the evolution of the bay through time from a starting condition of a straight coastline pinned by two headlands/sea walls. Model evolves to a condition of equilibrium where the coastal morphology changes little through time.</div>
+<div class="title">Figure 7. Example model output for a spiral bay showing the evolution of the bay through time from a starting condition of a straight coastline pinned by two headlands/sea walls. Model evolves to a condition of equilibrium where the coastal morphology changes little through time.</div>
 </div>
 <div class="paragraph">
 <p>Additionally, below will be a link to a video of a spiral bay evolving, which will be hosted on Vimeo once I have time to work out how to do it (MDH).</p>
@@ -1348,7 +1387,7 @@ CoastVector.TransportSediment(TimeStep, MyWave, CliffVector);</code></pre>
 <div class="content">
 <img src="./images//spiral_bay_example.png" alt="spiral bay example" width="500">
 </div>
-<div class="title">Figure 6. Example model output for a spiral bay showing the evolution of the bay through time from a starting condition of a straight coastline pinned by two headlands/sea walls. Model evolves to a condition of equilibrium where the coastal morphology changes little through time.</div>
+<div class="title">Figure 8. Example model output for a spiral bay showing the evolution of the bay through time from a starting condition of a straight coastline pinned by two headlands/sea walls. Model evolves to a condition of equilibrium where the coastal morphology changes little through time.</div>
 </div>
 </div>
 </div>
@@ -1438,7 +1477,7 @@ Time | Y[0] | Y[1] | Y[2] =====&gt; Y[NoNodes]</pre>
 <div class="content">
 <img src="./images//coastline_orientation.png" alt="coastline orientation" width="500">
 </div>
-<div class="title">Figure 7. Google Earth image of the coastline of Suffolk between Lowestoft and Southwold showing the beginning and end of the coastline vector the correct way around.</div>
+<div class="title">Figure 9. Google Earth image of the coastline of Suffolk between Lowestoft and Southwold showing the beginning and end of the coastline vector the correct way around.</div>
 </div>
 <div class="paragraph">
 <p>The third file required is a cliff type file. This tells the model whether a cliff node can erode or is fixed (this can later be expanded to include different types of geology). Currently a value of 1 represents a fixed coast (e.g. defended by sea wall/revetment) and a value of 0 is a normal erodible cliff. The file format is a header line followed by two columns, one for the node index (<code>i=0</code> to <code>i=NoNodes-1</code>) and the second for the cliff type integer.</p>
@@ -1675,7 +1714,7 @@ CliffVector.ErodeCliff(TimeStep, CoastVector, ErosionType);</code></pre>
 <div class="content">
 <img src="./images//benacre_output.png" alt="benacre output" width="300">
 </div>
-<div class="title">Figure 8. Example model output from the Suffolk coast showing the stretch of coastline between Lowestoft and Southwold.</div>
+<div class="title">Figure 10. Example model output from the Suffolk coast showing the stretch of coastline between Lowestoft and Southwold.</div>
 </div>
 <div class="paragraph">
 <p>The python script creates a file called filelist.txt which contains a list of all the output filenames. These frames can then be stitched together to create a video of the coastline evolving using <a href="https://en.wikipedia.org/wiki/MEncoder">Mencoder</a>, a command line tool that is part of <a href="http://www.mplayerhq.hu/design7/news.html">MPlayer</a> that allows you to encode video files. Thus once you have run the python script, you can run the following command to stich the output together into a nice video:</p>
@@ -1993,7 +2032,7 @@ Time | Y[0] | Y[1] | Y[2] =====&gt; Y[NoNodes]</pre>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2016-07-07 15:56:09 BST
+Last updated 2016-07-07 17:11:42 BST
 </div>
 </div>
 <script type="text/x-mathjax-config">

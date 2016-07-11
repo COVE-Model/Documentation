@@ -585,7 +585,6 @@ table.CodeRay td.code>pre{padding:0}
 <img src="./images//COVE_logo.png" alt="COVE logo" width="100" height="100">
 </div>
 </div>
-<div style="page-break-after: always;"></div>
 </div>
 </div>
 <div class="sect1">
@@ -667,7 +666,7 @@ of breaking waves. Gradients in alongshore transport dictate whether the shoreli
 </div>
 <div class="imageblock" style="text-align: center">
 <div class="content">
-<img src="./images//parallel_contours.pdf.png" alt="parallel contours.pdf" width="300">
+<img src="./images//parallel_contours.png" alt="parallel contours" width="300">
 </div>
 <div class="title">Figure 2. Schematic planform diagram of a coastline with shore-parallel depth contours, as assumed in one-line models</div>
 </div>
@@ -678,7 +677,7 @@ of breaking waves. Gradients in alongshore transport dictate whether the shoreli
 <p>Previous one-line models have cast the conservation of sediment in a gridded cartesian framework, relative to the general orientation of the coastline (the \(x\)-coordinate). The result is that coastal cells are rectangular and either prograde or regress perpendicular to the general orientation of the coastline (the \(y\)-coordinate):</p>
 </div>
 <div class="paragraph">
-<p>image::rectangular_cells.pdf.png[title="Schematic planform diagram of a coastline with rectilinear cells orientated perpendicular to the general trend of the shoreline, as assumed in one-line models. The shoreline either advances or retreats in the \(y\) direction",width="300",align="center"]</p>
+<p>image::rectangular_cells.png[title="Schematic planform diagram of a coastline with rectilinear cells orientated perpendicular to the general trend of the shoreline, as assumed in one-line models. The shoreline either advances or retreats in the \(y\) direction",width="300",align="center"]</p>
 </div>
 <div class="paragraph">
 <p>Given the assumption that the evolution of the coastline is driven by gradients in alongshore sediment transport, the conservation equation for this setup (e.g. Ashton and Murray, 2006) states that the change of position of the coast \(y\) is equal to the divergence in alongshore sediment flux \(Q_{ls}\) divided by the shoreface depth \(D_{sf}\):</p>
@@ -1703,11 +1702,11 @@ CoastVector.WriteCoast(WriteCoastFile, Time);</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>COVE/driver_files$ ./Straight_Periodic.out 0.55 0.7</pre>
+<pre>COVE/driver_files$ ./Straight_Periodic.out 0.7 0.5</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>This will run the model with 55% of waves coming from high angle, and 70% of waves coming from the north-east quadrant. This should result in the formation of sand waves that migrate down the coast (untested!). We should also be able to observe waves that migrate off the bottom of the model domain reappearing at the top.</p>
+<p>This will run the model with 70% of waves coming from high angle, and 50% of waves coming from the north-east quadrant. This should result in the formation of sand waves that migrate down the coast (untested!). We should also be able to observe waves that migrate off the bottom of the model domain reappearing at the top.</p>
 </div>
 <div class="paragraph">
 <p>While running the model will print the current model time to screen, and may also print some other messages recording unusual model behaviour!</p>
@@ -1716,11 +1715,11 @@ CoastVector.WriteCoast(WriteCoastFile, Time);</code></pre>
 <div class="sect3">
 <h4 id="_plotting_the_results_3">5.3.9. Plotting the results</h4>
 <div class="paragraph">
-<p>To plot the results of this run, we are going to create an animation! Open the file <code>filename_here.py</code> in your favourite python IDE, and run. You should get a series of figures whose file names are numbered sequentially and each looks a bit like this:</p>
+<p>To plot the results of this run, we are going to create an animation! Open the file <code>plot_periodic_animation.py</code> in your favourite python IDE, and run. You should get a series of figures whose file names are numbered sequentially and each looks a bit like this:</p>
 </div>
 <div class="imageblock" style="text-align: center">
 <div class="content">
-<img src="./images//benacre_output.png" alt="benacre output" width="300">
+<img src="./images//periodic_output.png" alt="periodic output" width="500">
 </div>
 <div class="title">Figure 10. Example model output from periodic boundary run.</div>
 </div>
@@ -2489,7 +2488,7 @@ Time | Y[0] | Y[1] | Y[2] =====&gt; Y[NoNodes]</pre>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2016-07-08 14:02:46 BST
+Last updated 2016-07-11 12:02:54 BST
 </div>
 </div>
 <script type="text/x-mathjax-config">

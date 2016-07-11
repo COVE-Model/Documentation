@@ -709,19 +709,19 @@ COVE/driver_files$ make -f straight_periodic_make.make
 This should create an executable file called `Straight_Periodic.out` which can be launched from the command line. The program requires two input arguments, _U_ and _A_: 
 
 ----
-COVE/driver_files$ ./Straight_Periodic.out 0.55 0.7
+COVE/driver_files$ ./Straight_Periodic.out 0.7 0.5
 ---- 
 
-This will run the model with 55% of waves coming from high angle, and 70% of waves coming from the north-east quadrant. This should result in the formation of sand waves that migrate down the coast (untested!). We should also be able to observe waves that migrate off the bottom of the model domain reappearing at the top.
+This will run the model with 70% of waves coming from high angle, and 50% of waves coming from the north-east quadrant. This should result in the formation of sand waves that migrate down the coast (untested!). We should also be able to observe waves that migrate off the bottom of the model domain reappearing at the top.
 
 While running the model will print the current model time to screen, and may also print some other messages recording unusual model behaviour!
 
 ==== Plotting the results
 
-To plot the results of this run, we are going to create an animation! Open the file `filename_here.py` in your favourite python IDE, and run. You should get a series of figures whose file names are numbered sequentially and each looks a bit like this:
+To plot the results of this run, we are going to create an animation! Open the file `plot_periodic_animation.py` in your favourite python IDE, and run. You should get a series of figures whose file names are numbered sequentially and each looks a bit like this:
 
 .Example model output from periodic boundary run. 
-image::benacre_output.png[width="300",align="center"]
+image::periodic_output.png[width="500",align="center"]
 
 The python script creates a file called filelist.txt which contains a list of all the output filenames. These frames can then be stitched together to create a video of the coastline evolving using https://en.wikipedia.org/wiki/MEncoder[Mencoder], a command line tool that is part of http://www.mplayerhq.hu/design7/news.html[MPlayer] that allows you to encode video files (Linux only). Thus once you have run the python script, you can run the following command to stich the output together into a nice video:
 

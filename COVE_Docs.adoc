@@ -8,8 +8,6 @@ Martin D. Hurst <Martin.Hurst@glasgow.ac.uk>, Andrew Barkwith, Christopher W. Th
 
 image::COVE_logo.png[width="100", height="100"]
 
-<<<
-
 == Introduction
 
 This is the documentation for COVE, the COastal Vector Evolution model - a vector-based one-line coastal evolution model. The model was presented and used in a http://onlinelibrary.wiley.com/doi/10.1002/2015JF003704/abstract[paper] on the evolution of crenulate bays published in the _Journal of Geophysical Research Earth Surface_ (http://onlinelibrary.wiley.com/doi/10.1002/2015JF003704/abstract[Hurst et al., 2015]). The model is intended for research purposes, exploring coastal behaviour and sensitiviy. 
@@ -47,13 +45,13 @@ of breaking waves. Gradients in alongshore transport dictate whether the shoreli
 
 image::shoreface_section.png[title="Change in shoreline position viewed in schematic cross section. Planar beach sloepe extends down to the depth of the shoreface. Shoreface advances or retreats across the shelf",width="300",align="center"]
 
-image::parallel_contours.pdf.png[title="Schematic planform diagram of a coastline with shore-parallel depth contours, as assumed in one-line models",width="300",align="center"]
+image::parallel_contours.png[title="Schematic planform diagram of a coastline with shore-parallel depth contours, as assumed in one-line models",width="300",align="center"]
 
 === Governing equation
 
 Previous one-line models have cast the conservation of sediment in a gridded cartesian framework, relative to the general orientation of the coastline (the latexmath:[x]-coordinate). The result is that coastal cells are rectangular and either prograde or regress perpendicular to the general orientation of the coastline (the latexmath:[y]-coordinate):
 
-image::rectangular_cells.pdf.png[title="Schematic planform diagram of a coastline with rectilinear cells orientated perpendicular to the general trend of the shoreline, as assumed in one-line models. The shoreline either advances or retreats in the latexmath:[y] direction",width="300",align="center"]
+image::rectangular_cells.png[title="Schematic planform diagram of a coastline with rectilinear cells orientated perpendicular to the general trend of the shoreline, as assumed in one-line models. The shoreline either advances or retreats in the latexmath:[y] direction",width="300",align="center"]
 
 Given the assumption that the evolution of the coastline is driven by gradients in alongshore sediment transport, the conservation equation for this setup (e.g. Ashton and Murray, 2006) states that the change of position of the coast latexmath:[y] is equal to the divergence in alongshore sediment flux latexmath:[Q_{ls}] divided by the shoreface depth latexmath:[D_{sf}]:
 

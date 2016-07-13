@@ -573,6 +573,11 @@ table.CodeRay td.code>pre{padding:0}
 </ul>
 </li>
 <li><a href="#_ensemble_mode">8. Ensemble mode</a></li>
+<li><a href="#_debugging">Appendix A: Debugging</a>
+<ul class="sectlevel2">
+<li><a href="#_the_gnu_debugger_gdb">A.1. The GNU Debugger (GDB)</a></li>
+</ul>
+</li>
 <li><a href="#_references">9. References</a></li>
 </ul>
 </div>
@@ -592,6 +597,24 @@ table.CodeRay td.code>pre{padding:0}
 <div class="sectionbody">
 <div class="paragraph">
 <p>This is the documentation for COVE, the COastal Vector Evolution model - a vector-based one-line coastal evolution model. The model was presented and used in a <a href="http://onlinelibrary.wiley.com/doi/10.1002/2015JF003704/abstract">paper</a> on the evolution of crenulate bays published in the <em>Journal of Geophysical Research Earth Surface</em> (<a href="http://onlinelibrary.wiley.com/doi/10.1002/2015JF003704/abstract">Hurst et al., 2015</a>). The model is intended for research purposes, exploring coastal behaviour and sensitiviy.</p>
+</div>
+<div class="imageblock" style="text-align: left">
+<div class="content">
+<img src="./images//bgslogo1000.png" alt="bgslogo1000" width="200">
+</div>
+</div>
+<div class="imageblock" style="text-align: left">
+<div class="content">
+<img src="./images//uofg_logo.png" alt="uofg logo" width="200">
+</div>
+</div>
+<div class="imageblock" style="text-align: left">
+<div class="content">
+<img src="./images//icoasst_logo.png" alt="icoasst logo" width="200">
+</div>
+</div>
+<div class="paragraph">
+<p>Development of COVE was lead by Martin D. Hurst at the British Geological Survey as part of a National Capability project to explore Environmental Sensitivity and Change within the Land, Soil and Coast Research Program directed by Michael A. Ellis. Development of COVE was also supported by the NERC and Environment Agency funded <a href="https://icoasst.net">iCOASST Project</a>.</p>
 </div>
 <div class="paragraph">
 <p>The model is intended for research purposes. It is released under a <a href="http://www.gnu.org/licenses/gpl-3.0.en.html">GNU General Public Licence</a>. If you are interested in working with COVE, we would encourage you to <a href="mailto:martin.hurst@glasgow.ac.uk">get in touch</a> and work with us. In this introduction, we will give a brief overview of the science behind the model.</p>
@@ -617,6 +640,9 @@ table.CodeRay td.code>pre{padding:0}
 </li>
 <li>
 <p>Alongshore sediment transport driven by the height and angle of breaking waves.</p>
+</li>
+<li>
+<p>Produces emergent landforms (such as capes and spits) and processes (wave shadowing)</p>
 </li>
 <li>
 <p>Retreat of cliffs governed by beach interaction (protection vs tools).</p>
@@ -780,7 +806,7 @@ and angle \(\alpha_b\) of breaking waves. For example, in the simplest case of f
 <div class="ulist">
 <ul>
 <li>
-<p>The model requires offshore (~10 m water depth) wave data. This can be obtained either from a wave buoy or preferably from distributed coastal area modelling predictions of wave conditions (e.g. <a href="http://fvcom.smast.umassd.edu/fvcom/">FVCOM</a> or <a href="http://www.swan.tudelft.nl/">SWAN</a>).</p>
+<p>The model requires offshore wave data. Offshore in this case is defined as waves that are unaffected by refraction, shoaling and shadowing at the shoreface. This can be obtained either from a wave buoy or preferably from distributed coastal area modelling predictions of wave conditions (e.g. <a href="http://fvcom.smast.umassd.edu/fvcom/">FVCOM</a> or <a href="http://www.swan.tudelft.nl/">SWAN</a>).</p>
 </li>
 <li>
 <p>The transport coefficient \(K_{ls}\) may be modified to account for the size of beach material (\(D_{50}\)). Calibration of this coefficient can be made from estimates of bulk alongshore transport or by calibration against a historical record of coastal change.</p>
@@ -920,16 +946,30 @@ and angle \(\alpha_b\) of breaking waves. For example, in the simplest case of f
 <div class="sect2">
 <h3 id="_windows">2.2. Windows</h3>
 <div class="paragraph">
-<p>Alternatively, if you prefer to continue using Windows, it is possible to get the model working using the <a href="http://www.codeblocks.org/home">Code::Blocks</a> IDE with <a href="http://www.mingw.org/">MinGW</a> (Minimalist GNU for Windows) compilers. The pair are available to install together <a href="http://sourceforge.net/projects/codeblocks/files/Binaries/16.01/Windows/">here</a>. We have not tested COVE extensively in this environment but the <a href="#Examples">examples</a> below all compile and run correctly from Code::Blocks.</p>
+<p>Alternatively, if you prefer to continue using Windows, then you have a couple of options:
+1. Use <a href="https://cygwin.com/index.html">Cygwin</a>; or
+2. Use the <a href="http://www.codeblocks.org/home">Code::Blocks</a> IDE with <a href="http://www.mingw.org/">MinGW</a> (Minimalist GNU for Windows) compilers. We have not tested COVE extensively in these environment but the <a href="#Examples">examples</a> below all compile and run correctly from Code::Blocks and Cygwin.</p>
 </div>
 <div class="sect3">
-<h4 id="_code_blocks">2.2.1. Code::Blocks</h4>
+<h4 id="_cygwin">2.2.1. Cygwin</h4>
+<div class="paragraph">
+<p>Cygwin is a collection of tools that provides functionality similar to a Linux distribution on Windows. It provides a Unix-like environment and command-line interface for Windows. You can install Cygwin by downloading one of the binaries found on the <a href="https://cygwin.com/install.html">installation page</a>. We will require certain packages to be installed to Cygwin, most notably the GNU GCC compilers and the GNU Debugger. A good guide for the installation process of Cygwin and the required packages can be found <a href="https://cygwin.com/install.html">here</a>. Once Cygwin is installed, all of the command line instructions for Linux found in this documentation can also be used with Cygwin.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_code_blocks">2.2.2. Code::Blocks</h4>
 <div class="paragraph">
 <p>Code::Blocks is an IDE with built in compiler and debugger functionality. Head to the <a href="http://sourceforge.net/projects/codeblocks/files/Binaries/16.01/Windows/">download page</a> for Code::Blocks and select the binary executable with the suffix "&#8230;&#8203;mingw_setup.exe". Run through the installation procedure selecting the default options. Once finished, Code::Blocks should load automatically.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_python_2">2.2.2. Python</h4>
+<h4 id="_notepad">2.2.3. Notepad++</h4>
+<div class="paragraph">
+<p>Notepad is a free text editor for Windows often recommended by developers, with support for several programming languages, including C. It can be <a href="https://notepad-plus-plus.org/download/">downloaded here</a>.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_python_2">2.2.4. Python</h4>
 <div class="paragraph">
 <p>Python is a programming language that is great for analysing and visualising data, and is used here to visualise the output of COVE and running further analyses on model results. The key package required is <a href="https://www.scipy.org/">SciPy</a> ("scientific python"), which includes NumPy and Matplotlib. If you are using Windows/Mac then we recommend installing a Python distribution such as <a href="https://www.continuum.io/why-anaconda">Anaconda</a>.</p>
 </div>
@@ -2456,6 +2496,200 @@ Time | Y[0] | Y[1] | Y[2] =====&gt; Y[NoNodes]</pre>
 </div>
 </div>
 <div class="sect1">
+<h2 id="_debugging">Appendix A: Debugging</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>This model is a developing research tool and may contain bugs or behave in an unexpected manner as new applications and study sites are tested and as code development is continues. Statements have been written into the model code to print to screen when unusual behaviour occurs, telling you where in the code this has happened, what the problem is, and what (if anything) the model has done to try and resolve the problem.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>Coastline: Initialising Coastline as straight segment
+	 MeanNodeSpacing = 50
+	 CoastLength = 2000
+	 Boundary Conditions = 2, 2
+
+
+Cliffline.Initialise: Warning, initialised an empty Cliffline object
+Coastline: Time is 1.10 years
+In TransportSediment at line 3829: Large Position Change, reducing timestep!
+In TransportSediment at line 3829: Large Position Change, reducing timestep!
+In TransportSediment at line 3829: Large Position Change, reducing timestep!</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>For example in the output above, we have recieved a warning that there is an empty Cliffline object (this is fine in certain circumstances), and a notification that a large position change in the coast has occurred. This is usually an indication that you need to reduce your model timestep, but may sometimes be indicative of some other problem within the model and is worthy of exploration.</p>
+</div>
+<div class="paragraph">
+<p>Often the best way to diagnose such a problem further, or understand what might be happening when the model fails to run completely, is to run the model in debug mode. Debug mode allows you to stop the model at any point, query what is going on, query the values of variables or find out exactly where and why the model fell over.</p>
+</div>
+<div class="sect2">
+<h3 id="_the_gnu_debugger_gdb">A.1. The GNU Debugger (GDB)</h3>
+<div class="paragraph">
+<p>During model development, debugging has principally taken place in the <a href="https://www.gnu.org/software/gdb/">GNU debugger (GDB)</a>. GDB is a command line tool for executing and controlling a model run within a debugging environment. Useful functionality includes the ability to:
+.pause and continue the model at any point, including where certain conditions are met,
+.catch memory dumps, segmentation faults, stack overflows, memory leaks etc. in the act,
+.print where abouts within the model structure the model is currently executing,
+.print the value of any variables or memory location to screen.</p>
+</div>
+<div class="paragraph">
+<p>Here, we will go through some basic commands to get started with debugging using GDB. More extensive instructions and examples can be found in abundance online, see for example <a href="http://www.yolinux.com/TUTORIALS/GDB-Commands.html">GDB Cheat Sheet</a>.</p>
+</div>
+<div class="sect3">
+<h4 id="_running_gdb">A.1.1. Running GDB</h4>
+<div class="paragraph">
+<p>The makefiles used for compiling COVE typically include the required flags to allow GDB to function correctly (you have to tell your compiler that you want to debug when you compile the code). To launch GDB for compiling a particular model (e.g. the spiral bay model executable), run the command:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>$ gdb spiral_bay.out</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You will be presented with the <code>(gdb)</code> console from which you can make commands to the debugger.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_running_the_model_in_debug_model">A.1.2. Running the model in debug model</h4>
+<div class="paragraph">
+<p>To run the model in debug mode, type run, followed by any required commandline arguments:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>(gdb) run 6 1 1. 0.1 35 25</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The model will execute as if you launched it from the command line, and all being well will complete. If you have already run the model once inside the current debug session, you can rerun by just typing <code>run</code>, without the additional arguments, and it will execute with the same arguments as the previous run.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_pausing_and_resuming_the_modeling">A.1.3. Pausing and resuming the modeling</h4>
+<div class="paragraph">
+<p>If you&#8217;d like to pause the model while it is running, press <code>CTRL-C</code> on your keyboard. You will be returned to the <code>(gdb)</code> console. To resume the model, type <code>c</code> at the console. When paused this way, we have no idea where abouts within the model it is paused.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_backtracing_to_find_out_where_we_are">A.1.4. Backtracing to find out where we are</h4>
+<div class="paragraph">
+<p>We can find out where in the model we have got to by typing:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>(gdb) backtrace</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This will print to screen a history of where the model has been to get to where it is currently:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>#0  Coastline::TransportSediment (this=0x7fffffffd900, TimeDelta=@0x7fffffffd520: 0.10000000000000001,
+    TheWave=..., CliffVector=...) at ../coastline.cpp:3838
+#1  0x000000000043d7c5 in main () at spiral_bay_driver.cpp:144</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This is telling us the model is #1 inside the <code>main</code> function of <code>spiral_bay_driver.cpp</code> at line 144. This happens to be the <code>TransportSediment</code> function, and #0 tells us that it is at line 3838 within that function in the 'coastline.cpp' file.</p>
+</div>
+<div class="paragraph">
+<p>The backtrace function can be particularly useful for pinpointing where memory leaks and segmentation faults have occurred if the model fails for one of these reasons.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_setting_break_points">A.1.5. Setting break points</h4>
+<div class="paragraph">
+<p>Before executing the model, or whilst paused, we can set up break points to tell the model to stop when it reaches a certain place in the code. For example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>(gdb) break spiral_bay_driver.cpp:186
+Breakpoint 1 at 0x424a16: file ../spiral_bay_driver.cpp, line 186.</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This tells the debugger to automatically break (pause) the model whenever line 186 in the <code>spiral_bay_driver.cpp</code> file is reached. This has been assigned a number Breakpoint 1.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_conditional_break_points">A.1.6. Conditional break points</h4>
+<div class="paragraph">
+<p>You can tell the debugger to only implement the break point if a particular conditions is met, using the same conditional syntax as you would use in C++ code. In the next command, we&#8217;ll tell the model to break when the variable <code>Time</code> is greater than 0.1, using the <code>cond</code> command, telling it to apply to Breakpoint 1, and telling it what the conditional statement is:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>(gdb) cond 1 Time &gt; 0.1
+(gdb) c</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Typing <code>c</code> for continue, or <code>run</code> to run/rerun the model will execute the model until this condition is met, upon which the model will pause/break.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_printing_variables_to_screen">A.1.7. Printing variables to screen</h4>
+<div class="paragraph">
+<p>In the case above, line 186 happens to be inside the main model loop. To see how much model time has elapsed, we can use the <code>print</code> (or <code>p</code> for short) command to display the <code>Time</code> variable on screen:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>(gdb) p Time
+$1 = 0.1001</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Telling us that Time has a value of 0.1. We can also access and print values from within objects, such as the coastline object called <code>CoastVector</code>. Let&#8217;s print the number of nodes in our coastline object:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>(gdb) p CoastVector.NoNodes
+$2 = 57</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>So there are 57 nodes. Another way you can find out how many nodes there are would be using</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>(gdb) p X.size()
+$3 = 57</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The coastline object <code>CoastVector</code> contains a variety of vectors, such as the <code>Orientation</code> vector. To print the whole vector, simply type:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>(gdb) p Orientation
+$9 = std::vector of length 57, capacity 57 = {315, 321.60094533591007, 22.216282736864009,
+  337.92083201072523, 331.46683943535487, 328.74000871549521, 328.56943628252139, 329.3837844925842,
+  331.03563876766952, 332.40559792862649, 332.82638125188163, 332.9245341437483, 332.93052241718527,
+  332.89505726491376, 332.83385098343905, 332.74888832616358, 332.64670360927767, 332.51956294297577,
+  332.37435404622971, 332.19187033915836, 331.98128493122556, 331.73952655625015, 331.45574672016079,
+  331.12294086709244, 330.75626492842684, 330.33227946333, 329.8343696059797, 329.28977634602285,
+  328.55965087010219, 327.69635559935881, 326.64424950907846, 325.53196699095071, 324.23753352499017,
+  322.87152718696478, 321.28662654854742, 319.48794541733355, 317.39883969083547, 315.31314397231881,
+  312.5481246023183, 309.3840749386398, 305.72483950877961, 300.26574163061139, 294.0715726264682,
+  287.02711087458448, 278.49458640312565, 270.15845682076986, 259.64212073586492, 250.94017797254546,
+  239.4529514946729, 226.11779089145259, 210.20538031715429, 191.46362690977978, 169.54150518072848,
+  146.8206916976348, 134.99530456698648, 315.00076908588517, 315.00076908588517}</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>If you jsut want to know what the Orientation of the first node or last node is, try:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>(gdb) p Orientation[0]
+$10 = 315
+(gdb) p Orientation[NoNodes-1]
+$11 = 315.00076908588517</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
 <h2 id="_references">9. References</h2>
 <div class="sectionbody">
 <div class="paragraph">
@@ -2488,7 +2722,7 @@ Time | Y[0] | Y[1] | Y[2] =====&gt; Y[NoNodes]</pre>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2016-07-11 12:02:54 BST
+Last updated 2016-07-13 17:17:12 BST
 </div>
 </div>
 <script type="text/x-mathjax-config">

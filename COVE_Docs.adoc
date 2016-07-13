@@ -10,7 +10,13 @@ image::COVE_logo.png[width="100", height="100"]
 
 == Introduction
 
-This is the documentation for COVE, the COastal Vector Evolution model - a vector-based one-line coastal evolution model. The model was presented and used in a http://onlinelibrary.wiley.com/doi/10.1002/2015JF003704/abstract[paper] on the evolution of crenulate bays published in the _Journal of Geophysical Research Earth Surface_ (http://onlinelibrary.wiley.com/doi/10.1002/2015JF003704/abstract[Hurst et al., 2015]). The model is intended for research purposes, exploring coastal behaviour and sensitiviy. 
+This is the documentation for COVE, the COastal Vector Evolution model - a vector-based one-line coastal evolution model. The model was presented and used in a http://onlinelibrary.wiley.com/doi/10.1002/2015JF003704/abstract[paper] on the evolution of crenulate bays published in the _Journal of Geophysical Research Earth Surface_ (http://onlinelibrary.wiley.com/doi/10.1002/2015JF003704/abstract[Hurst et al., 2015]). The model is intended for research purposes, exploring coastal behaviour and sensitiviy.
+
+image::bgslogo1000.png[width="200",align="left"]
+image::uofg_logo.png[width="200",align="left"]
+image::icoasst_logo.png[width="200",align="left"]
+
+Development of COVE was lead by Martin D. Hurst at the British Geological Survey as part of a National Capability project to explore Environmental Sensitivity and Change within the Land, Soil and Coast Research Program directed by Michael A. Ellis. Development of COVE was also supported by the NERC and Environment Agency funded https://icoasst.net[iCOASST Project].
 
 The model is intended for research purposes. It is released under a http://www.gnu.org/licenses/gpl-3.0.en.html[GNU General Public Licence]. If you are interested in working with COVE, we would encourage you to mailto:martin.hurst@glasgow.ac.uk[get in touch] and work with us. In this introduction, we will give a brief overview of the science behind the model.
 
@@ -22,6 +28,7 @@ Reference documentation for the code has been generated using Doxygen and the re
 - Application at spatial scales of kms to tens of kms, over decadal to millennial timescales.
 - Coastal change is driven by gradients in wave-generated alongshore sediment transport.
 - Alongshore sediment transport driven by the height and angle of breaking waves.
+- Produces emergent landforms (such as capes and spits) and processes (wave shadowing) 
 - Retreat of cliffs governed by beach interaction (protection vs tools).
 ====
 
@@ -111,7 +118,7 @@ The result is that we can run simlutaions at decadal timescales to explore the i
 === Model requirements
 
 ==== Data
-- The model requires offshore (~10 m water depth) wave data. This can be obtained either from a wave buoy or preferably from distributed coastal area modelling predictions of wave conditions (e.g. http://fvcom.smast.umassd.edu/fvcom/[FVCOM] or http://www.swan.tudelft.nl/[SWAN]).
+- The model requires offshore wave data. Offshore in this case is defined as waves that are unaffected by refraction, shoaling and shadowing at the shoreface. This can be obtained either from a wave buoy or preferably from distributed coastal area modelling predictions of wave conditions (e.g. http://fvcom.smast.umassd.edu/fvcom/[FVCOM] or http://www.swan.tudelft.nl/[SWAN]).
 - The transport coefficient latexmath:[K_{ls}] may be modified to account for the size of beach material (latexmath:[D_{50}]). Calibration of this coefficient can be made from estimates of bulk alongshore transport or by calibration against a historical record of coastal change.
 - Historical shoreline positions and legacy wave data allow training of the model to reproduce past geomorphic changes.
 
@@ -178,11 +185,21 @@ $ sudo apt install mencoder
 
 === Windows
 
-Alternatively, if you prefer to continue using Windows, it is possible to get the model working using the http://www.codeblocks.org/home[Code::Blocks] IDE with http://www.mingw.org/[MinGW] (Minimalist GNU for Windows) compilers. The pair are available to install together http://sourceforge.net/projects/codeblocks/files/Binaries/16.01/Windows/[here]. We have not tested COVE extensively in this environment but the <<Examples,examples>> below all compile and run correctly from Code::Blocks.
+Alternatively, if you prefer to continue using Windows, then you have a couple of options:
+1. Use https://cygwin.com/index.html[Cygwin]; or 
+2. Use the http://www.codeblocks.org/home[Code::Blocks] IDE with http://www.mingw.org/[MinGW] (Minimalist GNU for Windows) compilers. We have not tested COVE extensively in these environment but the <<Examples,examples>> below all compile and run correctly from Code::Blocks and Cygwin.
+
+==== Cygwin
+
+Cygwin is a collection of tools that provides functionality similar to a Linux distribution on Windows. It provides a Unix-like environment and command-line interface for Windows. You can install Cygwin by downloading one of the binaries found on the https://cygwin.com/install.html[installation page]. We will require certain packages to be installed to Cygwin, most notably the GNU GCC compilers and the GNU Debugger. A good guide for the installation process of Cygwin and the required packages can be found https://cygwin.com/install.html[here]. Once Cygwin is installed, all of the command line instructions for Linux found in this documentation can also be used with Cygwin.
 
 ==== Code::Blocks
 
 Code::Blocks is an IDE with built in compiler and debugger functionality. Head to the http://sourceforge.net/projects/codeblocks/files/Binaries/16.01/Windows/[download page] for Code::Blocks and select the binary executable with the suffix "...mingw_setup.exe". Run through the installation procedure selecting the default options. Once finished, Code::Blocks should load automatically.
+
+==== Notepad++
+
+Notepad++ is a free text editor for Windows often recommended by developers, with support for several programming languages, including C++. It can be https://notepad-plus-plus.org/download/[downloaded here].
 
 ==== Python
 
@@ -1307,6 +1324,154 @@ More details to follow. See the [Doxygen documentation] for the time being.
 == Ensemble mode
 
 Details to follow.
+
+[appendix]
+== Debugging
+
+This model is a developing research tool and may contain bugs or behave in an unexpected manner as new applications and study sites are tested and as code development is continues. Statements have been written into the model code to print to screen when unusual behaviour occurs, telling you where in the code this has happened, what the problem is, and what (if anything) the model has done to try and resolve the problem.
+
+----
+Coastline: Initialising Coastline as straight segment
+	 MeanNodeSpacing = 50
+	 CoastLength = 2000
+	 Boundary Conditions = 2, 2
+
+
+Cliffline.Initialise: Warning, initialised an empty Cliffline object
+Coastline: Time is 1.10 years
+In TransportSediment at line 3829: Large Position Change, reducing timestep!
+In TransportSediment at line 3829: Large Position Change, reducing timestep!
+In TransportSediment at line 3829: Large Position Change, reducing timestep!
+----
+
+For example in the output above, we have recieved a warning that there is an empty Cliffline object (this is fine in certain circumstances), and a notification that a large position change in the coast has occurred. This is usually an indication that you need to reduce your model timestep, but may sometimes be indicative of some other problem within the model and is worthy of exploration.
+
+Often the best way to diagnose such a problem further, or understand what might be happening when the model fails to run completely, is to run the model in debug mode. Debug mode allows you to stop the model at any point, query what is going on, query the values of variables or find out exactly where and why the model fell over. 
+
+=== The GNU Debugger (GDB)
+During model development, debugging has principally taken place in the https://www.gnu.org/software/gdb/[GNU debugger (GDB)]. GDB is a command line tool for executing and controlling a model run within a debugging environment. Useful functionality includes the ability to:
+.pause and continue the model at any point, including where certain conditions are met,
+.catch memory dumps, segmentation faults, stack overflows, memory leaks etc. in the act,
+.print where abouts within the model structure the model is currently executing,
+.print the value of any variables or memory location to screen.
+
+Here, we will go through some basic commands to get started with debugging using GDB. More extensive instructions and examples can be found in abundance online, see for example http://www.yolinux.com/TUTORIALS/GDB-Commands.html[GDB Cheat Sheet].
+
+==== Running GDB
+
+The makefiles used for compiling COVE typically include the required flags to allow GDB to function correctly (you have to tell your compiler that you want to debug when you compile the code). To launch GDB for compiling a particular model (e.g. the spiral bay model executable), run the command:
+
+----
+$ gdb spiral_bay.out
+----
+
+You will be presented with the `(gdb)` console from which you can make commands to the debugger. 
+
+==== Running the model in debug model
+
+To run the model in debug mode, type run, followed by any required commandline arguments:
+
+----
+(gdb) run 6 1 1. 0.1 35 25
+----
+
+The model will execute as if you launched it from the command line, and all being well will complete. If you have already run the model once inside the current debug session, you can rerun by just typing `run`, without the additional arguments, and it will execute with the same arguments as the previous run.
+
+==== Pausing and resuming the modeling
+
+If you'd like to pause the model while it is running, press `CTRL-C` on your keyboard. You will be returned to the `(gdb)` console. To resume the model, type `c` at the console. When paused this way, we have no idea where abouts within the model it is paused.
+
+==== Backtracing to find out where we are
+
+We can find out where in the model we have got to by typing:
+
+----
+(gdb) backtrace
+----
+
+This will print to screen a history of where the model has been to get to where it is currently:
+
+----
+#0  Coastline::TransportSediment (this=0x7fffffffd900, TimeDelta=@0x7fffffffd520: 0.10000000000000001, 
+    TheWave=..., CliffVector=...) at ../coastline.cpp:3838
+#1  0x000000000043d7c5 in main () at spiral_bay_driver.cpp:144
+----
+
+This is telling us the model is #1 inside the `main` function of `spiral_bay_driver.cpp` at line 144. This happens to be the `TransportSediment` function, and #0 tells us that it is at line 3838 within that function in the 'coastline.cpp' file.
+
+The backtrace function can be particularly useful for pinpointing where memory leaks and segmentation faults have occurred if the model fails for one of these reasons.
+
+==== Setting break points
+
+Before executing the model, or whilst paused, we can set up break points to tell the model to stop when it reaches a certain place in the code. For example:
+
+----
+(gdb) break spiral_bay_driver.cpp:186
+Breakpoint 1 at 0x424a16: file ../spiral_bay_driver.cpp, line 186.
+----
+
+This tells the debugger to automatically break (pause) the model whenever line 186 in the `spiral_bay_driver.cpp` file is reached. This has been assigned a number Breakpoint 1.
+
+==== Conditional break points
+
+You can tell the debugger to only implement the break point if a particular conditions is met, using the same conditional syntax as you would use in C++ code. In the next command, we'll tell the model to break when the variable `Time` is greater than 0.1, using the `cond` command, telling it to apply to Breakpoint 1, and telling it what the conditional statement is:
+
+----
+(gdb) cond 1 Time > 0.1
+(gdb) c
+----
+ 
+Typing `c` for continue, or `run` to run/rerun the model will execute the model until this condition is met, upon which the model will pause/break.
+
+==== Printing variables to screen
+
+In the case above, line 186 happens to be inside the main model loop. To see how much model time has elapsed, we can use the `print` (or `p` for short) command to display the `Time` variable on screen:
+
+----
+(gdb) p Time
+$1 = 0.1001
+----
+
+Telling us that Time has a value of 0.1. We can also access and print values from within objects, such as the coastline object called `CoastVector`. Let's print the number of nodes in our coastline object:
+
+----
+(gdb) p CoastVector.NoNodes
+$2 = 57
+----
+
+So there are 57 nodes. Another way you can find out how many nodes there are would be using 
+
+----
+(gdb) p X.size()
+$3 = 57
+----
+
+The coastline object `CoastVector` contains a variety of vectors, such as the `Orientation` vector. To print the whole vector, simply type:
+
+----
+(gdb) p Orientation
+$9 = std::vector of length 57, capacity 57 = {315, 321.60094533591007, 22.216282736864009, 
+  337.92083201072523, 331.46683943535487, 328.74000871549521, 328.56943628252139, 329.3837844925842, 
+  331.03563876766952, 332.40559792862649, 332.82638125188163, 332.9245341437483, 332.93052241718527, 
+  332.89505726491376, 332.83385098343905, 332.74888832616358, 332.64670360927767, 332.51956294297577, 
+  332.37435404622971, 332.19187033915836, 331.98128493122556, 331.73952655625015, 331.45574672016079, 
+  331.12294086709244, 330.75626492842684, 330.33227946333, 329.8343696059797, 329.28977634602285, 
+  328.55965087010219, 327.69635559935881, 326.64424950907846, 325.53196699095071, 324.23753352499017, 
+  322.87152718696478, 321.28662654854742, 319.48794541733355, 317.39883969083547, 315.31314397231881, 
+  312.5481246023183, 309.3840749386398, 305.72483950877961, 300.26574163061139, 294.0715726264682, 
+  287.02711087458448, 278.49458640312565, 270.15845682076986, 259.64212073586492, 250.94017797254546, 
+  239.4529514946729, 226.11779089145259, 210.20538031715429, 191.46362690977978, 169.54150518072848, 
+  146.8206916976348, 134.99530456698648, 315.00076908588517, 315.00076908588517}
+----
+
+If you jsut want to know what the Orientation of the first node or last node is, try:
+
+----
+(gdb) p Orientation[0]
+$10 = 315
+(gdb) p Orientation[NoNodes-1]
+$11 = 315.00076908588517
+----
 
 == References
 
